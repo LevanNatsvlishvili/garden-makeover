@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { camera, renderer, controls, scene } from './utils/renderer.js';
+import { camera, renderer, scene } from './utils/renderer.js';
+import { controls } from './utils/controls/controls.js';
 import windowResizer from './utils/windowResizer.js';
 import { config } from './config';
 import './styles/style.css';

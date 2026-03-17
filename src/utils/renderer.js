@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { screenSizes } from './windowResizer';
 import { config } from '../config';
 
@@ -16,11 +15,6 @@ camera.position.set(
   config.camera.position.y,
   config.camera.position.z
 );
-
-export const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = config.controls.enableDamping;
-controls.maxPolarAngle = config.controls.maxPolarAngle;
-controls.minPolarAngle = config.controls.minPolarAngle;
 
 export const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
