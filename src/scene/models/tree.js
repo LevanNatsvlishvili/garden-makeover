@@ -7,6 +7,8 @@ const tree = async () => {
   const material = new THREE.SpriteMaterial({ map: treeSprite, color: 'green' });
   const sprite = new THREE.Sprite(material);
   sprite.position.y = 0.35;
+  sprite.position.x = 2.5;
+  sprite.position.z = 2.5;
   return sprite;
 };
 
