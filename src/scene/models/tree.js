@@ -4,7 +4,8 @@ import * as THREE from 'three';
 
 const tree = async () => {
   const treeSprite = textureLoader.load('./sprite/tree-3.png');
-  const material = new THREE.SpriteMaterial({ map: treeSprite, color: 'green' });
+  treeSprite.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({ map: treeSprite });
   const sprite = new THREE.Sprite(material);
   sprite.position.y = 0.35;
   sprite.position.x = 2.5;

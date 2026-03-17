@@ -8,8 +8,8 @@ const groundTexture = textureLoader.load('./textures/grass.png');
 
 const rotation = Math.PI * 0.75;
 
-const repeatX = size / 7.5;
-const repeatY = size / 7.5;
+const repeatX = size / 5;
+const repeatY = size / 5;
 
 console.log(repeatY);
 

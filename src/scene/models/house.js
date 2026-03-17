@@ -5,9 +5,10 @@ import gltfLoader from '@/utils/loader/gltfLoader';
 
 // const house = async () => {
 //   const houseSprite = textureLoader.load('./sprite/house-3.png');
+//   houseSprite.colorSpace = THREE.SRGBColorSpace;
 //   const material = new THREE.SpriteMaterial({ map: houseSprite });
 //   const sprite = new THREE.Sprite(material);
-//   sprite.position.y = 1;
+//   sprite.position.y = 0.55;
 //   sprite.position.x = 0.25;
 //   sprite.scale.set(5, 2.5, 0);
 //   return sprite;
