@@ -21,7 +21,7 @@ export const config = {
   },
 
   lights: {
-    ambient: { color: '#ffffff', intensity: 0.5 },
+    ambient: { color: '#ffffff', intensity: 5 },
     directional: {
       color: '#ffffff',
       intensity: 1,
@@ -34,14 +34,13 @@ export const config = {
   },
 
   ground: {
-    size: 50,
+    size: 150,
     color: 'green',
     positionY: -0.5,
   },
 
   environment: {
-    // background: 0x87ceeb,
-    // fog: { color: 0xcccccc, near: 10, far: 80 },
+    background: 0x87ceeb,
   },
 
   fps: {

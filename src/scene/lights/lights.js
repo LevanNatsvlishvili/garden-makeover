@@ -1,12 +1,21 @@
 import * as THREE from 'three';
-import { config } from '../../config';
+import { config } from '@/config';
 
 const { ambient, directional } = config.lights;
 
+// Ambient light
 export const ambientLight = new THREE.AmbientLight(ambient.color, ambient.intensity);
 
-export const directionalLight = new THREE.DirectionalLight(directional.color, directional.intensity);
-directionalLight.position.set(directional.position.x, directional.position.y, directional.position.z);
+// Directional light
+export const directionalLight = new THREE.DirectionalLight(
+  directional.color,
+  directional.intensity
+);
+
+// Light optimization
+const { x, y, z } = directional.position;
+directionalLight.position.set(x, y, z);
+
 directionalLight.castShadow = true;
 directionalLight.shadow.mapSize.width = directional.shadow.mapSize;
 directionalLight.shadow.mapSize.height = directional.shadow.mapSize;
