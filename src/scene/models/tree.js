@@ -1,25 +1,13 @@
 // import gltfLoader from '@/utils/loader/gtlfLoader';
+import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
 
 const tree = async () => {
-  // const glb = await gltfLoader.loadAsync('./models/tree.glb');
-  // const model = glb.scene;
-  // model.traverse((child) => {
-  //   if (child.isMesh) {
-  //     // Dark grey color
-  //     child.material.color.setHex(0x2f3a3b);
-  //   }
-  // });
-  const model = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1),
-    new THREE.MeshBasicMaterial({ color: 'red' })
-  );
-  // model.position.x = 3.75;
-  // model.position.z = 5;
-
-  // model.scale.set(props.scale, props.scale, props.scale);
-
-  return model;
+  const treeSprite = textureLoader.load('./sprite/tree-3.png');
+  const material = new THREE.SpriteMaterial({ map: treeSprite, color: 'green' });
+  const sprite = new THREE.Sprite(material);
+  sprite.position.y = 0.35;
+  return sprite;
 };
 
 export default tree;
