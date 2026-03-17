@@ -22,15 +22,10 @@ async function init() {
   /**
    * Animate
    */
-  const clock = new THREE.Clock();
 
   const fpsLimit = 60;
   const frameDuration = 1000 / fpsLimit; // ~16.67ms
   let lastTime = 0;
-
-  const lowFPS = 30;
-  const lowFrameDuration = 1000 / lowFPS; // ~33.33ms
-  let lastLowTime = 0;
 
   const tick = (now) => {
     window.requestAnimationFrame(tick);
@@ -50,18 +45,8 @@ async function init() {
     // Keep leftover time (smoother pacing)
     lastTime = now - (delta % frameDuration);
 
-    // stats.begin();
-
-    const t = clock.getElapsedTime(); // seconds since start
-
-    // Low framerate updates
-    if (now - lastLowTime >= lowFrameDuration) {
-    }
-
     controls.update();
     renderer.render(scene, camera);
-
-    // stats.end();
   };
   window.requestAnimationFrame(tick);
 }

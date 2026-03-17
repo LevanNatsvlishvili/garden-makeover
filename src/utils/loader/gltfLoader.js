@@ -1,6 +1,6 @@
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
-import loadingManager from './loadingManagerDebugger';
+import loadingManager from './loadingManager';
 
 const gltfLoader = new GLTFLoader(loadingManager);
 const dracoLoader = new DRACOLoader();
