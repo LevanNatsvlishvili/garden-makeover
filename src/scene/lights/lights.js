@@ -1,23 +1,18 @@
 import * as THREE from 'three';
-import { colors, shadow } from '../../utils/consts/common';
+import { config } from '../../config';
 
-// Ambient light
-export const ambientLight = new THREE.AmbientLight(colors.light, 10);
-// ambientLight.raycast = true;
-ambientLight.intensity = 0.5;
+const { ambient, directional } = config.lights;
 
-export const lightningAmbientLight = new THREE.AmbientLight('#ffffff', 0);
+export const ambientLight = new THREE.AmbientLight(ambient.color, ambient.intensity);
 
-// Directional light
-export const directionalLight = new THREE.DirectionalLight(colors.light, 0);
-directionalLight.position.set(-1.5, 2, -8);
-
-// Light optimization
-directionalLight.shadow.mapSize.width = shadow.mapSize.width;
-directionalLight.shadow.mapSize.height = shadow.mapSize.height;
-directionalLight.shadow.camera.top = 8;
-directionalLight.shadow.camera.right = 8;
-directionalLight.shadow.camera.bottom = -8;
-directionalLight.shadow.camera.left = -8;
-directionalLight.shadow.camera.near = 1;
-directionalLight.shadow.camera.far = 15;
+export const directionalLight = new THREE.DirectionalLight(directional.color, directional.intensity);
+directionalLight.position.set(directional.position.x, directional.position.y, directional.position.z);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.width = directional.shadow.mapSize;
+directionalLight.shadow.mapSize.height = directional.shadow.mapSize;
+directionalLight.shadow.camera.top = directional.shadow.camera.top;
+directionalLight.shadow.camera.right = directional.shadow.camera.right;
+directionalLight.shadow.camera.bottom = directional.shadow.camera.bottom;
+directionalLight.shadow.camera.left = directional.shadow.camera.left;
+directionalLight.shadow.camera.near = directional.shadow.camera.near;
+directionalLight.shadow.camera.far = directional.shadow.camera.far;

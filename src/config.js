@@ -20,7 +20,26 @@ export const config = {
     shadowType: THREE.PCFSoftShadowMap,
   },
 
-  scene: {
+  lights: {
+    ambient: { color: '#ffffff', intensity: 0.5 },
+    directional: {
+      color: '#ffffff',
+      intensity: 1,
+      position: { x: -1.5, y: 2, z: -8 },
+      shadow: {
+        mapSize: 1024,
+        camera: { top: 8, right: 8, bottom: -8, left: -8, near: 1, far: 15 },
+      },
+    },
+  },
+
+  ground: {
+    size: 50,
+    color: 'green',
+    positionY: -0.5,
+  },
+
+  environment: {
     // background: 0x87ceeb,
     // fog: { color: 0xcccccc, near: 10, far: 80 },
   },

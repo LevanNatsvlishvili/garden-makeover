@@ -1,4 +1,3 @@
-// onClick.js (or wherever this lives)
 import * as THREE from 'three';
 
 const raycaster = new THREE.Raycaster();
