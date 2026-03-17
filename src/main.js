@@ -1,13 +1,11 @@
 import * as THREE from 'three';
 import { camera, renderer, controls, scene } from './utils/renderer.js';
 import windowResizer from './utils/windowResizer.js';
+import { config } from './config';
 import './styles/style.css';
 
 async function init() {
-  // Camera
   scene.add(camera);
-
-  // Resizes window every time the window size changes
   windowResizer(camera, renderer);
 
   // Base
@@ -23,8 +21,7 @@ async function init() {
    * Animate
    */
 
-  const fpsLimit = 60;
-  const frameDuration = 1000 / fpsLimit; // ~16.67ms
+  const frameDuration = 1000 / config.fps.limit;
   let lastTime = 0;
 
   const tick = (now) => {
