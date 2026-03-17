@@ -8,14 +8,14 @@ const groundTexture = textureLoader.load('./textures/grass.png');
 
 const rotation = Math.PI * 0.75;
 
-const repeatX = (2 * size) / size;
-const repeatY = (2 * size) / size;
+const repeatX = size / 7.5;
+const repeatY = size / 7.5;
 
 console.log(repeatY);
 
 groundTexture.wrapS = THREE.RepeatWrapping;
 groundTexture.wrapT = THREE.RepeatWrapping;
-groundTexture.repeat.set(2, 2);
+groundTexture.repeat.set(repeatX, repeatY);
 groundTexture.center.set(repeatX / 2, repeatY / 2);
 groundTexture.rotation = rotation;
 

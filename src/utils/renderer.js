@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { screenSizes } from './windowResizer';
 import { config } from '../config';
+import gui from '@/utils/gui';
 
 export const scene = new THREE.Scene();
 
@@ -10,11 +11,11 @@ export const camera = new THREE.PerspectiveCamera(
   config.camera.fov,
   screenSizes.width / screenSizes.height
 );
-camera.position.set(
-  config.camera.position.x,
-  config.camera.position.y,
-  config.camera.position.z
-);
+camera.position.set(config.camera.position.x, config.camera.position.y, config.camera.position.z);
+
+gui.add(camera.position, 'x', 0, 1000);
+gui.add(camera.position, 'y', 0, 1000);
+gui.add(camera.position, 'z', 0, 1000);
 
 export const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
