@@ -11,14 +11,14 @@ const tomato = async (point) => {
   const group = new THREE.Group();
   const ripeTexture = textureLoader.load('./sprite/tomato/ripe.png');
   ripeTexture.colorSpace = THREE.SRGBColorSpace;
-  const ripeMaterial = new THREE.SpriteMaterial({ map: ripeTexture });
+  const ripeMaterial = new THREE.SpriteMaterial({ map: ripeTexture, depthWrite: false });
   const ripeSprite = new THREE.Sprite(ripeMaterial);
 
   ripeSprite.scale.set(blockSide, blockSide, blockSide);
 
   const growingTexture = textureLoader.load('./sprite/tomato/growing.png');
   growingTexture.colorSpace = THREE.SRGBColorSpace;
-  const growingMaterial = new THREE.SpriteMaterial({ map: growingTexture });
+  const growingMaterial = new THREE.SpriteMaterial({ map: growingTexture, depthWrite: false });
   const growingSprite = new THREE.Sprite(growingMaterial);
 
   // Ripe Tomato
