@@ -34,7 +34,7 @@ export const config = {
   },
 
   ground: {
-    size: 50,
+    size: 20,
     color: 'green',
     positionY: -0.5,
   },

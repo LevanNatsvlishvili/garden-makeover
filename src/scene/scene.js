@@ -1,3 +1,4 @@
+import * as THREE from 'three';
 import { scene } from '../utils/renderer';
 import ground from './environment/ground';
 import { ambientLight, directionalLight } from './lights/lights';
@@ -11,6 +12,19 @@ import vine from './models/plants/vine';
 import rose from './models/decoration/rose';
 import statue from './models/decoration/statue';
 import well from './models/assets/well';
+import gui from '@/utils/gui';
+import textureLoader from '@/utils/loader/textureLoader';
+import { activate } from '../utils/placementTool';
+
+function spawnTomato(point) {
+  const tex = textureLoader.load('./sprite/tomato/growing.png');
+  tex.colorSpace = THREE.SRGBColorSpace;
+  const mat = new THREE.SpriteMaterial({ map: tex });
+  const sprite = new THREE.Sprite(mat);
+  sprite.scale.set(0.5, 0.5, 0.5);
+  sprite.position.set(point.x, point.y + 0.125, point.z);
+  scene.add(sprite);
+}
 
 export async function setupScene() {
   setupEnvironment();
@@ -34,12 +48,15 @@ export async function setupScene() {
   scene.add(roseModel);
   scene.add(statueModel);
 
-  // Ground + Grass
   scene.add(ground);
 
-  // Lights
   scene.add(ambientLight);
   scene.add(directionalLight);
+
+  const actions = {
+    placeTomato: () => activate(ground, spawnTomato),
+  };
+  gui.add(actions, 'placeTomato').name('🍅 Tomato');
 }
 
 export default setupScene;
