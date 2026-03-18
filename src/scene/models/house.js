@@ -15,9 +15,9 @@ import gltfLoader from '@/utils/loader/gltfLoader';
 // };
 
 const house = async () => {
-  const houseSprite = await gltfLoader.loadAsync('./models/house.glb');
+  const houseSprite = await gltfLoader.loadAsync('./models/house-2.glb');
   const model = houseSprite.scene;
-  model.position.y = 1;
+  model.position.y = 0.4;
   model.rotation.y = Math.PI * 0.5;
   model.scale.set(0.5, 0.5, 0.5);
 

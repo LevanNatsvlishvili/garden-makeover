@@ -8,7 +8,7 @@ import './styles/style.css';
 async function init() {
   scene.add(camera);
   windowResizer(camera, renderer);
-  setupScene();
+  await setupScene();
 
   /**
    * Animate
