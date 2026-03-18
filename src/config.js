@@ -39,6 +39,14 @@ export const config = {
     positionY: -0.5,
   },
 
+  grid: {
+    cellSize: 0.1,
+    highlightColor: 0xffffff,
+    highlightOpacity: 0.3,
+    lineColor: 0xffffff,
+    lineOpacity: 0.15,
+  },
+
   environment: {
     background: 0x87ceeb,
   },

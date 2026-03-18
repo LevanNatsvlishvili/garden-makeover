@@ -18,6 +18,7 @@ const config = {
       z: 0.5,
     },
   },
+  blockSize: 4,
 };
 
 const tomato = async () => {
