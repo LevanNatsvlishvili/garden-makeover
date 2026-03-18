@@ -2,7 +2,7 @@ import { camera, renderer, scene } from './utils/renderer';
 import { controls } from './utils/controls/controls';
 import windowResizer from './utils/windowResizer';
 import { setupScene } from './scene/scene';
-import { config } from './config';
+import { config } from './config/config';
 import './styles/style.css';
 
 async function init() {

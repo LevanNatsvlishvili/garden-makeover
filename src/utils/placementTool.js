@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { camera, renderer, scene } from './renderer';
-import { config } from '../config';
+import { config } from '../config/config';
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
@@ -51,7 +51,7 @@ function snapToGrid(value, side) {
 }
 
 function clampToGround(val, side) {
-  const halfSpan = (side * cellSize) * 0.5;
+  const halfSpan = side * cellSize * 0.5;
   return Math.max(-halfGround + halfSpan, Math.min(halfGround - halfSpan, val));
 }
 

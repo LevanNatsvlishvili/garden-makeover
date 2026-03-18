@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { config } from '@/config';
+import { config } from '@/config/config';
 
 const { ambient, directional } = config.lights;
 

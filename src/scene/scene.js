@@ -15,14 +15,18 @@ import well from './models/assets/well';
 import gui from '@/utils/gui';
 import textureLoader from '@/utils/loader/textureLoader';
 import { activate } from '../utils/placementTool';
+import { config as globalConfig } from '../config/config';
+import { assetConfig } from '@/config/assetConfig';
 
 function spawnTomato(point) {
+  const blockSide = assetConfig.tomato.blockSize * globalConfig.grid.cellSize;
+
   const tex = textureLoader.load('./sprite/tomato/growing.png');
   tex.colorSpace = THREE.SRGBColorSpace;
   const mat = new THREE.SpriteMaterial({ map: tex });
   const sprite = new THREE.Sprite(mat);
-  sprite.scale.set(0.5, 0.5, 0.5);
-  sprite.position.set(point.x, 0.125, point.z);
+  sprite.scale.set(blockSide, blockSide, blockSide);
+  sprite.position.set(point.x, blockSide * 0.25, point.z);
   scene.add(sprite);
 }
 
@@ -42,7 +46,7 @@ export async function setupScene() {
   scene.add(houseModel);
   // scene.add(fenceModel);
   // scene.add(wellModel);
-  // scene.add(tomatoModel);
+  scene.add(tomatoModel);
   // scene.add(cucumberModel);
   // scene.add(vineModel);
   // scene.add(roseModel);
@@ -53,9 +57,8 @@ export async function setupScene() {
   scene.add(ambientLight);
   scene.add(directionalLight);
 
-  const TOMATO_BLOCK_SIZE = 4;
   const actions = {
-    placeTomato: () => activate(ground, spawnTomato, TOMATO_BLOCK_SIZE),
+    placeTomato: () => activate(ground, spawnTomato, assetConfig.tomato.blockSize),
   };
   gui.add(actions, 'placeTomato').name('🍅 Tomato');
 }

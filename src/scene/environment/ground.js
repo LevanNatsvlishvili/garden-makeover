@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import textureLoader from '@/utils/loader/textureLoader.js';
-import { config } from '@/config';
+import { config } from '@/config/config';
 
 const { size, color } = config.ground;
 
