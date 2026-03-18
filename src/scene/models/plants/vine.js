@@ -6,7 +6,7 @@ import gui from '@/utils/gui';
 
 const vine = async (point) => {
   const blockSide = assetConfig.vine.blockSize * globalConfig.grid.cellSize;
-  const { blockSizePlacementMinus } = assetConfig.global;
+  const { plantsPlacementMinus } = assetConfig.global;
 
   const group = new THREE.Group();
 
@@ -22,18 +22,18 @@ const vine = async (point) => {
 
   ripeSprite.scale.set(blockSide, blockSide, blockSide);
   ripeSprite.position.set(
-    point.x + blockSizePlacementMinus,
+    point.x + plantsPlacementMinus,
     blockSide * 0.25,
-    point.z + blockSizePlacementMinus
+    point.z + plantsPlacementMinus
   );
   ripeSprite.rotation.y = Math.PI * -0.5;
   ripeSprite.visible = false;
 
   growingSprite.scale.set(blockSide, blockSide, blockSide);
   growingSprite.position.set(
-    point.x + blockSizePlacementMinus,
+    point.x + plantsPlacementMinus,
     blockSide * 0.25,
-    point.z + blockSizePlacementMinus
+    point.z + plantsPlacementMinus
   );
 
   const actions = {

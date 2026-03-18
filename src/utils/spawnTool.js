@@ -3,11 +3,9 @@ import { deactivate, activate, isActive } from '@/utils/placementTool';
 const tomatoModel = await import('@/scene/models/plants/tomato');
 const cucumberModel = await import('@/scene/models/plants/cucumber');
 const vineModel = await import('@/scene/models/plants/vine');
-
-export async function spawnTomato(point) {
-  const model = await tomatoModel.default(point);
-  scene.add(model);
-}
+const roseModel = await import('@/scene/models/decoration/rose');
+const statueModel = await import('@/scene/models/decoration/statue');
+const wellModel = await import('@/scene/models/assets/well');
 
 export const spawnActivator = (ground, fc, blockSize = 1) => {
   if (isActive()) {
@@ -17,6 +15,11 @@ export const spawnActivator = (ground, fc, blockSize = 1) => {
   }
 };
 
+export async function spawnTomato(point) {
+  const model = await tomatoModel.default(point);
+  scene.add(model);
+}
+
 export async function spawnCucumber(point) {
   const model = await cucumberModel.default(point);
   scene.add(model);
@@ -24,5 +27,20 @@ export async function spawnCucumber(point) {
 
 export async function spawnVine(point) {
   const model = await vineModel.default(point);
+  scene.add(model);
+}
+
+export async function spawnRose(point) {
+  const model = await roseModel.default(point);
+  scene.add(model);
+}
+
+export async function spawnStatue(point) {
+  const model = await statueModel.default(point);
+  scene.add(model);
+}
+
+export async function spawnWell(point) {
+  const model = await wellModel.default(point);
   scene.add(model);
 }

@@ -6,7 +6,7 @@ import { config as globalConfig } from '@/config/config';
 
 const tomato = async (point) => {
   const blockSide = assetConfig.tomato.blockSize * globalConfig.grid.cellSize;
-  const { blockSizePlacementMinus } = assetConfig.global;
+  const { plantsPlacementMinus } = assetConfig.global;
 
   const group = new THREE.Group();
   const ripeTexture = textureLoader.load('./sprite/tomato/ripe.png');
@@ -24,9 +24,9 @@ const tomato = async (point) => {
   // Ripe Tomato
   ripeSprite.scale.set(blockSide, blockSide, blockSide);
   ripeSprite.position.set(
-    point.x + blockSizePlacementMinus,
+    point.x + plantsPlacementMinus,
     blockSide * 0.25,
-    point.z + blockSizePlacementMinus
+    point.z + plantsPlacementMinus
   );
   ripeSprite.rotation.y = Math.PI * -0.5;
   ripeSprite.visible = false;
@@ -35,9 +35,9 @@ const tomato = async (point) => {
 
   growingSprite.scale.set(blockSide, blockSide, blockSide);
   growingSprite.position.set(
-    point.x + blockSizePlacementMinus,
+    point.x + plantsPlacementMinus,
     blockSide * 0.25,
-    point.z + blockSizePlacementMinus
+    point.z + plantsPlacementMinus
   );
 
   const actions = {

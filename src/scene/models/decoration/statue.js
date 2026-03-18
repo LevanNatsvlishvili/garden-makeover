@@ -1,33 +1,26 @@
 import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
+import { assetConfig } from '@/config/assetConfig';
+import { config as globalConfig } from '@/config/config';
 
-const config = {
-  position: {
-    y: 0.175,
-    z: 0.25,
-    x: 2.5,
-  },
-  rotation: {
-    y: Math.PI * -0.5,
-  },
-  scale: {
-    x: 0.5,
-    y: 0.5,
-    z: 0.5,
-  },
-};
+const statue = async (point) => {
+  const blockSide = Math.sqrt(assetConfig.statue.blockSize) * globalConfig.grid.cellSize;
+  const { plantsPlacementMinus } = assetConfig.global;
 
-const statue = async () => {
-  const { position, rotation, scale } = config;
-  const statueSprite = textureLoader.load('./sprite/statues/statue-1.png');
-  statueSprite.colorSpace = THREE.SRGBColorSpace;
-  const material = new THREE.SpriteMaterial({ map: statueSprite });
+  const statueTexture = textureLoader.load('./sprite/statues/statue-1.png');
+  statueTexture.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({ map: statueTexture, depthWrite: false });
   const sprite = new THREE.Sprite(material);
-  sprite.position.y = position.y;
-  sprite.position.x = position.x;
-  sprite.position.z = position.z;
-  sprite.rotation.y = rotation.y;
-  sprite.scale.set(scale.x, scale.y, scale.z);
+
+  console.log(blockSide);
+
+  sprite.scale.set(blockSide * 1.5, blockSide * 1.5, blockSide * 1.5);
+  sprite.position.set(
+    point.x + plantsPlacementMinus,
+    blockSide * 0.75,
+    point.z + plantsPlacementMinus
+  );
+
   return sprite;
 };
 

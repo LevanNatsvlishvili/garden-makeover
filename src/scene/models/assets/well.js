@@ -1,33 +1,26 @@
 import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
+import { assetConfig } from '@/config/assetConfig';
+import { config as globalConfig } from '@/config/config';
 
-const config = {
-  position: {
-    y: 0.25,
-    z: -1,
-    x: 2.5,
-  },
-  rotation: {
-    y: Math.PI * -0.5,
-  },
-  scale: {
-    x: 0.75,
-    y: 0.75,
-    z: 0.75,
-  },
-};
+const well = async (point) => {
+  const blockSide = Math.sqrt(assetConfig.well.blockSize) * globalConfig.grid.cellSize;
+  const { plantsPlacementMinus } = assetConfig.global;
 
-const well = async () => {
-  const { position, rotation, scale } = config;
-  const wellSprite = textureLoader.load('./sprite/well.png');
-  wellSprite.colorSpace = THREE.SRGBColorSpace;
-  const material = new THREE.SpriteMaterial({ map: wellSprite });
+  const wellTexture = textureLoader.load('./sprite/well.png');
+  wellTexture.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({ map: wellTexture, depthWrite: false });
   const sprite = new THREE.Sprite(material);
-  sprite.position.y = position.y;
-  sprite.position.x = position.x;
-  sprite.position.z = position.z;
-  sprite.rotation.y = rotation.y;
-  sprite.scale.set(scale.x, scale.y, scale.z);
+
+  // scale up to look bigger
+  const scale = blockSide * 1.25;
+  sprite.scale.set(scale, scale, scale);
+  sprite.position.set(
+    point.x + plantsPlacementMinus,
+    blockSide * 0.5,
+    point.z + plantsPlacementMinus
+  );
+
   return sprite;
 };
 

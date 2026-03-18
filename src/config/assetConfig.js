@@ -8,7 +8,16 @@ export const assetConfig = {
   vine: {
     blockSize: 4,
   },
+  rose: {
+    blockSize: 1,
+  },
+  statue: {
+    blockSize: 4,
+  },
+  well: {
+    blockSize: 9,
+  },
   global: {
-    blockSizePlacementMinus: 0.025,
+    plantsPlacementMinus: 0.025,
   },
 };

@@ -1,33 +1,19 @@
 import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
+import { assetConfig } from '@/config/assetConfig';
+import { config as globalConfig } from '@/config/config';
 
-const config = {
-  position: {
-    y: 0.075,
-    z: 0.25,
-    x: 1.5,
-  },
-  rotation: {
-    y: Math.PI * -0.5,
-  },
-  scale: {
-    x: 0.2,
-    y: 0.2,
-    z: 0.2,
-  },
-};
+const rose = async (point) => {
+  const blockSide = Math.sqrt(assetConfig.rose.blockSize) * globalConfig.grid.cellSize;
 
-const rose = async () => {
-  const { position, rotation, scale } = config;
-  const roseSprite = textureLoader.load('./sprite/roses/rose-red.png');
-  roseSprite.colorSpace = THREE.SRGBColorSpace;
-  const material = new THREE.SpriteMaterial({ map: roseSprite });
+  const roseTexture = textureLoader.load('./sprite/roses/rose-red.png');
+  roseTexture.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({ map: roseTexture, depthWrite: false });
   const sprite = new THREE.Sprite(material);
-  sprite.position.y = position.y;
-  sprite.position.x = position.x;
-  sprite.position.z = position.z;
-  sprite.rotation.y = rotation.y;
-  sprite.scale.set(scale.x, scale.y, scale.z);
+
+  sprite.scale.set(blockSide * 1.5, blockSide * 1.5, blockSide * 1.5);
+  sprite.position.set(point.x, 0.06, point.z);
+
   return sprite;
 };
 
