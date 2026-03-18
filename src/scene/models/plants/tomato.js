@@ -40,17 +40,13 @@ const tomato = async (point) => {
     point.z + blockSizePlacementMinus
   );
 
-  gui.add(growingSprite.position, 'y', -3, 3).name('Growing Tomato Position Y');
-  gui.add(growingSprite.position, 'x', -3, 3).name('Growing Tomato Position X');
-  gui.add(growingSprite.position, 'z', -3, 3).name('Growing Tomato Position Z');
-
   const actions = {
     switchTomato: () => {
       ripeSprite.visible = !ripeSprite.visible;
       growingSprite.visible = !growingSprite.visible;
     },
   };
-  // gui.add(actions, 'switchTomato').name('Switch Tomato');
+  gui.add(actions, 'switchTomato').name('Switch Tomato');
 
   group.add(ripeSprite);
   group.add(growingSprite);
