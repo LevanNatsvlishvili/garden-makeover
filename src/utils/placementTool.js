@@ -12,6 +12,21 @@ const halfGround = groundSize / 2;
 const cellCount = Math.floor(groundSize / cellSize);
 
 const occupiedCells = new Set();
+const OCCUPIED_COLOR = 0xff8844;
+const OCCUPIED_OPACITY = 0.25;
+
+const occupiedGroup = new THREE.Group();
+occupiedGroup.visible = false;
+scene.add(occupiedGroup);
+
+const occupiedMat = new THREE.MeshBasicMaterial({
+  color: OCCUPIED_COLOR,
+  transparent: true,
+  opacity: OCCUPIED_OPACITY,
+  side: THREE.DoubleSide,
+  depthWrite: false,
+});
+const occupiedCellGeo = new THREE.PlaneGeometry(cellSize, cellSize);
 
 const gridHelper = new THREE.GridHelper(groundSize, cellCount, lineColor, lineColor);
 gridHelper.material.transparent = true;
@@ -63,8 +78,21 @@ function isBlocked(cx, cz, side) {
 }
 
 function markOccupied(cx, cz, side) {
-  const cells = getCellsForBlock(cx, cz, side);
-  cells.forEach((key) => occupiedCells.add(key));
+  const half = (side - 1) * cellSize * 0.5;
+  for (let ix = 0; ix < side; ix++) {
+    for (let iz = 0; iz < side; iz++) {
+      const x = cx - half + ix * cellSize;
+      const z = cz - half + iz * cellSize;
+      const key = cellKey(x, z);
+      if (!occupiedCells.has(key)) {
+        occupiedCells.add(key);
+        const mesh = new THREE.Mesh(occupiedCellGeo, occupiedMat);
+        mesh.rotation.x = -Math.PI * 0.5;
+        mesh.position.set(x, 0.015, z);
+        occupiedGroup.add(mesh);
+      }
+    }
+  }
 }
 
 function setHighlightSize(blockSize) {
@@ -132,6 +160,7 @@ function onPointerDown(event) {
 
 function showGrid(visible) {
   gridHelper.visible = visible;
+  occupiedGroup.visible = visible;
   highlightMesh.visible = false;
   renderer.domElement.style.cursor = visible ? 'crosshair' : '';
 }
