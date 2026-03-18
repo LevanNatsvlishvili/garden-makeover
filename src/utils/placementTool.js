@@ -6,9 +6,12 @@ const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2();
 
 const { cellSize, highlightColor, highlightOpacity, lineColor, lineOpacity } = config.grid;
+const BLOCKED_COLOR = 0xff4444;
 const groundSize = config.ground.size;
 const halfGround = groundSize / 2;
 const cellCount = Math.floor(groundSize / cellSize);
+
+const occupiedCells = new Set();
 
 const gridHelper = new THREE.GridHelper(groundSize, cellCount, lineColor, lineColor);
 gridHelper.material.transparent = true;
@@ -35,6 +38,34 @@ let active = false;
 let groundMesh = null;
 let spawnCallback = null;
 let currentSide = 1;
+let canPlace = true;
+
+function cellKey(x, z) {
+  return `${x.toFixed(4)},${z.toFixed(4)}`;
+}
+
+function getCellsForBlock(cx, cz, side) {
+  const cells = [];
+  const half = (side - 1) * cellSize * 0.5;
+  for (let ix = 0; ix < side; ix++) {
+    for (let iz = 0; iz < side; iz++) {
+      const x = cx - half + ix * cellSize;
+      const z = cz - half + iz * cellSize;
+      cells.push(cellKey(x, z));
+    }
+  }
+  return cells;
+}
+
+function isBlocked(cx, cz, side) {
+  const cells = getCellsForBlock(cx, cz, side);
+  return cells.some((key) => occupiedCells.has(key));
+}
+
+function markOccupied(cx, cz, side) {
+  const cells = getCellsForBlock(cx, cz, side);
+  cells.forEach((key) => occupiedCells.add(key));
+}
 
 function setHighlightSize(blockSize) {
   const side = Math.sqrt(blockSize);
@@ -80,6 +111,10 @@ function onPointerMove(event) {
     highlightMesh.position.x = snapped.x;
     highlightMesh.position.z = snapped.z;
     highlightMesh.visible = true;
+
+    canPlace = !isBlocked(snapped.x, snapped.z, currentSide);
+    highlightMat.color.setHex(canPlace ? highlightColor : BLOCKED_COLOR);
+    highlightMat.opacity = canPlace ? highlightOpacity : 0.45;
   } else {
     highlightMesh.visible = false;
   }
@@ -89,7 +124,8 @@ function onPointerDown(event) {
   if (!active || !groundMesh) return;
 
   const snapped = getGridPoint(event);
-  if (snapped && spawnCallback) {
+  if (snapped && spawnCallback && canPlace) {
+    markOccupied(snapped.x, snapped.z, currentSide);
     spawnCallback(new THREE.Vector3(snapped.x, snapped.y, snapped.z));
   }
 }

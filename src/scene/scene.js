@@ -22,15 +22,15 @@ export async function setupScene() {
 
   // add red zone for spawn tool to not place place on each other
 
-  const treeModel = await tree();
+  // const treeModel = await tree();
   const houseModel = await house();
-  const fenceModel = await fence();
+  // const fenceModel = await fence();
   // const tomatoModel = await tomato();
   // const cucumberModel = await cucumber();
   // const vineModel = await vine();
-  const roseModel = await rose();
-  const statueModel = await statue();
-  const wellModel = await well();
+  // const roseModel = await rose();
+  // const statueModel = await statue();
+  // const wellModel = await well();
   // scene.add(treeModel);
   scene.add(houseModel);
   // scene.add(fenceModel);
