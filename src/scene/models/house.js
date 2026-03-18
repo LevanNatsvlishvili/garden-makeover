@@ -3,7 +3,7 @@ import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
 
 const house = async () => {
-  const houseSprite = textureLoader.load('./sprite/house-4.png');
+  const houseSprite = textureLoader.load('./sprite/house.png');
   houseSprite.colorSpace = THREE.SRGBColorSpace;
   const material = new THREE.SpriteMaterial({ map: houseSprite });
   const sprite = new THREE.Sprite(material);

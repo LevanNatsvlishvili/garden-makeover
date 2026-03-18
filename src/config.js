@@ -47,12 +47,12 @@ export const config = {
     limit: 60,
   },
 
-  paths: {
-    // models: {
-    //   garden: '/models/garden.glb',
-    // },
-    // textures: {
-    //   grass: '/textures/grass.jpg',
-    // },
-  },
+  // paths: {
+  //   // models: {
+  //   //   garden: '/models/garden.glb',
+  //   // },
+  //   // textures: {
+  //   //   grass: '/textures/grass.jpg',
+  //   // },
+  // },
 };

@@ -5,7 +5,6 @@ import { setupEnvironment } from './environment/environment';
 import tree from './models/tree';
 import house from './models/house';
 import fence from './models/fence';
-import wellOld from './models/assets/wellOld';
 import tomato from './models/plants/tomato';
 import cucumber from './models/plants/cucumber';
 import vine from './models/plants/vine';
@@ -19,7 +18,6 @@ export async function setupScene() {
   const treeModel = await tree();
   const houseModel = await house();
   const fenceModel = await fence();
-  const wellOldModel = await wellOld();
   const tomatoModel = await tomato();
   const cucumberModel = await cucumber();
   const vineModel = await vine();
@@ -29,7 +27,6 @@ export async function setupScene() {
   scene.add(treeModel);
   scene.add(houseModel);
   scene.add(fenceModel);
-  scene.add(wellOldModel);
   scene.add(wellModel);
   scene.add(tomatoModel);
   scene.add(cucumberModel);
