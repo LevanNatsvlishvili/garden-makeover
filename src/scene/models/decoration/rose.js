@@ -5,12 +5,16 @@ import { config as globalConfig } from '@/config/config';
 
 const blockSide = Math.sqrt(assetConfig.rose.blockSize) * globalConfig.grid.cellSize;
 
-const roseTexture = textureLoader.load('./sprite/roses/rose-red.png');
-roseTexture.colorSpace = THREE.SRGBColorSpace;
-const roseMat = new THREE.SpriteMaterial({ map: roseTexture, depthWrite: false });
+const roseRedTexture = textureLoader.load('./sprite/roses/rose-red.png');
+roseRedTexture.colorSpace = THREE.SRGBColorSpace;
+const roseRedMat = new THREE.SpriteMaterial({ map: roseRedTexture, depthWrite: false });
 
-const rose = async (point) => {
-  const sprite = new THREE.Sprite(roseMat.clone());
+const roseYellowTexture = textureLoader.load('./sprite/roses/rose-yellow.png');
+roseYellowTexture.colorSpace = THREE.SRGBColorSpace;
+const roseYellowMat = new THREE.SpriteMaterial({ map: roseYellowTexture, depthWrite: false });
+
+const rose = async (point, color = 'red') => {
+  const sprite = new THREE.Sprite(color === 'red' ? roseRedMat.clone() : roseYellowMat.clone());
   sprite.scale.set(blockSide * 1.5, blockSide * 1.5, blockSide * 1.5);
   sprite.position.set(point.x, 0.06, point.z);
   return sprite;

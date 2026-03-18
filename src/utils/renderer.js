@@ -13,10 +13,6 @@ export const camera = new THREE.PerspectiveCamera(
 );
 camera.position.set(config.camera.position.x, config.camera.position.y, config.camera.position.z);
 
-gui.add(camera.position, 'x', 0, 1000);
-gui.add(camera.position, 'y', 0, 1000);
-gui.add(camera.position, 'z', 0, 1000);
-
 export const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
   preserveDrawingBuffer: true,

@@ -30,13 +30,13 @@ export async function spawnVine(point) {
   scene.add(model);
 }
 
-export async function spawnRose(point) {
-  const model = await roseModel.default(point);
+export async function spawnRedRose(point, color = 'red') {
+  const model = await roseModel.default(point, color);
   scene.add(model);
 }
 
-export async function spawnStatue(point) {
-  const model = await statueModel.default(point);
+export async function spawnStatue(point, id = 1) {
+  const model = await statueModel.default(point, id);
   scene.add(model);
 }
 
