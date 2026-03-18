@@ -4,34 +4,43 @@ import { ambientLight, directionalLight } from './lights/lights';
 import { setupEnvironment } from './environment/environment';
 import tree from './models/tree';
 import house from './models/house';
-import bush from './models/bush';
 import fence from './models/fence';
-import well from './models/well';
-import tomato from './models/tomato';
-import cucumber from './models/cucumber';
-import vine from './models/vine';
+import wellOld from './models/assets/wellOld';
+import tomato from './models/plants/tomato';
+import cucumber from './models/plants/cucumber';
+import vine from './models/plants/vine';
+import rose from './models/decoration/rose';
+import statue from './models/decoration/statue';
+import well from './models/assets/well';
 
 export async function setupScene() {
   setupEnvironment();
 
   const treeModel = await tree();
   const houseModel = await house();
-  const bushModel = await bush();
   const fenceModel = await fence();
-  const wellModel = await well();
+  const wellOldModel = await wellOld();
   const tomatoModel = await tomato();
   const cucumberModel = await cucumber();
   const vineModel = await vine();
+  const roseModel = await rose();
+  const statueModel = await statue();
+  const wellModel = await well();
   scene.add(treeModel);
   scene.add(houseModel);
-  scene.add(bushModel);
   scene.add(fenceModel);
+  scene.add(wellOldModel);
   scene.add(wellModel);
   scene.add(tomatoModel);
   scene.add(cucumberModel);
   scene.add(vineModel);
+  scene.add(roseModel);
+  scene.add(statueModel);
 
+  // Ground + Grass
   scene.add(ground);
+
+  // Lights
   scene.add(ambientLight);
   scene.add(directionalLight);
 }

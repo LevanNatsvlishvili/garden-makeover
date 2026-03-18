@@ -19,6 +19,7 @@ gui.add(camera.position, 'z', 0, 1000);
 
 export const renderer = new THREE.WebGLRenderer({
   canvas: canvas,
+  preserveDrawingBuffer: true,
 });
 renderer.setSize(screenSizes.width, screenSizes.height);
 renderer.setPixelRatio(config.renderer.pixelRatio);

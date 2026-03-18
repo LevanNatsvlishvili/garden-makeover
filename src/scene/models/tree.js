@@ -1,9 +1,8 @@
-// import gltfLoader from '@/utils/loader/gtlfLoader';
 import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
 
 const tree = async () => {
-  const treeSprite = textureLoader.load('./sprite/tree-2.png');
+  const treeSprite = textureLoader.load('./sprite/tree.png');
   treeSprite.colorSpace = THREE.SRGBColorSpace;
   const material = new THREE.SpriteMaterial({ map: treeSprite });
   const sprite = new THREE.Sprite(material);
