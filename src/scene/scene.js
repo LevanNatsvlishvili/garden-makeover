@@ -13,7 +13,7 @@ import rose from './models/decoration/rose';
 import statue from './models/decoration/statue';
 import well from './models/assets/well';
 import gui from '@/utils/gui';
-import { activate } from '../utils/placementTool';
+import { activate, deactivate, isActive } from '../utils/placementTool';
 import { assetConfig } from '@/config/assetConfig';
 import { spawnTomato } from '@/utils/spawnTool';
 
@@ -45,7 +45,13 @@ export async function setupScene() {
   scene.add(directionalLight);
 
   const actions = {
-    placeTomato: () => activate(ground, spawnTomato, assetConfig.tomato.blockSize),
+    placeTomato: () => {
+      if (isActive()) {
+        deactivate();
+      } else {
+        activate(ground, spawnTomato, assetConfig.tomato.blockSize);
+      }
+    },
   };
   gui.add(actions, 'placeTomato').name('🍅 Tomato');
 }

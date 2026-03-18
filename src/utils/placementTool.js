@@ -92,8 +92,6 @@ function onPointerDown(event) {
   if (snapped && spawnCallback) {
     spawnCallback(new THREE.Vector3(snapped.x, snapped.y, snapped.z));
   }
-
-  deactivate();
 }
 
 function showGrid(visible) {
