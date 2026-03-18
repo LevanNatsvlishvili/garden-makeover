@@ -13,12 +13,14 @@ import rose from './models/decoration/rose';
 import statue from './models/decoration/statue';
 import well from './models/assets/well';
 import gui from '@/utils/gui';
-import { activate, deactivate, isActive } from '../utils/placementTool';
+// import { activate, deactivate, isActive } from '../utils/placementTool';
 import { assetConfig } from '@/config/assetConfig';
-import { spawnTomato, spawnCucumber, spawnVine } from '@/utils/spawnTool';
+import { spawnTomato, spawnCucumber, spawnVine, spawnActivator } from '@/utils/spawnTool';
 
 export async function setupScene() {
   setupEnvironment();
+
+  // add red zone for spawn tool to not place place on each other
 
   const treeModel = await tree();
   const houseModel = await house();
@@ -45,27 +47,9 @@ export async function setupScene() {
   scene.add(directionalLight);
 
   const actions = {
-    placeTomato: () => {
-      if (isActive()) {
-        deactivate();
-      } else {
-        activate(ground, spawnTomato, assetConfig.tomato.blockSize);
-      }
-    },
-    placeCucumber: () => {
-      if (isActive()) {
-        deactivate();
-      } else {
-        activate(ground, spawnCucumber, assetConfig.cucumber.blockSize);
-      }
-    },
-    placeVine: () => {
-      if (isActive()) {
-        deactivate();
-      } else {
-        activate(ground, spawnVine, assetConfig.vine.blockSize);
-      }
-    },
+    placeTomato: () => spawnActivator(ground, spawnTomato, assetConfig.tomato.blockSize),
+    placeCucumber: () => spawnActivator(ground, spawnCucumber, assetConfig.cucumber.blockSize),
+    placeVine: () => spawnActivator(ground, spawnVine, assetConfig.vine.blockSize),
   };
   gui.add(actions, 'placeTomato').name('🍅 Tomato');
   gui.add(actions, 'placeCucumber').name('🥒 Cucumber');

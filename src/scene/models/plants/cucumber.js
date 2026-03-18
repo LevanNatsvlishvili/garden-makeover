@@ -42,7 +42,7 @@ const cucumber = async (point) => {
       growingSprite.visible = !growingSprite.visible;
     },
   };
-  gui.add(actions, 'switchCucumber').name('Switch Cucumber');
+  // gui.add(actions, 'switchCucumber').name('Switch Cucumber');
 
   group.add(ripeSprite);
   group.add(growingSprite);

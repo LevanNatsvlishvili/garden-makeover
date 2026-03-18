@@ -46,7 +46,7 @@ const tomato = async (point) => {
       growingSprite.visible = !growingSprite.visible;
     },
   };
-  gui.add(actions, 'switchTomato').name('Switch Tomato');
+  // gui.add(actions, 'switchTomato').name('Switch Tomato');
 
   group.add(ripeSprite);
   group.add(growingSprite);

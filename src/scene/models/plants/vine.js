@@ -42,7 +42,7 @@ const vine = async (point) => {
       growingSprite.visible = !growingSprite.visible;
     },
   };
-  gui.add(actions, 'switchVine').name('Switch Vine');
+  // gui.add(actions, 'switchVine').name('Switch Vine');
 
   group.add(ripeSprite);
   group.add(growingSprite);
