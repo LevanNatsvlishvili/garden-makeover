@@ -1,7 +1,8 @@
 import { camera, renderer, scene } from './utils/renderer';
 import { controls } from './utils/controls/controls';
 import windowResizer from './utils/windowResizer';
-import { setupScene, loadPlacementTools } from './scene/scene';
+import { setupScene, loadPlacementTools, characterModel } from './scene/scene';
+import { updateCharacter } from './utils/controls/characterController';
 import { config } from './config/config';
 import './styles/style.css';
 
@@ -9,7 +10,6 @@ async function init() {
   scene.add(camera);
   windowResizer(camera, renderer);
 
-  // Loads first render essentials, ground, lights, env, etc
   await setupScene();
 
   const frameDuration = 1000 / config.fps.limit;
@@ -30,12 +30,17 @@ async function init() {
 
     lastTime = now - (delta % frameDuration);
 
+    const deltaSec = delta / 1000;
+
+    if (characterModel) {
+      updateCharacter(characterModel, deltaSec);
+    }
+
     controls.update();
     renderer.render(scene, camera);
   };
   window.requestAnimationFrame(tick);
 
-  // Loads placement tools and rest of the assets
   loadPlacementTools();
 }
 init().catch((err) => {

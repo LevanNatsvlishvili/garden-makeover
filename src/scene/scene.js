@@ -7,13 +7,15 @@ import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
 import character from './models/starter/character';
 
+export let characterModel = null;
+
 export async function setupScene() {
   setupEnvironment();
 
   const houseModel = await house();
   scene.add(houseModel);
 
-  const characterModel = await character();
+  characterModel = await character();
   scene.add(characterModel);
 
   scene.add(ground);
