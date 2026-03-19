@@ -32,6 +32,7 @@ export async function loadPlacementTools() {
     spawnStatue,
     spawnWell,
     spawnActivator,
+    spawnHouse,
   } = await import('@/utils/spawnTool');
 
   const actions = {
@@ -48,6 +49,7 @@ export async function loadPlacementTools() {
     placeStatue3: () =>
       spawnActivator(ground, (point) => spawnStatue(point, 3), assetConfig.statue.blockSize),
     placeWell: () => spawnActivator(ground, spawnWell, assetConfig.well.blockSize),
+    placeHouse: () => spawnActivator(ground, spawnHouse, assetConfig.house.blockSize),
   };
   gui.add(actions, 'placeTomato').name('🍅 Tomato');
   gui.add(actions, 'placeCucumber').name('🥒 Cucumber');
@@ -58,6 +60,7 @@ export async function loadPlacementTools() {
   gui.add(actions, 'placeStatue2').name('🗿 Statue 2');
   gui.add(actions, 'placeStatue3').name('🗿 Statue 3');
   gui.add(actions, 'placeWell').name('⛲ Well');
+  gui.add(actions, 'placeHouse').name('🏠 House');
 }
 
 export default setupScene;

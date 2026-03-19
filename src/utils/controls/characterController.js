@@ -1,12 +1,13 @@
 import * as THREE from 'three';
 import { camera } from '../renderer';
+import { config } from '@/config/config';
 
 const keys = { up: false, down: false, left: false, right: false };
 const forward = new THREE.Vector3();
 const right = new THREE.Vector3();
 const moveDir = new THREE.Vector3();
 
-const SPEED = 0.5;
+const SPEED = config.character.speed;
 
 window.addEventListener('keydown', (e) => {
   if (e.code === 'ArrowUp') keys.up = true;

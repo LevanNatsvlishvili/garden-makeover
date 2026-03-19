@@ -1,5 +1,6 @@
 import { scene } from '@/utils/renderer';
 import { deactivate, activate, isActive } from '@/utils/placementTool';
+import house from '@/scene/models/starter/house';
 const tomatoModel = await import('@/scene/models/plants/tomato');
 const cucumberModel = await import('@/scene/models/plants/cucumber');
 const vineModel = await import('@/scene/models/plants/vine');
@@ -42,5 +43,11 @@ export async function spawnStatue(point, id = 1) {
 
 export async function spawnWell(point) {
   const model = await wellModel.default(point);
+  scene.add(model);
+}
+
+// Starter Tools
+export async function spawnHouse(point) {
+  const model = await house.default(point);
   scene.add(model);
 }

@@ -14,6 +14,10 @@ export const config = {
     // minDistance: 5,
   },
 
+  character: {
+    speed: 0.5,
+  },
+
   renderer: {
     pixelRatio: Math.min(window.devicePixelRatio, 2),
     shadowMap: true,

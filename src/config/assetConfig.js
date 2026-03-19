@@ -17,6 +17,9 @@ export const assetConfig = {
   well: {
     blockSize: 9,
   },
+  house: {
+    blockSize: 20,
+  },
   global: {
     plantsPlacementMinus: 0.025,
   },
