@@ -2,15 +2,19 @@ import { scene } from '../utils/renderer';
 import ground from './environment/ground';
 import { ambientLight, directionalLight } from './lights/lights';
 import { setupEnvironment } from './environment/environment';
-import house from './models/house';
+import house from './models/starter/house';
 import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
+import character from './models/starter/character';
 
 export async function setupScene() {
   setupEnvironment();
 
   const houseModel = await house();
   scene.add(houseModel);
+
+  const characterModel = await character();
+  scene.add(characterModel);
 
   scene.add(ground);
   scene.add(ambientLight);
