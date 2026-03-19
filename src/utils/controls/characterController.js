@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { camera } from '../renderer';
 import { config } from '@/config/config';
+import { isCellOccupied } from '@/utils/placementTool';
 
 const keys = { up: false, down: false, left: false, right: false };
 const forward = new THREE.Vector3();
@@ -40,6 +41,24 @@ export function updateCharacter(model, delta) {
   if (moveDir.lengthSq() === 0) return;
 
   moveDir.normalize();
-  model.position.addScaledVector(moveDir, SPEED * delta);
+  const step = SPEED * delta;
+
+  const nextX = model.position.x + moveDir.x * step;
+  const nextZ = model.position.z + moveDir.z * step;
+
+  const blockedFull = isCellOccupied(nextX, nextZ);
+
+  if (!blockedFull) {
+    model.position.x = nextX;
+    model.position.z = nextZ;
+  } else {
+    if (!isCellOccupied(nextX, model.position.z)) {
+      model.position.x = nextX;
+    }
+    if (!isCellOccupied(model.position.x, nextZ)) {
+      model.position.z = nextZ;
+    }
+  }
+
   model.rotation.y = Math.atan2(moveDir.x, moveDir.z);
 }

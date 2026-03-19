@@ -195,5 +195,11 @@ export function isActive() {
   return active;
 }
 
+export function isCellOccupied(x, z) {
+  const cx = Math.floor(x / cellSize) * cellSize + cellSize * 0.5;
+  const cz = Math.floor(z / cellSize) * cellSize + cellSize * 0.5;
+  return occupiedCells.has(cellKey(cx, cz));
+}
+
 renderer.domElement.addEventListener('pointermove', onPointerMove);
 renderer.domElement.addEventListener('pointerdown', onPointerDown);

@@ -8,11 +8,12 @@ import character from './models/starter/character';
 import { spawnHouse } from '@/utils/spawnTool';
 
 export let characterModel = null;
+export let houseModel = null;
 
 export async function setupScene() {
   setupEnvironment();
 
-  spawnHouse();
+  houseModel = await spawnHouse();
 
   characterModel = await character();
   scene.add(characterModel);

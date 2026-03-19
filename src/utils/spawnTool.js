@@ -61,4 +61,6 @@ export async function spawnHouse() {
   const houseModel = await house(housePoint);
   scene.add(houseModel);
   markOccupied(housePoint.x, housePoint.z, xBlocks, yBlocks);
+
+  return houseModel;
 }
