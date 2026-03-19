@@ -1,6 +1,7 @@
 export const assetConfig = {
   tomato: {
     blockSize: 4,
+    price: 3,
   },
   cucumber: {
     blockSize: 4,

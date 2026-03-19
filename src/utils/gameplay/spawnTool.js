@@ -20,11 +20,6 @@ export const spawnActivator = (ground, fc, blockSize = 1) => {
   }
 };
 
-export async function spawnTomato(point) {
-  const model = await tomatoModel.default(point);
-  scene.add(model);
-}
-
 export async function spawnCucumber(point) {
   const model = await cucumberModel.default(point);
   scene.add(model);

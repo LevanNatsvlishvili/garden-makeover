@@ -1,7 +1,8 @@
 import { camera, renderer, scene } from './utils/renderer';
 import { controls } from './utils/controls/controls';
 import windowResizer from './utils/windowResizer';
-import { setupScene, loadPlacementTools, characterModel } from './scene/scene';
+import { setupScene, characterModel } from './scene/scene';
+import { loadPlacementTools } from './utils/gameplay/actions';
 import { updateCharacter } from './utils/controls/characterController';
 import { config } from './config/config';
 import './styles/style.css';
