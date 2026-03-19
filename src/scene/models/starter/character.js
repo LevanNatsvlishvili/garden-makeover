@@ -1,5 +1,8 @@
 // import * as THREE from 'three';
 import gltfLoader from '@/utils/loader/gltfLoader';
+import { config as globalConfig } from '@/config/config';
+
+const { startingPosition } = globalConfig.character;
 
 const character = async () => {
   const characterSprite = await gltfLoader.loadAsync('./models/character.glb');
@@ -9,6 +12,7 @@ const character = async () => {
   model.position.y = 0.1;
   model.position.x = -0.25;
   model.position.z = -0;
+  model.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
 
   return model;
 };
