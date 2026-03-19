@@ -52,37 +52,48 @@ scene.add(highlightMesh);
 let active = false;
 let groundMesh = null;
 let spawnCallback = null;
-let currentSide = 1;
+let currentXSide = 1;
+let currentZSide = 1;
 let canPlace = true;
 
 function cellKey(x, z) {
   return `${x.toFixed(4)},${z.toFixed(4)}`;
 }
 
-function getCellsForBlock(cx, cz, side) {
+function parseBlockSize(blockSize) {
+  if (typeof blockSize === 'object' && blockSize.x !== undefined) {
+    return { xSide: blockSize.x, zSide: blockSize.z };
+  }
+  const side = Math.sqrt(blockSize);
+  return { xSide: side, zSide: side };
+}
+
+function getCellsForBlock(cx, cz, xSide, zSide) {
   const cells = [];
-  const half = (side - 1) * cellSize * 0.5;
-  for (let ix = 0; ix < side; ix++) {
-    for (let iz = 0; iz < side; iz++) {
-      const x = cx - half + ix * cellSize;
-      const z = cz - half + iz * cellSize;
+  const halfX = (xSide - 1) * cellSize * 0.5;
+  const halfZ = (zSide - 1) * cellSize * 0.5;
+  for (let ix = 0; ix < xSide; ix++) {
+    for (let iz = 0; iz < zSide; iz++) {
+      const x = cx - halfX + ix * cellSize;
+      const z = cz - halfZ + iz * cellSize;
       cells.push(cellKey(x, z));
     }
   }
   return cells;
 }
 
-function isBlocked(cx, cz, side) {
-  const cells = getCellsForBlock(cx, cz, side);
+function isBlocked(cx, cz, xSide, zSide) {
+  const cells = getCellsForBlock(cx, cz, xSide, zSide);
   return cells.some((key) => occupiedCells.has(key));
 }
 
-function markOccupied(cx, cz, side) {
-  const half = (side - 1) * cellSize * 0.5;
-  for (let ix = 0; ix < side; ix++) {
-    for (let iz = 0; iz < side; iz++) {
-      const x = cx - half + ix * cellSize;
-      const z = cz - half + iz * cellSize;
+export function markOccupied(cx, cz, xSide, zSide = xSide) {
+  const halfX = (xSide - 1) * cellSize * 0.5;
+  const halfZ = (zSide - 1) * cellSize * 0.5;
+  for (let ix = 0; ix < xSide; ix++) {
+    for (let iz = 0; iz < zSide; iz++) {
+      const x = cx - halfX + ix * cellSize;
+      const z = cz - halfZ + iz * cellSize;
       const key = cellKey(x, z);
       if (!occupiedCells.has(key)) {
         occupiedCells.add(key);
@@ -96,13 +107,13 @@ function markOccupied(cx, cz, side) {
 }
 
 function setHighlightSize(blockSize) {
-  const side = Math.sqrt(blockSize);
-  currentSide = side;
-  const worldSize = side * cellSize;
-  highlightMesh.scale.set(worldSize, worldSize, 1);
+  const { xSide, zSide } = parseBlockSize(blockSize);
+  currentXSide = xSide;
+  currentZSide = zSide;
+  highlightMesh.scale.set(xSide * cellSize, zSide * cellSize, 1);
 }
 
-function snapToGrid(value, side) {
+export function snapToGrid(value, side) {
   if (side % 2 === 0) {
     return Math.round(value / cellSize) * cellSize;
   }
@@ -125,9 +136,9 @@ function getGridPoint(event) {
 
   const p = hits[0].point;
   return {
-    x: clampToGround(snapToGrid(p.x, currentSide), currentSide),
+    x: clampToGround(snapToGrid(p.x, currentXSide), currentXSide),
     y: 0,
-    z: clampToGround(snapToGrid(p.z, currentSide), currentSide),
+    z: clampToGround(snapToGrid(p.z, currentZSide), currentZSide),
   };
 }
 
@@ -140,7 +151,7 @@ function onPointerMove(event) {
     highlightMesh.position.z = snapped.z;
     highlightMesh.visible = true;
 
-    canPlace = !isBlocked(snapped.x, snapped.z, currentSide);
+    canPlace = !isBlocked(snapped.x, snapped.z, currentXSide, currentZSide);
     highlightMat.color.setHex(canPlace ? highlightColor : BLOCKED_COLOR);
     highlightMat.opacity = canPlace ? highlightOpacity : 0.45;
   } else {
@@ -153,7 +164,7 @@ function onPointerDown(event) {
 
   const snapped = getGridPoint(event);
   if (snapped && spawnCallback && canPlace) {
-    markOccupied(snapped.x, snapped.z, currentSide);
+    markOccupied(snapped.x, snapped.z, currentXSide, currentZSide);
     spawnCallback(new THREE.Vector3(snapped.x, snapped.y, snapped.z));
   }
 }

@@ -2,18 +2,17 @@ import { scene } from '../utils/renderer';
 import ground from './environment/ground';
 import { ambientLight, directionalLight } from './lights/lights';
 import { setupEnvironment } from './environment/environment';
-import house from './models/starter/house';
 import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
 import character from './models/starter/character';
+import { spawnHouse } from '@/utils/spawnTool';
 
 export let characterModel = null;
 
 export async function setupScene() {
   setupEnvironment();
 
-  const houseModel = await house();
-  scene.add(houseModel);
+  spawnHouse();
 
   characterModel = await character();
   scene.add(characterModel);
@@ -49,7 +48,11 @@ export async function loadPlacementTools() {
     placeStatue3: () =>
       spawnActivator(ground, (point) => spawnStatue(point, 3), assetConfig.statue.blockSize),
     placeWell: () => spawnActivator(ground, spawnWell, assetConfig.well.blockSize),
-    placeHouse: () => spawnActivator(ground, spawnHouse, assetConfig.house.blockSize),
+    placeHouse: () =>
+      spawnActivator(ground, spawnHouse, {
+        x: assetConfig.house.xBlocks,
+        z: assetConfig.house.yBlocks,
+      }),
   };
   gui.add(actions, 'placeTomato').name('🍅 Tomato');
   gui.add(actions, 'placeCucumber').name('🥒 Cucumber');

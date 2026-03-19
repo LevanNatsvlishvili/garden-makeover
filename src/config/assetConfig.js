@@ -18,7 +18,9 @@ export const assetConfig = {
     blockSize: 9,
   },
   house: {
-    blockSize: 20,
+    blockSize: 9 * 6,
+    xBlocks: 9,
+    yBlocks: 6,
   },
   global: {
     plantsPlacementMinus: 0.025,

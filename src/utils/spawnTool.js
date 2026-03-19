@@ -1,6 +1,10 @@
 import { scene } from '@/utils/renderer';
 import { deactivate, activate, isActive } from '@/utils/placementTool';
 import house from '@/scene/models/starter/house';
+import { assetConfig } from '@/config/assetConfig';
+import * as THREE from 'three';
+import { markOccupied, snapToGrid } from '@/utils/placementTool';
+
 const tomatoModel = await import('@/scene/models/plants/tomato');
 const cucumberModel = await import('@/scene/models/plants/cucumber');
 const vineModel = await import('@/scene/models/plants/vine');
@@ -47,7 +51,10 @@ export async function spawnWell(point) {
 }
 
 // Starter Tools
-export async function spawnHouse(point) {
-  const model = await house.default(point);
-  scene.add(model);
+export async function spawnHouse() {
+  const { xBlocks, yBlocks } = assetConfig.house;
+  const housePoint = new THREE.Vector3(snapToGrid(-1.5, xBlocks), 0, snapToGrid(0, yBlocks));
+  const houseModel = await house(housePoint);
+  scene.add(houseModel);
+  markOccupied(housePoint.x, housePoint.z, xBlocks, yBlocks);
 }
