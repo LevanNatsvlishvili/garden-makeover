@@ -36,11 +36,6 @@ async function init() {
       updateCharacter(characterModel, deltaSec);
     }
 
-    const distance = spriteScreenPos.distanceTo(charScreenPos);
-    if (distance < 1) {
-      console.log('House is near the character');
-    }
-
     controls.update();
     renderer.render(scene, camera);
   };
