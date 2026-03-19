@@ -17,6 +17,7 @@ export const assetConfig = {
   },
   well: {
     blockSize: 9,
+    price: 7,
   },
   house: {
     blockSize: 9 * 6,
