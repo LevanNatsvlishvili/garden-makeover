@@ -16,6 +16,7 @@ export const config = {
 
   character: {
     speed: 0.5,
+    startingPosition: { x: -0.9, y: 0.1, z: -0.2 },
   },
 
   renderer: {

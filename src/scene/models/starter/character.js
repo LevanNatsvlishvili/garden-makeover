@@ -7,8 +7,8 @@ const character = async () => {
   model.scale.set(0.1, 0.1, 0.1);
   model.rotation.y = Math.PI * 0.5;
   model.position.y = 0.1;
-  model.position.x = -0.9;
-  model.position.z = -0.2;
+  model.position.x = -0.25;
+  model.position.z = -0;
 
   return model;
 };

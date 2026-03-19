@@ -21,6 +21,7 @@ export const assetConfig = {
     blockSize: 9 * 6,
     xBlocks: 9,
     yBlocks: 6,
+    startingPosition: { x: -0.75, y: 0, z: 0 },
   },
   global: {
     plantsPlacementMinus: 0.025,

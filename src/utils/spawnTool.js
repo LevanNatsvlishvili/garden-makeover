@@ -53,7 +53,11 @@ export async function spawnWell(point) {
 // Starter Tools
 export async function spawnHouse() {
   const { xBlocks, yBlocks } = assetConfig.house;
-  const housePoint = new THREE.Vector3(snapToGrid(-1.5, xBlocks), 0, snapToGrid(0, yBlocks));
+  const housePoint = new THREE.Vector3(
+    snapToGrid(assetConfig.house.startingPosition.x, xBlocks),
+    0,
+    snapToGrid(assetConfig.house.startingPosition.z, yBlocks)
+  );
   const houseModel = await house(housePoint);
   scene.add(houseModel);
   markOccupied(housePoint.x, housePoint.z, xBlocks, yBlocks);
