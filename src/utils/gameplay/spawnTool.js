@@ -1,5 +1,5 @@
 import { scene } from '@/utils/renderer';
-import { deactivate, activate, isActive } from '@/utils/placementTool';
+import { deactivate, activate, isActive, getActiveCallback } from '@/utils/placementTool';
 import house from '@/scene/models/starter/house';
 import { assetConfig } from '@/config/assetConfig';
 import * as THREE from 'three';
@@ -14,10 +14,11 @@ const wellModel = await import('@/scene/models/assets/well');
 
 export const spawnActivator = (ground, fc, blockSize = 1) => {
   if (isActive()) {
+    const sameTool = getActiveCallback() === fc;
     deactivate();
-  } else {
-    activate(ground, fc, blockSize);
+    if (sameTool) return;
   }
+  activate(ground, fc, blockSize);
 };
 
 export async function spawnCucumber(point) {
