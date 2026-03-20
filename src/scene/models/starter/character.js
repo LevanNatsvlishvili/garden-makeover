@@ -11,6 +11,7 @@ const character = async () => {
   model.scale.set(0.1, 0.1, 0.1);
   model.rotation.y = Math.PI * 0.5;
   model.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
+  model.castShadow = true;
 
   model.traverse((child) => {
     if (child.isMesh) {

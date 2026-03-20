@@ -6,9 +6,14 @@ import { actionCucumber } from './cucumber';
 import { actionVine } from './vine';
 import { actionWell } from './well';
 import { registerButton } from './buttonManager';
+import { ambientLight, directionalLight } from '@/scene/lights/lights';
+import { config } from '@/config/config';
 
 export async function loadPlacementTools() {
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
+
+  const { intensity: defaultAmbient } = config.lights.ambient;
+  const { intensity: defaultDirectional } = config.lights.directional;
 
   const actions = {
     placeTomato: actionTomato,
@@ -18,6 +23,11 @@ export async function loadPlacementTools() {
     logState: () => console.log(state),
     ripenAll: () => allPlants().forEach((p) => p.ripenHarvest()),
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),
+    finishDay: () => {
+      const isDay = ambientLight.intensity === defaultAmbient;
+      ambientLight.intensity = isDay ? 1 : defaultAmbient;
+      directionalLight.intensity = isDay ? defaultDirectional : 1;
+    },
   };
 
   const wellCtrl = gui
@@ -46,6 +56,9 @@ export async function loadPlacementTools() {
     .name('🍇 Vine')
     .enable(state.money >= assetConfig.vine.price && state.isWellPlaced);
   registerButton(vineCtrl, () => state.money >= assetConfig.vine.price && state.isWellPlaced);
+
+  const finishDayCtrl = gui.add(actions, 'finishDay').name('🔍 Finish Day').enable(true);
+  registerButton(finishDayCtrl, () => true);
 
   gui.add(state, 'money').name('💰 Money').listen().disable();
 

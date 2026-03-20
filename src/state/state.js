@@ -6,6 +6,7 @@ const state = {
   cucumbers: [],
   vines: [],
   isWellPlaced: false,
+  isTutorialFinished: false,
 };
 
 export default state;
