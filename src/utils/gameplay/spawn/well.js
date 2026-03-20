@@ -3,8 +3,8 @@ import ground from '@/scene/environment/ground';
 import state from '@/state/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from './spawnTool';
-import { deactivate } from '../placementTool';
-import { updateAllButtons } from './buttonManager';
+import { deactivate } from '../../placementTool';
+import { updateAllButtons } from '../buttonManager';
 const wellModel = await import('@/scene/models/assets/well');
 
 export async function spawnWell(point) {

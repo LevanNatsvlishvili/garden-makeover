@@ -3,15 +3,15 @@ import ground from '@/scene/environment/ground';
 import state from '@/state/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from './spawnTool';
-import { deactivate } from '../placementTool';
-import { updateAllButtons } from './buttonManager';
-const tomatoModel = await import('@/scene/models/plants/tomato');
+import { deactivate } from '../../placementTool';
+import { updateAllButtons } from '../buttonManager';
+const cucumberModel = await import('@/scene/models/plants/cucumber');
 
-export async function spawnTomato(point) {
-  if (state.money < assetConfig.tomato.price) return;
-  const model = await tomatoModel.default(point);
+export async function spawnCucumber(point) {
+  if (state.money < assetConfig.cucumber.price) return;
+  const model = await cucumberModel.default(point);
   scene.add(model);
-  state.money -= assetConfig.tomato.price;
+  state.money -= assetConfig.cucumber.price;
 
   const entry = {
     ref: model,
@@ -36,21 +36,21 @@ export async function spawnTomato(point) {
       const [ripeSprite, growingSprite] = model.children;
       ripeSprite.visible = false;
       growingSprite.visible = true;
-      state.money += assetConfig.tomato.harvestIncome;
+      state.money += assetConfig.cucumber.harvestIncome;
       updateAllButtons();
     },
   };
-  state.tomatoes.push(entry);
+  state.cucumbers.push(entry);
 
   updateAllButtons();
-  if (state.money < assetConfig.tomato.price) {
+  if (state.money < assetConfig.cucumber.price) {
     deactivate();
   }
 }
 
-export const actionTomato = () => {
-  if (state.money >= assetConfig.tomato.price) {
-    spawnActivator(ground, spawnTomato, assetConfig.tomato.blockSize);
+export const actionCucumber = () => {
+  if (state.money >= assetConfig.cucumber.price) {
+    spawnActivator(ground, spawnCucumber, assetConfig.cucumber.blockSize);
   } else {
     deactivate();
   }

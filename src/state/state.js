@@ -7,6 +7,7 @@ const state = {
   vines: [],
   isWellPlaced: false,
   isTutorialFinished: false,
+  isDay: true,
 };
 
 export default state;

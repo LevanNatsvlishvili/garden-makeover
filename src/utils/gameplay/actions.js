@@ -1,13 +1,14 @@
 import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
 import state from '@/state/state';
-import { actionTomato } from './tomato';
-import { actionCucumber } from './cucumber';
-import { actionVine } from './vine';
-import { actionWell } from './well';
+import { actionTomato } from './spawn/tomato';
+import { actionCucumber } from './spawn/cucumber';
+import { actionVine } from './spawn/vine';
+import { actionWell } from './spawn/well';
 import { registerButton } from './buttonManager';
 import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
+import { torchLight } from '@/scene/models/starter/character';
 
 export async function loadPlacementTools() {
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
@@ -24,8 +25,10 @@ export async function loadPlacementTools() {
     ripenAll: () => allPlants().forEach((p) => p.ripenHarvest()),
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),
     finishDay: () => {
-      const isDay = ambientLight.intensity === defaultAmbient;
-      ambientLight.intensity = isDay ? 1 : defaultAmbient;
+      const isDay = state.isDay;
+      state.isDay = !state.isDay;
+      torchLight.intensity = state.isDay ? 0 : 1.5;
+      ambientLight.intensity = isDay ? 0.5 : defaultAmbient;
       directionalLight.intensity = isDay ? defaultDirectional : 1;
     },
   };

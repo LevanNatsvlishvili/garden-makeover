@@ -5,7 +5,7 @@ import { setupEnvironment } from './environment/environment';
 import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
 import character from './models/starter/character';
-import { spawnHouse } from '@/utils/gameplay/spawnTool';
+import { spawnHouse } from '@/utils/gameplay/spawn/spawnTool';
 import state from '@/state/state';
 
 export let characterModel = null;
