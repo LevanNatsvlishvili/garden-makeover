@@ -15,12 +15,9 @@ export async function spawnTomato(point) {
 
   const entry = {
     ref: model,
-    _status: 'growing',
-    get status() {
-      return this._status;
-    },
+    status: 'growing',
     setStatus(newStatus) {
-      this._status = newStatus;
+      this.status = newStatus;
       const [ripeSprite, growingSprite] = model.children;
       ripeSprite.visible = newStatus === 'ripe';
       growingSprite.visible = newStatus === 'growing';
