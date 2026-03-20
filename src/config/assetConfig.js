@@ -6,9 +6,13 @@ export const assetConfig = {
   },
   cucumber: {
     blockSize: 4,
+    price: 10,
+    harvestIncome: 6,
   },
   vine: {
     blockSize: 4,
+    price: 16,
+    harvestIncome: 10,
   },
   rose: {
     blockSize: 1,
@@ -28,5 +32,6 @@ export const assetConfig = {
   },
   global: {
     plantsPlacementMinus: 0.025,
+    startingMoney: 12,
   },
 };

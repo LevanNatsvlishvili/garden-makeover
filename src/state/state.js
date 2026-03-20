@@ -1,6 +1,10 @@
+import { assetConfig } from '@/config/assetConfig';
+
 const state = {
-  money: 10,
+  money: assetConfig.global.startingMoney,
   tomatoes: [],
+  cucumbers: [],
+  vines: [],
   isWellPlaced: false,
 };
 
