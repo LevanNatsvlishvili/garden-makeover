@@ -1,13 +1,11 @@
-import state from '@/state/state';
-
 const buttons = [];
 
-export function registerButton(controller, price) {
-  buttons.push({ controller, price });
+export function registerButton(controller, condition) {
+  buttons.push({ controller, condition });
 }
 
 export function updateAllButtons() {
-  for (const { controller, price } of buttons) {
-    controller.enable(state.money >= price);
+  for (const { controller, condition } of buttons) {
+    controller.enable(condition());
   }
 }

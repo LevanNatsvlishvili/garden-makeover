@@ -12,6 +12,7 @@ export async function spawnWell(point) {
   const model = await wellModel.default(point);
   scene.add(model);
   state.money -= assetConfig.well.price;
+  state.isWellPlaced = true;
   updateAllButtons();
   if (state.money < assetConfig.well.price) {
     deactivate();

@@ -1,7 +1,8 @@
 export const assetConfig = {
   tomato: {
     blockSize: 4,
-    price: 3,
+    price: 4,
+    harvestIncome: 2,
   },
   cucumber: {
     blockSize: 4,
@@ -17,10 +18,10 @@ export const assetConfig = {
   },
   well: {
     blockSize: 9,
-    price: 7,
+    price: 6,
   },
   house: {
-    blockSize: 9 * 6,
+    blockSize: 12 * 8,
     xBlocks: 9,
     yBlocks: 6,
     startingPosition: { x: -0.75, y: 0, z: 0 },
