@@ -23,7 +23,11 @@ export async function loadPlacementTools() {
     placeWell: actionWell,
     logState: () => console.log(state),
     changeTomatoStatus: () =>
-      state.tomatoes[0]?.setStatus(state.tomatoes[0]?.status === 'ripe' ? 'growing' : 'ripe'),
+      state.tomatoes.map((tomato) =>
+        tomato.setStatus(tomato.status === 'ripe' ? 'growing' : 'ripe')
+      ),
+    // state.tomatoes.map.setStatus(state.tomatoes[0]?.status === 'ripe' ? 'growing' : 'ripe'),
+
     // placeCucumber: () => spawnActivator(ground, spawnCucumber, assetConfig.cucumber.blockSize),
     // placeVine: () => spawnActivator(ground, spawnVine, assetConfig.vine.blockSize),
     // placeRose: () => spawnActivator(ground, spawnRedRose, assetConfig.rose.blockSize),
