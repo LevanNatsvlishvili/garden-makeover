@@ -12,6 +12,22 @@ export async function spawnTomato(point) {
   const model = await tomatoModel.default(point);
   scene.add(model);
   state.money -= assetConfig.tomato.price;
+
+  const entry = {
+    ref: model,
+    _status: 'growing',
+    get status() {
+      return this._status;
+    },
+    setStatus(newStatus) {
+      this._status = newStatus;
+      const [ripeSprite, growingSprite] = model.children;
+      ripeSprite.visible = newStatus === 'ripe';
+      growingSprite.visible = newStatus === 'growing';
+    },
+  };
+  state.tomatoes.push(entry);
+
   updateAllButtons();
   if (state.money < assetConfig.tomato.price) {
     deactivate();

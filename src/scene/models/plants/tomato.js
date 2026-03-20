@@ -14,7 +14,7 @@ const growingTexture = textureLoader.load('./sprite/tomato/growing.png');
 growingTexture.colorSpace = THREE.SRGBColorSpace;
 const growingMat = new THREE.SpriteMaterial({ map: growingTexture, depthWrite: false });
 
-const tomato = async (point) => {
+const tomato = async (point, status) => {
   const group = new THREE.Group();
 
   const ripeSprite = new THREE.Sprite(ripeMat.clone());
@@ -25,7 +25,7 @@ const tomato = async (point) => {
     point.z + plantsPlacementMinus
   );
   ripeSprite.rotation.y = Math.PI * -0.5;
-  ripeSprite.visible = false;
+  ripeSprite.visible = true;
 
   const growingSprite = new THREE.Sprite(growingMat.clone());
   growingSprite.scale.set(blockSide, blockSide, blockSide);
@@ -34,6 +34,15 @@ const tomato = async (point) => {
     blockSide * 0.25,
     point.z + plantsPlacementMinus
   );
+  growingSprite.visible = false;
+
+  if (status === 'ripe') {
+    ripeSprite.visible = true;
+    growingSprite.visible = false;
+  } else {
+    ripeSprite.visible = false;
+    growingSprite.visible = true;
+  }
 
   group.add(ripeSprite);
   group.add(growingSprite);

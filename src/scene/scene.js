@@ -14,6 +14,8 @@ export let houseModel = null;
 export async function setupScene() {
   setupEnvironment();
 
+  console.log(state);
+
   houseModel = await spawnHouse();
 
   characterModel = await character();

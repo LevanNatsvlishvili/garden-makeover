@@ -21,7 +21,9 @@ export async function loadPlacementTools() {
   const actions = {
     placeTomato: actionTomato,
     placeWell: actionWell,
-
+    logState: () => console.log(state),
+    changeTomatoStatus: () =>
+      state.tomatoes[0]?.setStatus(state.tomatoes[0]?.status === 'ripe' ? 'growing' : 'ripe'),
     // placeCucumber: () => spawnActivator(ground, spawnCucumber, assetConfig.cucumber.blockSize),
     // placeVine: () => spawnActivator(ground, spawnVine, assetConfig.vine.blockSize),
     // placeRose: () => spawnActivator(ground, spawnRedRose, assetConfig.rose.blockSize),
@@ -69,4 +71,6 @@ export async function loadPlacementTools() {
 
   // add number in gui to keep track of money
   gui.add(state, 'money').name('💰 Money').listen().disable();
+  gui.add(actions, 'logState').name('🔍 Log State');
+  gui.add(actions, 'changeTomatoStatus').name('🍅 Ripen Tomato');
 }
