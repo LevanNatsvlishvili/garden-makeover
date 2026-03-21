@@ -23,6 +23,11 @@ export async function actions() {
     placeWell: placeWell,
     placeTree: placeTree,
     logState: () => console.log(state),
+    exportTrees: () => {
+      const json = JSON.stringify(state.trees, null, 2);
+      navigator.clipboard.writeText(json);
+      console.log('Tree positions copied to clipboard:', json);
+    },
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),
     turnDay: () => turnDay(),
   };
@@ -80,5 +85,6 @@ export async function actions() {
     .enable(state.isDay && allPlants().some((p) => p.status === 'ripe'));
   registerButton(harvestCtrl, () => state.isDay && allPlants().some((p) => p.status === 'ripe'));
 
+  gui.add(actions, 'exportTrees').name('📋 Export Trees');
   gui.add(actions, 'logState').name('🔍 Log State');
 }

@@ -4,18 +4,23 @@ import { ambientLight, directionalLight } from './lights/lights';
 import { setupEnvironment } from './environment/environment';
 import models from '@/store/models';
 import spawnHouse, { housePoint } from '@/gameplay/spawn/assets/house';
-// Load Starter Models
+import { trees } from '@/store/tree';
+import { markOccupied } from '@/utils/placementTool';
+import { assetConfig } from '@/config/assetConfig';
 import character from './models/other/character';
 import tree from './models/other/tree';
-// import house from './models/structures/house';
-import well from './models/structures/well';
 import house from './models/structures/house';
 
-// Load Starter Models
 const loadStarterModels = async () => {
   models.houseModel = await house(housePoint);
   models.characterModel = await character();
-  // models.treeModel = await tree();
+
+  const blockSize = assetConfig.tree.blockSize;
+  const treeSprites = await Promise.all(trees.map((pos) => tree(pos)));
+  treeSprites.forEach((sprite, i) => {
+    scene.add(sprite);
+    markOccupied(trees[i].x, trees[i].z, blockSize);
+  });
 
   scene.add(models.characterModel);
 };
