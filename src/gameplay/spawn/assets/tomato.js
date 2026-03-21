@@ -5,11 +5,11 @@ import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
 import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
-const tomatoModel = await import('@/scene/models/plants/tomato');
+import models from '@/store/models';
 
 async function spawnTomato(point) {
   if (state.money < assetConfig.tomato.price) return;
-  const model = await tomatoModel.default(point);
+  const model = await models.tomatoModel.default(point);
   scene.add(model);
   state.money -= assetConfig.tomato.price;
 

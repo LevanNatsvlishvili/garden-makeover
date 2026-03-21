@@ -5,11 +5,11 @@ import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
 import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
-const vineModel = await import('@/scene/models/plants/vine');
+import models from '@/store/models';
 
 async function spawnVine(point) {
   if (state.money < assetConfig.vine.price) return;
-  const model = await vineModel.default(point);
+  const model = await models.vineModel.default(point);
   scene.add(model);
   state.money -= assetConfig.vine.price;
 

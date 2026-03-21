@@ -5,11 +5,11 @@ import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
 import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
-const cucumberModel = await import('@/scene/models/plants/cucumber');
+import models from '@/store/models';
 
 async function spawnCucumber(point) {
   if (state.money < assetConfig.cucumber.price) return;
-  const model = await cucumberModel.default(point);
+  const model = await models.cucumberModel.default(point);
   scene.add(model);
   state.money -= assetConfig.cucumber.price;
 

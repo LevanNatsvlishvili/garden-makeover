@@ -1,10 +1,6 @@
 import { scene } from '@/utils/renderer';
 import { deactivate, activate, isActive, getActiveCallback } from '@/utils/placementTool';
 import models from '@/store/models';
-import { assetConfig } from '@/config/assetConfig';
-import { snapToGrid } from '@/utils/placementTool';
-import * as THREE from 'three';
-import { markOccupied } from '@/utils/placementTool';
 
 export const spawnActivator = (ground, fc, blockSize = 1) => {
   if (isActive()) {
@@ -14,16 +10,6 @@ export const spawnActivator = (ground, fc, blockSize = 1) => {
   }
   activate(ground, fc, blockSize);
 };
-
-export async function spawnCucumber(point) {
-  const model = await models.cucumberModel.default(point);
-  scene.add(model);
-}
-
-export async function spawnVine(point) {
-  const model = await models.vineModel.default(point);
-  scene.add(model);
-}
 
 export async function spawnRedRose(point, color = 'red') {
   const model = await models.roseModel.default(point, color);
