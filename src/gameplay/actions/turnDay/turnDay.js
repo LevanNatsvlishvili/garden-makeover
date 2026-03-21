@@ -3,6 +3,8 @@ import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
 import { torchLight } from '@/scene/models/other/character';
 import { scene } from '@/utils/renderer';
+import { updateAllButtons } from '@/gameplay/buttonManager';
+import { deactivate } from '@/utils/placementTool';
 
 const { intensity: defaultAmbient, nightIntensity: nightAmbient } = config.lights.ambient;
 const { intensity: defaultDirectional, nightIntensity: nightDirectional } =
@@ -32,4 +34,7 @@ export function turnDay() {
   directionalLight.intensity = wasDay ? nightDirectional : defaultDirectional;
   torchLight.intensity = wasDay ? 1.5 : 0;
   setNightTint(wasDay);
+
+  if (!state.isDay) deactivate();
+  updateAllButtons();
 }

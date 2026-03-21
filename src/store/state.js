@@ -6,6 +6,7 @@ const state = {
   cucumbers: [],
   vines: [],
   isWellPlaced: false,
+  isPlantPlaced: false,
   isTutorialFinished: false,
   isDay: true,
 };

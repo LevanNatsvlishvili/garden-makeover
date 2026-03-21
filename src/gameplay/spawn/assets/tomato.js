@@ -12,6 +12,9 @@ async function spawnTomato(point) {
   const model = await models.tomatoModel.default(point);
   scene.add(model);
   state.money -= assetConfig.tomato.price;
+  if (!state.isPlantPlaced) {
+    state.isPlantPlaced = true;
+  }
 
   const entry = {
     ref: model,
