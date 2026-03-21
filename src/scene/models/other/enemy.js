@@ -9,7 +9,7 @@ const monster = async () => {
   const monsterSprite = await gltfLoader.loadAsync('./models/monster.glb');
   const model = monsterSprite.scene;
 
-  model.scale.set(0.1, 0.1, 0.1);
+  model.scale.set(0.05, 0.05, 0.05);
   model.rotation.y = Math.PI * -0.5;
   model.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
   model.castShadow = true;

@@ -5,7 +5,7 @@ import { setupScene, setupRest } from './scene';
 import models from './store/models';
 import { actions } from './gameplay/actions';
 import { updateCharacter } from './utils/controls/characterController';
-import { updateEnemy } from './gameplay/enemy/enemy';
+import { updateEnemy } from './gameplay/enemyAI/enemyAI';
 import { config } from './config/config';
 import './styles/style.css';
 
