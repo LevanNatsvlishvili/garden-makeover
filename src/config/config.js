@@ -20,7 +20,12 @@ export const config = {
   },
 
   monster: {
-    startingPosition: { x: 1, y: 0.1, z: -0 },
+    speed: 0.25,
+    attackRange: 0.15,
+    attackDamage: 1,
+    attackCooldown: 1.5,
+    chaseRange: 3,
+    startingPosition: { x: 1, y: 0.1, z: 0 },
   },
 
   renderer: {

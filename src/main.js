@@ -5,6 +5,7 @@ import { setupScene, setupRest } from './scene';
 import models from './store/models';
 import { actions } from './gameplay/actions';
 import { updateCharacter } from './utils/controls/characterController';
+import { updateEnemy } from './gameplay/enemy/enemy';
 import { config } from './config/config';
 import './styles/style.css';
 
@@ -36,6 +37,9 @@ async function init() {
 
     if (models.characterModel) {
       updateCharacter(models.characterModel, deltaSec);
+    }
+    if (models.monsterModel) {
+      updateEnemy(models.monsterModel, deltaSec);
     }
 
     controls.update();

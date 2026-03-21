@@ -1,5 +1,6 @@
 const models = {
   characterModel: null,
+  monsterModel: null,
   houseModel: null,
   tomatoModel: null,
   cucumberModel: null,
