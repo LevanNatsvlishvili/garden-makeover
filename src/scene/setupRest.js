@@ -13,4 +13,5 @@ export const setupRest = async () => {
   models.roseModel = await import('@/scene/models/decoration/rose');
   models.statueModel = await import('@/scene/models/decoration/statue');
   models.wellModel = await import('@/scene/models/structures/well');
+  models.treeModel = await import('@/scene/models/other/tree');
 };

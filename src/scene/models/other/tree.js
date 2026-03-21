@@ -1,14 +1,20 @@
 import textureLoader from '@/utils/loader/textureLoader';
 import * as THREE from 'three';
+import { assetConfig } from '@/config/assetConfig';
+import { config as globalConfig } from '@/config/config';
 
-const tree = async () => {
-  const treeSprite = textureLoader.load('./sprite/tree.png');
-  treeSprite.colorSpace = THREE.SRGBColorSpace;
-  const material = new THREE.SpriteMaterial({ map: treeSprite });
-  const sprite = new THREE.Sprite(material);
-  sprite.position.y = 0.35;
-  sprite.position.x = 2.5;
-  sprite.position.z = 2.5;
+const blockSide = assetConfig.tree.blockSize * globalConfig.grid.cellSize;
+
+const treeTexture = textureLoader.load('./sprite/tree.png');
+treeTexture.colorSpace = THREE.SRGBColorSpace;
+const treeMat = new THREE.SpriteMaterial({ map: treeTexture, depthWrite: false });
+
+const tree = async (point) => {
+  const { placementMinus } = assetConfig.global;
+  const sprite = new THREE.Sprite(treeMat.clone());
+  const scale = blockSide * 1.25;
+  sprite.scale.set(scale, scale, scale);
+  sprite.position.set(point.x - placementMinus, blockSide * 0.5, point.z - placementMinus);
   return sprite;
 };
 

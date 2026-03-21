@@ -4,7 +4,7 @@ import { assetConfig } from '@/config/assetConfig';
 import { config as globalConfig } from '@/config/config';
 
 const blockSide = assetConfig.cucumber.blockSize * globalConfig.grid.cellSize;
-const { plantsPlacementMinus } = assetConfig.global;
+const { placementMinus } = assetConfig.global;
 
 const ripeTexture = textureLoader.load('./sprite/cucumber/ripe.png');
 ripeTexture.colorSpace = THREE.SRGBColorSpace;
@@ -19,21 +19,13 @@ const cucumber = async (point) => {
 
   const ripeSprite = new THREE.Sprite(ripeMat.clone());
   ripeSprite.scale.set(blockSide, blockSide, blockSide);
-  ripeSprite.position.set(
-    point.x + plantsPlacementMinus,
-    blockSide * 0.25,
-    point.z + plantsPlacementMinus
-  );
+  ripeSprite.position.set(point.x + placementMinus, blockSide * 0.25, point.z + placementMinus);
   ripeSprite.rotation.y = Math.PI * -0.5;
   ripeSprite.visible = false;
 
   const growingSprite = new THREE.Sprite(growingMat.clone());
   growingSprite.scale.set(blockSide, blockSide, blockSide);
-  growingSprite.position.set(
-    point.x + plantsPlacementMinus,
-    blockSide * 0.25,
-    point.z + plantsPlacementMinus
-  );
+  growingSprite.position.set(point.x + placementMinus, blockSide * 0.25, point.z + placementMinus);
 
   group.add(ripeSprite);
   group.add(growingSprite);

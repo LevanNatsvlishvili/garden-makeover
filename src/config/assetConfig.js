@@ -20,6 +20,10 @@ export const assetConfig = {
   statue: {
     blockSize: 4,
   },
+  tree: {
+    blockSize: 4,
+    price: 0,
+  },
   well: {
     blockSize: 9,
     price: 6,
@@ -31,7 +35,7 @@ export const assetConfig = {
     startingPosition: { x: -0.75, y: 0, z: 0 },
   },
   global: {
-    plantsPlacementMinus: 0.025,
+    placementMinus: 0.05,
     startingMoney: 12,
   },
 };

@@ -3,23 +3,24 @@ import ground from '@/scene/environment/ground';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
-import { deactivate } from '../../../utils/placementTool';
-import { updateAllButtons } from '../../buttonManager';
+import { deactivate } from '@/utils/placementTool';
+import { updateAllButtons } from '@/gameplay/buttonManager';
 import models from '@/store/models';
 
-async function spawnWell(point) {
-  if (state.money < assetConfig.well.price) return;
+async function spawnTree(point) {
+  if (state.money < assetConfig.tree.price) return;
   const model = await models.treeModel.default(point);
   scene.add(model);
-  state.money -= assetConfig.well.price;
-  state.isWellPlaced = true;
+  state.money -= assetConfig.tree.price;
   updateAllButtons();
-  deactivate();
+  if (state.money < assetConfig.tree.price) {
+    deactivate();
+  }
 }
 
-export const placeWell = () => {
-  if (state.money >= assetConfig.well.price) {
-    spawnActivator(ground, spawnWell, assetConfig.well.blockSize);
+export const placeTree = () => {
+  if (state.money >= assetConfig.tree.price) {
+    spawnActivator(ground, spawnTree, assetConfig.tree.blockSize);
   } else {
     deactivate();
   }
