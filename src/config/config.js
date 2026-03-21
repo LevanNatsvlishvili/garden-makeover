@@ -19,6 +19,10 @@ export const config = {
     startingPosition: { x: -0, y: 0.1, z: -0 },
   },
 
+  monster: {
+    startingPosition: { x: 1, y: 0.1, z: -0 },
+  },
+
   renderer: {
     pixelRatio: Math.min(window.devicePixelRatio, 2),
     shadowMap: true,
