@@ -9,6 +9,7 @@ const right = new THREE.Vector3();
 const moveDir = new THREE.Vector3();
 
 const SPEED = config.character.speed;
+const RADIUS = config.grid.cellSize;
 
 window.addEventListener('keydown', (e) => {
   if (e.code === 'ArrowUp') keys.up = true;
@@ -46,16 +47,23 @@ export function updateCharacter(model, delta) {
   const nextX = model.position.x + moveDir.x * step;
   const nextZ = model.position.z + moveDir.z * step;
 
-  const blockedFull = isCellOccupied(nextX, nextZ);
+  function isBlocked(x, z) {
+    return (
+      isCellOccupied(x - RADIUS, z - RADIUS) ||
+      isCellOccupied(x + RADIUS, z - RADIUS) ||
+      isCellOccupied(x - RADIUS, z + RADIUS) ||
+      isCellOccupied(x + RADIUS, z + RADIUS)
+    );
+  }
 
-  if (!blockedFull) {
+  if (!isBlocked(nextX, nextZ)) {
     model.position.x = nextX;
     model.position.z = nextZ;
   } else {
-    if (!isCellOccupied(nextX, model.position.z)) {
+    if (!isBlocked(nextX, model.position.z)) {
       model.position.x = nextX;
     }
-    if (!isCellOccupied(model.position.x, nextZ)) {
+    if (!isBlocked(model.position.x, nextZ)) {
       model.position.z = nextZ;
     }
   }

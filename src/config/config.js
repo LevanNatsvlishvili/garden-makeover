@@ -16,7 +16,7 @@ export const config = {
 
   character: {
     speed: 0.5,
-    startingPosition: { x: -0.25, y: 0.1, z: -0 },
+    startingPosition: { x: -0, y: 0.1, z: -0 },
   },
 
   renderer: {
@@ -64,13 +64,4 @@ export const config = {
   fps: {
     limit: 60,
   },
-
-  // paths: {
-  //   // models: {
-  //   //   garden: '/models/garden.glb',
-  //   // },
-  //   // textures: {
-  //   //   grass: '/textures/grass.jpg',
-  //   // },
-  // },
 };
