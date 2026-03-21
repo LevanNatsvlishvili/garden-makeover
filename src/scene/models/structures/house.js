@@ -15,7 +15,7 @@ const houseMat = new THREE.SpriteMaterial({ map: houseTexture, depthWrite: false
 
 const house = async (point) => {
   const sprite = new THREE.Sprite(houseMat.clone());
-  sprite.renderOrder = 1;
+  // sprite.renderOrder = 1;
   sprite.scale.set(width, height, 1);
   sprite.position.set(point.x + 0.075, height * 0.25, point.z + 0.15);
   return sprite;

@@ -13,6 +13,7 @@ const tree = async (point) => {
   const { placementMinus } = assetConfig.global;
   const sprite = new THREE.Sprite(treeMat.clone());
   const scale = blockSide * 1.25;
+  sprite.renderOrder = point.priority ? 5 : 0;
   sprite.scale.set(scale, scale, scale);
   sprite.position.set(point.x - placementMinus, blockSide * 0.5, point.z - placementMinus);
   return sprite;
