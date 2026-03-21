@@ -9,6 +9,7 @@ import { registerButton } from './buttonManager';
 import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
 import { torchLight } from '@/scene/models/starter/character';
+import { houseModel } from '@/scene/scene';
 
 export async function loadPlacementTools() {
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
@@ -30,6 +31,9 @@ export async function loadPlacementTools() {
       torchLight.intensity = state.isDay ? 0 : 1.5;
       ambientLight.intensity = isDay ? 0.5 : defaultAmbient;
       directionalLight.intensity = isDay ? defaultDirectional : 1;
+      if (houseModel) {
+        houseModel.material.color.setScalar(isDay ? 0.4 : 1);
+      }
     },
   };
 
