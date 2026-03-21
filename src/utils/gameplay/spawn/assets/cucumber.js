@@ -1,10 +1,10 @@
 import { assetConfig } from '@/config/assetConfig';
 import ground from '@/scene/environment/ground';
-import state from '@/state/state';
+import state from '@/store/state';
 import { scene } from '@/utils/renderer';
-import { spawnActivator } from './spawnTool';
-import { deactivate } from '../../placementTool';
-import { updateAllButtons } from '../buttonManager';
+import { spawnActivator } from '../spawnTool';
+import { deactivate } from '../../../placementTool';
+import { updateAllButtons } from '../../buttonManager';
 const cucumberModel = await import('@/scene/models/plants/cucumber');
 
 export async function spawnCucumber(point) {

@@ -1,7 +1,8 @@
 import { camera, renderer, scene } from './utils/renderer';
 import { controls } from './utils/controls/controls';
 import windowResizer from './utils/windowResizer';
-import { setupScene, characterModel } from './scene/scene';
+import { setupScene, setupRest } from './scene';
+import models from './store/models';
 import { loadPlacementTools } from './utils/gameplay/actions';
 import { updateCharacter } from './utils/controls/characterController';
 import { config } from './config/config';
@@ -33,8 +34,8 @@ async function init() {
 
     const deltaSec = delta / 1000;
 
-    if (characterModel) {
-      updateCharacter(characterModel, deltaSec);
+    if (models.characterModel) {
+      updateCharacter(models.characterModel, deltaSec);
     }
 
     controls.update();
@@ -42,6 +43,7 @@ async function init() {
   };
   window.requestAnimationFrame(tick);
 
+  setupRest();
   loadPlacementTools();
 }
 init().catch((err) => {

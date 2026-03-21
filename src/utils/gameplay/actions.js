@@ -1,15 +1,15 @@
 import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
-import state from '@/state/state';
-import { actionTomato } from './spawn/tomato';
-import { actionCucumber } from './spawn/cucumber';
-import { actionVine } from './spawn/vine';
-import { actionWell } from './spawn/well';
+import state from '@/store/state';
+import { actionTomato } from './spawn/assets/tomato';
+import { actionCucumber } from './spawn/assets/cucumber';
+import { actionVine } from './spawn/assets/vine';
+import { actionWell } from './spawn/assets/well';
 import { registerButton } from './buttonManager';
 import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
-import { torchLight } from '@/scene/models/starter/character';
-import { houseModel } from '@/scene/scene';
+import { torchLight } from '@/scene/models/other/character';
+import models from '@/store/models';
 
 export async function loadPlacementTools() {
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
@@ -31,8 +31,8 @@ export async function loadPlacementTools() {
       torchLight.intensity = state.isDay ? 0 : 1.5;
       ambientLight.intensity = isDay ? 0.5 : defaultAmbient;
       directionalLight.intensity = isDay ? defaultDirectional : 1;
-      if (houseModel) {
-        houseModel.material.color.setScalar(isDay ? 0.4 : 1);
+      if (models.houseModel) {
+        models.houseModel.material.color.setScalar(isDay ? 0.4 : 1);
       }
     },
   };

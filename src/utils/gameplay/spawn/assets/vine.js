@@ -1,17 +1,17 @@
 import { assetConfig } from '@/config/assetConfig';
 import ground from '@/scene/environment/ground';
-import state from '@/state/state';
+import state from '@/store/state';
 import { scene } from '@/utils/renderer';
-import { spawnActivator } from './spawnTool';
-import { deactivate } from '../../placementTool';
-import { updateAllButtons } from '../buttonManager';
-const tomatoModel = await import('@/scene/models/plants/tomato');
+import { spawnActivator } from '../spawnTool';
+import { deactivate } from '../../../placementTool';
+import { updateAllButtons } from '../../buttonManager';
+const vineModel = await import('@/scene/models/plants/vine');
 
-export async function spawnTomato(point) {
-  if (state.money < assetConfig.tomato.price) return;
-  const model = await tomatoModel.default(point);
+export async function spawnVine(point) {
+  if (state.money < assetConfig.vine.price) return;
+  const model = await vineModel.default(point);
   scene.add(model);
-  state.money -= assetConfig.tomato.price;
+  state.money -= assetConfig.vine.price;
 
   const entry = {
     ref: model,
@@ -36,21 +36,21 @@ export async function spawnTomato(point) {
       const [ripeSprite, growingSprite] = model.children;
       ripeSprite.visible = false;
       growingSprite.visible = true;
-      state.money += assetConfig.tomato.harvestIncome;
+      state.money += assetConfig.vine.harvestIncome;
       updateAllButtons();
     },
   };
-  state.tomatoes.push(entry);
+  state.vines.push(entry);
 
   updateAllButtons();
-  if (state.money < assetConfig.tomato.price) {
+  if (state.money < assetConfig.vine.price) {
     deactivate();
   }
 }
 
-export const actionTomato = () => {
-  if (state.money >= assetConfig.tomato.price) {
-    spawnActivator(ground, spawnTomato, assetConfig.tomato.blockSize);
+export const actionVine = () => {
+  if (state.money >= assetConfig.vine.price) {
+    spawnActivator(ground, spawnVine, assetConfig.vine.blockSize);
   } else {
     deactivate();
   }
