@@ -69,7 +69,10 @@ export async function actions() {
 
   gui.add(state, 'money').name('💰 Money').listen().disable();
 
-  const harvestCtrl = gui.add(actions, 'takeHarvest').name('🌾 Take Harvest').enable(state.isDay);
+  const harvestCtrl = gui
+    .add(actions, 'takeHarvest')
+    .name('🌾 Take Harvest')
+    .enable(state.isDay && allPlants().some((p) => p.status === 'ripe'));
   registerButton(harvestCtrl, () => state.isDay && allPlants().some((p) => p.status === 'ripe'));
 
   gui.add(actions, 'logState').name('🔍 Log State');
