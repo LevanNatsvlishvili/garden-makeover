@@ -4,7 +4,7 @@ import state from '@/store/state';
 import { actionTomato } from './spawn/assets/tomato';
 import { actionCucumber } from './spawn/assets/cucumber';
 import { actionVine } from './spawn/assets/vine';
-import { actionWell } from './spawn/assets/well';
+import { placeWell } from './spawn/assets/well';
 import { registerButton } from './buttonManager';
 import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
@@ -21,7 +21,7 @@ export async function loadPlacementTools() {
     placeTomato: actionTomato,
     placeCucumber: actionCucumber,
     placeVine: actionVine,
-    placeWell: actionWell,
+    placeWell: placeWell,
     logState: () => console.log(state),
     ripenAll: () => allPlants().forEach((p) => p.ripenHarvest()),
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),

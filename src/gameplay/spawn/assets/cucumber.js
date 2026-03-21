@@ -3,11 +3,11 @@ import ground from '@/scene/environment/ground';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
-import { deactivate } from '../../../placementTool';
+import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
 const cucumberModel = await import('@/scene/models/plants/cucumber');
 
-export async function spawnCucumber(point) {
+async function spawnCucumber(point) {
   if (state.money < assetConfig.cucumber.price) return;
   const model = await cucumberModel.default(point);
   scene.add(model);

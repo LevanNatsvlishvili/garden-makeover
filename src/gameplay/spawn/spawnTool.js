@@ -34,8 +34,3 @@ export async function spawnStatue(point, id = 1) {
   const model = await models.statueModel.default(point, id);
   scene.add(model);
 }
-
-export async function spawnWell(point) {
-  const model = await models.wellModel.default(point);
-  scene.add(model);
-}

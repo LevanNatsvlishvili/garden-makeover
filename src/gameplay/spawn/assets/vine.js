@@ -3,11 +3,11 @@ import ground from '@/scene/environment/ground';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
-import { deactivate } from '../../../placementTool';
+import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
 const vineModel = await import('@/scene/models/plants/vine');
 
-export async function spawnVine(point) {
+async function spawnVine(point) {
   if (state.money < assetConfig.vine.price) return;
   const model = await vineModel.default(point);
   scene.add(model);

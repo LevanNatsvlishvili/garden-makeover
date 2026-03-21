@@ -9,3 +9,5 @@ export function updateAllButtons() {
     controller.enable(condition());
   }
 }
+
+// Should be replaced with PIXI ui system and can be removed

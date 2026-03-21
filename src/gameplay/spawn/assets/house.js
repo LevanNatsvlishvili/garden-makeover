@@ -4,7 +4,6 @@ import { assetConfig } from '@/config/assetConfig';
 import { snapToGrid } from '@/utils/placementTool';
 import * as THREE from 'three';
 import { markOccupied } from '@/utils/placementTool';
-import house from '@/scene/models/structures/house';
 
 const { xBlocks, yBlocks } = assetConfig.house;
 export const housePoint = new THREE.Vector3(

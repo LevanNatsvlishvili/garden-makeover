@@ -3,11 +3,11 @@ import ground from '@/scene/environment/ground';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
-import { deactivate } from '../../../placementTool';
+import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
 const wellModel = await import('@/scene/models/structures/well');
 
-export async function spawnWell(point) {
+async function spawnWell(point) {
   if (state.money < assetConfig.well.price) return;
   const model = await wellModel.default(point);
   scene.add(model);
@@ -17,7 +17,7 @@ export async function spawnWell(point) {
   deactivate();
 }
 
-export const actionWell = () => {
+export const placeWell = () => {
   if (state.money >= assetConfig.well.price) {
     spawnActivator(ground, spawnWell, assetConfig.well.blockSize);
   } else {

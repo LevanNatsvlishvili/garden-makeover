@@ -3,11 +3,11 @@ import ground from '@/scene/environment/ground';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
-import { deactivate } from '../../../placementTool';
+import { deactivate } from '../../../utils/placementTool';
 import { updateAllButtons } from '../../buttonManager';
 const tomatoModel = await import('@/scene/models/plants/tomato');
 
-export async function spawnTomato(point) {
+async function spawnTomato(point) {
   if (state.money < assetConfig.tomato.price) return;
   const model = await tomatoModel.default(point);
   scene.add(model);
