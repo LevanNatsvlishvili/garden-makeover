@@ -5,12 +5,7 @@ import { actionTomato } from '../spawn/assets/tomato';
 import { actionCucumber } from '../spawn/assets/cucumber';
 import { actionVine } from '../spawn/assets/vine';
 import { placeWell } from '../spawn/assets/well';
-import { placeTree } from '../spawn/assets/tree';
 import { registerButton } from '../buttonManager';
-import { ambientLight, directionalLight } from '@/scene/lights/lights';
-import { config } from '@/config/config';
-import { torchLight } from '@/scene/models/other/character';
-import models from '@/store/models';
 import { turnDay } from './turnDay';
 
 export async function actions() {
@@ -21,13 +16,8 @@ export async function actions() {
     placeCucumber: actionCucumber,
     placeVine: actionVine,
     placeWell: placeWell,
-    placeTree: placeTree,
     logState: () => console.log(state),
-    exportTrees: () => {
-      const json = JSON.stringify(state.trees, null, 2);
-      navigator.clipboard.writeText(json);
-      console.log('Tree positions copied to clipboard:', json);
-    },
+
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),
     turnDay: () => turnDay(),
   };
@@ -68,9 +58,6 @@ export async function actions() {
     () => state.money >= assetConfig.vine.price && state.isWellPlaced && state.isDay
   );
 
-  const treeCtrl = gui.add(actions, 'placeTree').name('🌳 Tree');
-  registerButton(treeCtrl);
-
   const turnDayCtrl = gui
     .add(actions, 'turnDay')
     .name('🌙 Turn Day')
@@ -85,6 +72,5 @@ export async function actions() {
     .enable(state.isDay && allPlants().some((p) => p.status === 'ripe'));
   registerButton(harvestCtrl, () => state.isDay && allPlants().some((p) => p.status === 'ripe'));
 
-  gui.add(actions, 'exportTrees').name('📋 Export Trees');
   gui.add(actions, 'logState').name('🔍 Log State');
 }
