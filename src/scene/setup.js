@@ -15,11 +15,11 @@ const loadStarterModels = async () => {
   models.houseModel = await house(housePoint);
   models.characterModel = await character();
 
-  const blockSize = assetConfig.tree.blockSize;
+  const side = Math.sqrt(assetConfig.tree.blockSize);
   const treeSprites = await Promise.all(trees.map((pos) => tree(pos)));
   treeSprites.forEach((sprite, i) => {
     scene.add(sprite);
-    markOccupied(trees[i].x, trees[i].z, blockSize);
+    markOccupied(trees[i].x, trees[i].z, side);
   });
 
   scene.add(models.characterModel);
