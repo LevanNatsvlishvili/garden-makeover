@@ -30,6 +30,7 @@ const character = async () => {
   model.add(torchLight);
   model.traverse((child) => {
     if (child.isMesh) {
+      child.castShadow = true;
       child.renderOrder = 999;
       child.material.transparent = true;
       child.material.depthTest = true;

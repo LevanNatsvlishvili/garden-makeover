@@ -9,7 +9,7 @@ const { intensity: defaultDirectional, nightIntensity: nightDirectional } =
   config.lights.directional;
 
 function setNightTint(isNight) {
-  const tint = isNight ? 0.4 : 1;
+  const tint = isNight ? 0.1 : 1;
   scene.traverse((child) => {
     if (child.isSprite) {
       child.material.color.setScalar(tint);
@@ -20,6 +20,13 @@ function setNightTint(isNight) {
 export function turnDay() {
   const wasDay = state.isDay;
   state.isDay = !wasDay;
+
+  // Ripens all plants when night is finished
+  const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
+  if (!wasDay) {
+    const ripenAll = () => allPlants().forEach((p) => p.ripenHarvest());
+    ripenAll();
+  }
 
   ambientLight.intensity = wasDay ? nightAmbient : defaultAmbient;
   directionalLight.intensity = wasDay ? nightDirectional : defaultDirectional;

@@ -15,17 +15,12 @@ import { turnDay } from './turnDay';
 export async function actions() {
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
 
-  const { intensity: defaultAmbient } = config.lights.ambient;
-  const { intensity: defaultDirectional } = config.lights.directional;
-  const { nightIntensity: defaultNightIntensity } = config.lights.directional;
-
   const actions = {
     placeTomato: actionTomato,
     placeCucumber: actionCucumber,
     placeVine: actionVine,
     placeWell: placeWell,
     logState: () => console.log(state),
-    ripenAll: () => allPlants().forEach((p) => p.ripenHarvest()),
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),
     turnDay: () => turnDay(),
   };
@@ -64,12 +59,6 @@ export async function actions() {
 
   const harvestCtrl = gui.add(actions, 'takeHarvest').name('🌾 Take Harvest').enable(false);
   registerButton(harvestCtrl, () => allPlants().some((p) => p.status === 'ripe'));
-
-  const ripenCtrl = gui.add(actions, 'ripenAll').name('☀️ Ripen All').enable(false);
-  registerButton(
-    ripenCtrl,
-    () => allPlants().length > 0 && allPlants().some((p) => p.status === 'growing')
-  );
 
   gui.add(actions, 'logState').name('🔍 Log State');
 }
