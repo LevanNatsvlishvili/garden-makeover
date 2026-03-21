@@ -18,13 +18,15 @@ const character = async () => {
   // torchLight.position.x = 0.5;
   // torchLight.position.z = props.position.z;
   // torchLight.position.y = 0.5;
-  // torchLight.shadow.mapSize.set(shadow.mapSize.width, shadow.mapSize.height);
+  torchLight.shadow.mapSize.set(512, 512);
   torchLight.shadow.radius = 2; // softer edge
   torchLight.position.y = 1.1;
   torchLight.position.x = 0.51;
   torchLight.intensity = state.isDay ? 0 : 1.5;
   torchLight.distance = 8;
   torchLight.decay = 1;
+  model.castShadow = true;
+
   model.add(torchLight);
   model.traverse((child) => {
     if (child.isMesh) {

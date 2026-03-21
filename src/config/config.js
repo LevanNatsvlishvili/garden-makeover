@@ -26,10 +26,15 @@ export const config = {
   },
 
   lights: {
-    ambient: { color: '#ffffff', intensity: 5 },
+    ambient: {
+      color: '#ffffff',
+      intensity: 5,
+      nightIntensity: 0.01,
+    },
     directional: {
       color: '#ffffff',
       intensity: 1,
+      nightIntensity: 0.5,
       position: { x: -1.5, y: 2, z: -8 },
       shadow: {
         mapSize: 1024,

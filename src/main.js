@@ -3,7 +3,7 @@ import { controls } from './utils/controls/controls';
 import windowResizer from './utils/windowResizer';
 import { setupScene, setupRest } from './scene';
 import models from './store/models';
-import { loadPlacementTools } from './gameplay/actions';
+import { actions } from './gameplay/actions';
 import { updateCharacter } from './utils/controls/characterController';
 import { config } from './config/config';
 import './styles/style.css';
@@ -44,7 +44,7 @@ async function init() {
   window.requestAnimationFrame(tick);
 
   setupRest();
-  loadPlacementTools();
+  actions();
 }
 init().catch((err) => {
   console.error(
