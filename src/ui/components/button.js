@@ -1,6 +1,5 @@
 import { Container, Graphics, Text } from 'pixi.js';
 
-const BTN_WIDTH = 130;
 const BTN_HEIGHT = 46;
 const BTN_RADIUS = 8;
 
@@ -16,12 +15,14 @@ const COLORS = {
 };
 
 export class UIButton extends Container {
-  constructor({ label, price, emoji, onClick }) {
+  constructor({ label, price, emoji, onClick, condition, btnWidth = 130 }) {
     super();
 
+    this._btnWidth = btnWidth;
     this._enabled = true;
     this._hovered = false;
     this._onClick = onClick;
+    this._condition = condition;
 
     this._bg = new Graphics();
     this.addChild(this._bg);
@@ -38,7 +39,7 @@ export class UIButton extends Container {
       },
     });
     this._label.anchor.set(0.5);
-    this._label.position.set(BTN_WIDTH / 2, hasPrice ? BTN_HEIGHT / 2 - 7 : BTN_HEIGHT / 2);
+    this._label.position.set(this._btnWidth / 2, hasPrice ? BTN_HEIGHT / 2 - 7 : BTN_HEIGHT / 2);
     this.addChild(this._label);
 
     if (hasPrice) {
@@ -51,7 +52,7 @@ export class UIButton extends Container {
         },
       });
       this._price.anchor.set(0.5);
-      this._price.position.set(BTN_WIDTH / 2, BTN_HEIGHT / 2 + 10);
+      this._price.position.set(this._btnWidth / 2, BTN_HEIGHT / 2 + 10);
       this.addChild(this._price);
     }
 
@@ -84,7 +85,7 @@ export class UIButton extends Container {
     const border = enabled ? COLORS.border : COLORS.borderDisabled;
 
     bg.clear();
-    bg.roundRect(0, 0, BTN_WIDTH, BTN_HEIGHT, BTN_RADIUS);
+    bg.roundRect(0, 0, this._btnWidth, BTN_HEIGHT, BTN_RADIUS);
     bg.fill({ color: fill, alpha: 0.9 });
     bg.stroke({ color: border, width: 1, alpha: 0.4 });
 
@@ -99,7 +100,9 @@ export class UIButton extends Container {
     this.cursor = enabled ? 'pointer' : 'default';
   }
 
-  enable(value) {
+  update() {
+    if (!this._condition) return;
+    const value = this._condition();
     if (this._enabled === value) return;
     this._enabled = value;
     this._draw();
