@@ -40,6 +40,7 @@ export function buildPopup(onClose) {
   const tomatoBtn = new UIButton({
     label: 'Tomato',
     price: assetConfig.tomato.price,
+    income: assetConfig.tomato.harvestIncome,
     emoji: '🍅',
     onClick: () => {
       actionTomato();
@@ -54,13 +55,13 @@ export function buildPopup(onClose) {
   const cucumberBtn = new UIButton({
     label: 'Cucumber',
     price: assetConfig.cucumber.price,
+    income: assetConfig.cucumber.harvestIncome,
     emoji: '🥒',
     onClick: () => {
       actionCucumber();
       onClose();
     },
-    condition: () =>
-      state.money >= assetConfig.cucumber.price && state.isWellPlaced && state.isDay,
+    condition: () => state.money >= assetConfig.cucumber.price && state.isWellPlaced && state.isDay,
   });
   popupGroup.addChild(cucumberBtn);
   allButtons.push(cucumberBtn);
@@ -69,6 +70,7 @@ export function buildPopup(onClose) {
   const vineBtn = new UIButton({
     label: 'Vine',
     price: assetConfig.vine.price,
+    income: assetConfig.vine.harvestIncome,
     emoji: '🍇',
     onClick: () => {
       actionVine();
