@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { camera } from '../../utils/renderer';
 import { config } from '@/config/config';
 import { isCellOccupied } from '@/utils/placementTool';
+import { joystickInput } from '@/ui/components/joystick';
 
 const keys = { up: false, down: false, left: false, right: false };
 const forward = new THREE.Vector3();
@@ -38,6 +39,11 @@ export function updateCharacter(model, delta) {
   if (keys.down) moveDir.sub(forward);
   if (keys.left) moveDir.sub(right);
   if (keys.right) moveDir.add(right);
+
+  if (joystickInput.x !== 0 || joystickInput.y !== 0) {
+    moveDir.addScaledVector(right, joystickInput.x);
+    moveDir.addScaledVector(forward, -joystickInput.y);
+  }
 
   if (moveDir.lengthSq() === 0) return;
 

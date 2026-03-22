@@ -2,6 +2,7 @@ import { Container, Graphics, Text } from 'pixi.js';
 import { app, UI_HEIGHT, resizeCanvas } from './pixiApp';
 import { UIButton, BTN_HEIGHTS } from './components/button';
 import { buildPopup } from './components/popup';
+import { buildJoystick } from './components/joystick';
 import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
 import { finishDay } from '@/gameplay/actions/finishDay';
@@ -15,6 +16,8 @@ export function buildGameUI() {
 
   const popup = buildPopup(() => closeShop());
 
+  const joystick = buildJoystick();
+  app.stage.addChild(joystick);
   app.stage.addChild(topbarGroup);
   app.stage.addChild(popup.container);
   app.stage.addChild(barGroup);
@@ -85,6 +88,7 @@ export function buildGameUI() {
 
     barGroup.y = h - UI_HEIGHT;
     drawBarBg(w);
+    joystick.position.set(80, h - UI_HEIGHT - 70);
 
     moneyText.position.set(paddingX, 20);
     harvestBtn.position.set(paddingX, btnY);
