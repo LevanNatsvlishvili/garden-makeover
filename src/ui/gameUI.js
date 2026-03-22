@@ -25,8 +25,7 @@ export function buildGameUI() {
   app.stage.addChild(popup.container);
   app.stage.addChild(barGroup);
 
-  const screenW = app.screen.width;
-  const btnWidth = screenW / 2 - paddingX * 2;
+  let btnWidth = app.screen.width / 2 - paddingX * 2;
 
   const barBg = new Graphics();
   barGroup.addChild(barBg);
@@ -150,7 +149,7 @@ export function buildGameUI() {
   function layout() {
     const h = app.screen.height;
     const w = app.screen.width;
-    const bw = w / 2 - paddingX * 2;
+    btnWidth = w / 2 - paddingX * 2;
     const btnY = (UI_HEIGHT - BTN_HEIGHTS.md) / 2;
 
     barGroup.y = h - UI_HEIGHT;
@@ -167,9 +166,14 @@ export function buildGameUI() {
     hpText.position.set(hpX + 20 + HP_BAR_W / 2, topY);
     atkText.position.set(hpX + 20 + HP_BAR_W + 12, topY);
 
+    [harvestBtn, finishDayBtn, shopBtn].forEach((btn) => {
+      btn._btnWidth = btnWidth;
+      btn._draw();
+    });
+
     harvestBtn.position.set(paddingX, btnY);
     finishDayBtn.position.set(paddingX, btnY);
-    shopBtn.position.set(w - bw - paddingX, btnY);
+    shopBtn.position.set(w - btnWidth - paddingX, btnY);
 
     if (shopOpen) {
       popup.layout();
