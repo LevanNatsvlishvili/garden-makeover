@@ -16,14 +16,15 @@ export async function spawnMonster() {
   const position = getRandomSpawnPoint();
   const model = await models.monsterModel.default(position);
 
-  await delay(1000);
-
-  scene.add(model);
-  state.monsters.push({
+  const entry = {
     model,
     health: config.monster.health,
     attackTimer: 0,
-  });
+  };
+  state.monsters.push(entry);
+
+  await delay(1000);
+  scene.add(model);
 }
 
 export async function spawnMonsters(count) {

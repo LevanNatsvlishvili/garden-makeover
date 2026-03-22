@@ -38,9 +38,9 @@ async function init() {
       return;
     }
 
-    // if (!state.isDay) {
-    //   finishNight();
-    // }
+    if (!state.isDay) {
+      finishNight();
+    }
 
     lastTime = now - (delta % frameDuration);
 
