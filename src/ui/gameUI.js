@@ -7,7 +7,6 @@ import { buildAttackButton } from './components/attackButton';
 import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
 import { finishDay } from '@/gameplay/actions/finishDay';
-import { canFinishDay } from '@/utils/canFinishDay';
 
 const paddingX = 12;
 
@@ -58,7 +57,10 @@ export function buildGameUI() {
   const finishDayBtn = new UIButton({
     label: 'Finish Day',
     emoji: '🌙',
-    onClick: () => finishDay(),
+    onClick: () => {
+      closeShop();
+      finishDay();
+    },
     btnWidth,
     // condition: canFinishDay,
   });
