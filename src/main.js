@@ -3,7 +3,6 @@ import { controls } from './utils/controls/controls';
 import windowResizer from './utils/windowResizer';
 import { setupScene, setupRest } from './scene';
 import models from './store/models';
-import { actions } from './gameplay/actions';
 import { updateCharacter } from './gameplay/character/characterMobility';
 import { updateCombat } from './gameplay/character/characterCombat';
 import { updateAllEnemies } from './gameplay/enemyAI/enemyAI';
@@ -58,7 +57,6 @@ async function init() {
   window.requestAnimationFrame(tick);
 
   setupRest();
-  actions();
 }
 init().catch((err) => {
   console.error(

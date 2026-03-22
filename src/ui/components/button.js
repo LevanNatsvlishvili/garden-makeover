@@ -91,9 +91,11 @@ export class UIButton extends Container {
 
     if (this._label) {
       this._label.style.fill = enabled ? COLORS.text : COLORS.textDisabled;
+      this._label.x = this._btnWidth / 2;
     }
     if (this._price) {
       this._price.style.fill = enabled ? COLORS.price : COLORS.textDisabled;
+      this._price.x = this._btnWidth / 2;
     }
 
     this.alpha = enabled ? 1 : 0.55;
