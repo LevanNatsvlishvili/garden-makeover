@@ -36,6 +36,11 @@ function findNearestTarget(playerPos) {
   return nearest;
 }
 
+export function triggerAttack() {
+  spaceDown = true;
+  setTimeout(() => (spaceDown = false), 100);
+}
+
 export function updateCombat(delta) {
   if (cooldownTimer > 0) cooldownTimer -= delta;
   if (!spaceDown || cooldownTimer > 0) return;
