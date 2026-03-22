@@ -3,6 +3,7 @@ import { config } from '@/config/config';
 import { isCellOccupied } from '@/utils/placementTool';
 import models from '@/store/models';
 import state from '@/store/state';
+import gameover from '../gameover';
 
 const { speed, attackRange, attackDamage, attackCooldown } = config.monster;
 const RADIUS = config.grid.cellSize;
@@ -42,6 +43,12 @@ function updateSingleEnemy(entry, player, delta) {
     if (entry.attackTimer <= 0) {
       entry.attackTimer = attackCooldown;
       if (state.characterHealth > 0) {
+        if (state.characterHealth - attackDamage <= 0) {
+          console.log('You died !');
+          state.characterHealth -= attackDamage;
+          gameover();
+          return;
+        }
         state.characterHealth -= attackDamage;
         console.log(`Monster attacks! Player HP: ${state.characterHealth}`);
       }
