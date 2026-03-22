@@ -158,13 +158,15 @@ export function buildGameUI() {
     attackBtn.position.set(w - 80, h - UI_HEIGHT - 70);
 
     const topY = 20;
-    moneyText.position.set(paddingX, topY);
-    const hpX = moneyText.x + moneyText.width + 16;
+    moneyText.position.set(0, topY);
+    const hpX = moneyText.width + 16;
     hpLabel.position.set(hpX, topY);
     hpBarBg.position.set(hpX + 20, topY - HP_BAR_H / 2);
     hpBarFill.position.set(hpX + 20, topY - HP_BAR_H / 2);
     hpText.position.set(hpX + 20 + HP_BAR_W / 2, topY);
     atkText.position.set(hpX + 20 + HP_BAR_W + 12, topY);
+    topbarGroup.x = (w - topbarGroup.width) / 2;
+    topbarGroup.y = 0;
 
     [harvestBtn, finishDayBtn, shopBtn].forEach((btn) => {
       btn._btnWidth = btnWidth;
