@@ -5,6 +5,7 @@ import { torchLight } from '@/scene/models/other/character';
 import { scene } from '@/utils/renderer';
 import { updateAllButtons } from '@/gameplay/buttonManager';
 import { deactivate } from '@/utils/placementTool';
+import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
 
 const { intensity: defaultAmbient, nightIntensity: nightAmbient } = config.lights.ambient;
 const { intensity: defaultDirectional, nightIntensity: nightDirectional } =
@@ -28,6 +29,10 @@ export function turnDay() {
   if (!wasDay) {
     const ripenAll = () => allPlants().forEach((p) => p.ripenHarvest());
     ripenAll();
+  }
+  if (wasDay) {
+    console.log('Spawning monsters');
+    spawnMonsters(3);
   }
 
   ambientLight.intensity = wasDay ? nightAmbient : defaultAmbient;

@@ -57,11 +57,14 @@ export async function actions() {
     () => state.money >= assetConfig.vine.price && state.isWellPlaced && state.isDay
   );
 
-  const turnDayCtrl = gui
-    .add(actions, 'turnDay')
-    .name('🌙 Turn Day')
-    .enable(state.isWellPlaced && state.isPlantPlaced);
-  registerButton(turnDayCtrl, () => state.isWellPlaced && state.isPlantPlaced);
+  const canTurnDay = () => {
+    if (!state.isDay && state.monsters.length === 0) return true;
+    if (state.isDay && state.isWellPlaced && state.isPlantPlaced) return true;
+    return false;
+  };
+
+  const turnDayCtrl = gui.add(actions, 'turnDay').name('🌙 Turn Day').enable(canTurnDay());
+  registerButton(turnDayCtrl, canTurnDay);
 
   gui.add(state, 'money').name('💰 Money').listen().disable();
 

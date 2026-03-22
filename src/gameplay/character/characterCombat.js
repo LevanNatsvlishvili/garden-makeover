@@ -3,6 +3,7 @@ import { config } from '@/config/config';
 import models from '@/store/models';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
+import { updateAllButtons } from '@/gameplay/buttonManager';
 
 const { attackRange, attackDamage, attackCooldown } = config.character;
 
@@ -53,5 +54,6 @@ export function updateCombat(delta) {
     console.log('Monster defeated!');
     scene.remove(target.model);
     state.monsters.splice(state.monsters.indexOf(target), 1);
+    updateAllButtons();
   }
 }

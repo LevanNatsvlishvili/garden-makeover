@@ -12,5 +12,5 @@ export const setupRest = async () => {
   models.treeModel = await import('@/scene/models/other/tree');
   models.monsterModel = await import('@/scene/models/other/monster');
 
-  await spawnMonsters(3);
+  // await spawnMonsters(3);
 };
