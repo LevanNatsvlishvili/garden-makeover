@@ -10,7 +10,6 @@ import { assetConfig } from '@/config/assetConfig';
 import character from './models/other/character';
 import tree from './models/other/tree';
 import house from './models/structures/house';
-import { spawnMonster } from '@/gameplay/enemyAI/spawnMonster';
 
 const loadStarterModels = async () => {
   models.houseModel = await house(housePoint);
