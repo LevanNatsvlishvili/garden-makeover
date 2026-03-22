@@ -38,5 +38,6 @@ export function updateCombat(delta) {
   if (state.monsterHealth <= 0) {
     console.log('Monster defeated!');
     enemy.visible = false;
+    state.monsters.splice(0, 1);
   }
 }

@@ -17,7 +17,6 @@ export async function actions() {
     placeVine: actionVine,
     placeWell: placeWell,
     logState: () => console.log(state),
-
     takeHarvest: () => allPlants().forEach((p) => p.takeHarvest()),
     turnDay: () => turnDay(),
   };
