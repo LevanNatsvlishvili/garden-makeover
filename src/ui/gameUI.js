@@ -2,6 +2,7 @@ import { Container, Graphics, Text } from 'pixi.js';
 import { app, UI_HEIGHT, resizeCanvas } from './pixiApp';
 import { UIButton } from './components/button';
 import { buildPopup } from './components/popup';
+import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
 
 const paddingX = 12;
@@ -97,6 +98,19 @@ export function buildGameUI() {
   }
 
   layout();
+
+  const uiContainer = document.getElementById('ui-container');
+  onPlacementChange(
+    () => {
+      barGroup.visible = false;
+      popup.container.visible = false;
+      uiContainer.style.pointerEvents = 'none';
+    },
+    () => {
+      barGroup.visible = true;
+      uiContainer.style.pointerEvents = 'auto';
+    }
+  );
 
   app.ticker.add(() => {
     moneyText.text = `💰  ${state.money}`;

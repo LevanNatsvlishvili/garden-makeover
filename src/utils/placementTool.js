@@ -176,13 +176,21 @@ function showGrid(visible) {
   renderer.domElement.style.cursor = visible ? 'crosshair' : '';
 }
 
+let _onActivate = null;
+let _onDeactivate = null;
+
+export function onPlacementChange(onActivate, onDeactivate) {
+  _onActivate = onActivate;
+  _onDeactivate = onDeactivate;
+}
+
 export function activate(ground, callback, blockSize = 1) {
   active = true;
   groundMesh = ground;
   spawnCallback = callback;
   setHighlightSize(blockSize);
   showGrid(true);
-  import('@/ui/pixiApp').then((m) => m.hideUI());
+  _onActivate?.();
 }
 
 export function deactivate() {
@@ -190,7 +198,7 @@ export function deactivate() {
   groundMesh = null;
   spawnCallback = null;
   showGrid(false);
-  import('@/ui/pixiApp').then((m) => m.showUI());
+  _onDeactivate?.();
 }
 
 export function isActive() {

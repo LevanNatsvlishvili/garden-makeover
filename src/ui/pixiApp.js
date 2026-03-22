@@ -22,13 +22,3 @@ export async function initPixiUI() {
 export function resizeCanvas() {
   app.renderer.resize(window.innerWidth, window.innerHeight);
 }
-
-export function hideUI() {
-  document.getElementById('ui-container').style.pointerEvents = 'none';
-  app.canvas.style.opacity = '0';
-}
-
-export function showUI() {
-  document.getElementById('ui-container').style.pointerEvents = 'auto';
-  app.canvas.style.opacity = '1';
-}
