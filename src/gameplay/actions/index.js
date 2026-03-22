@@ -4,7 +4,6 @@ import state from '@/store/state';
 import { actionCucumber } from '../spawn/assets/spawnCucumber';
 import { actionVine } from '../spawn/assets/spawnVine';
 import { registerButton } from '../buttonManager';
-import { turnDay } from './turnDay';
 
 export async function actions() {
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
@@ -35,14 +34,14 @@ export async function actions() {
     () => state.money >= assetConfig.vine.price && state.isWellPlaced && state.isDay
   );
 
-  const canTurnDay = () => {
-    if (!state.isDay && state.monsters.length === 0) return true;
-    if (state.isDay && state.isWellPlaced && state.isPlantPlaced) return true;
-    return false;
-  };
+  // const canTurnDay = () => {
+  //   if (!state.isDay && state.monsters.length === 0) return true;
+  //   if (state.isDay && state.isWellPlaced && state.isPlantPlaced) return true;
+  //   return false;
+  // };
 
-  const turnDayCtrl = gui.add(actions, 'turnDay').name('🌙 Turn Day').enable(canTurnDay());
-  registerButton(turnDayCtrl, canTurnDay);
+  // const turnDayCtrl = gui.add(actions, 'turnDay').name('🌙 Turn Day').enable(canTurnDay());
+  // registerButton(turnDayCtrl, canTurnDay);
 
   gui.add(state, 'money').name('💰 Money').listen().disable();
 

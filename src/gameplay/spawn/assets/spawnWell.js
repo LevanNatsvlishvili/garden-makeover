@@ -5,7 +5,6 @@ import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
 import { deactivate } from '@/utils/placementTool';
 import models from '@/store/models';
-import { updateAllButtons } from '@/gameplay/buttonManager';
 
 async function spawnWell(point) {
   if (state.money < assetConfig.well.price) return;
@@ -13,7 +12,6 @@ async function spawnWell(point) {
   scene.add(model);
   state.money -= assetConfig.well.price;
   state.isWellPlaced = true;
-  updateAllButtons();
   deactivate();
 }
 

@@ -3,7 +3,6 @@ import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
 import { torchLight } from '@/scene/models/other/character';
 import { scene } from '@/utils/renderer';
-import { updateAllButtons } from '@/gameplay/buttonManager';
 import { deactivate } from '@/utils/placementTool';
 import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
 
@@ -20,7 +19,7 @@ function setNightTint(isNight) {
   });
 }
 
-export function turnDay() {
+export function finishDay() {
   const wasDay = state.isDay;
   state.isDay = !wasDay;
 
@@ -41,5 +40,4 @@ export function turnDay() {
   setNightTint(wasDay);
 
   if (!state.isDay) deactivate();
-  updateAllButtons();
 }

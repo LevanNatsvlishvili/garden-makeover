@@ -4,6 +4,8 @@ import { UIButton } from './components/button';
 import { buildPopup } from './components/popup';
 import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
+import { finishDay } from '@/gameplay/actions/finishDay';
+import { canFinishDay } from '@/utils/canFinishDay';
 
 const paddingX = 12;
 
@@ -39,12 +41,23 @@ export function buildGameUI() {
 
   const harvestBtn = new UIButton({
     label: 'Harvest',
-    emoji: '🌾',
+    emoji: '🍅',
     onClick: () => allPlants().forEach((p) => p.takeHarvest()),
     condition: () => state.isDay && allPlants().some((p) => p.status === 'ripe'),
     btnWidth,
   });
+  harvestBtn.visible = false;
   barGroup.addChild(harvestBtn);
+
+  const finishDayBtn = new UIButton({
+    label: 'Finish Day',
+    emoji: '🌙',
+    onClick: () => finishDay(),
+    btnWidth,
+    condition: canFinishDay,
+  });
+  finishDayBtn.visible = false;
+  barGroup.addChild(finishDayBtn);
 
   const shopBtn = new UIButton({
     label: 'Shop',
@@ -75,6 +88,7 @@ export function buildGameUI() {
 
     moneyText.position.set(paddingX, 20);
     harvestBtn.position.set(paddingX, btnY);
+    finishDayBtn.position.set(paddingX, btnY);
     shopBtn.position.set(w - bw - paddingX, btnY);
 
     if (shopOpen) {
@@ -114,7 +128,13 @@ export function buildGameUI() {
 
   app.ticker.add(() => {
     moneyText.text = `💰  ${state.money}`;
+
+    const placed = state.isWellPlaced && state.isPlantPlaced;
+    finishDayBtn.visible = placed;
+    harvestBtn.visible = placed;
+
     harvestBtn.update();
+    finishDayBtn.update();
     popup.update();
   });
 
