@@ -131,8 +131,9 @@ export function buildGameUI() {
 
     const arePlacementsMade = state.isWellPlaced && state.isPlantPlaced;
     const isDay = state.isDay;
-    // finishDayBtn.visible = arePlacementsMade && isDay;
-    harvestBtn.visible = arePlacementsMade && isDay;
+    const isHarvestable = allPlants().some((p) => p.status === 'ripe');
+    finishDayBtn.visible = arePlacementsMade && isDay && !isHarvestable;
+    harvestBtn.visible = arePlacementsMade && isDay && isHarvestable;
     shopBtn.visible = isDay;
 
     harvestBtn.update();

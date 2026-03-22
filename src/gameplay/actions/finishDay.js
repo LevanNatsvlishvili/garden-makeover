@@ -6,9 +6,8 @@ import { deactivate } from '@/utils/placementTool';
 import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
 import { setNightTint } from '@/utils/setNightTint';
 
-const { intensity: defaultAmbient, nightIntensity: nightAmbient } = config.lights.ambient;
-const { intensity: defaultDirectional, nightIntensity: nightDirectional } =
-  config.lights.directional;
+const { nightIntensity: nightAmbient } = config.lights.ambient;
+const { nightIntensity: nightDirectional } = config.lights.directional;
 
 export async function finishDay() {
   const wasDay = state.isDay;
