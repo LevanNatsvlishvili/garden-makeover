@@ -12,6 +12,7 @@ const state = {
   isTutorialFinished: false,
   isDay: true,
   characterHealth: config.character.health,
+  monsterHealth: config.monster.health,
   monsters: [],
 };
 

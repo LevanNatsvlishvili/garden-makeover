@@ -4,7 +4,8 @@ import windowResizer from './utils/windowResizer';
 import { setupScene, setupRest } from './scene';
 import models from './store/models';
 import { actions } from './gameplay/actions';
-import { updateCharacter } from './utils/controls/characterController';
+import { updateCharacter } from './gameplay/character/characterMobility';
+import { updateCombat } from './gameplay/character/characterCombat';
 import { updateEnemy } from './gameplay/enemyAI/enemyAI';
 import { config } from './config/config';
 import './styles/style.css';
@@ -37,6 +38,7 @@ async function init() {
 
     if (models.characterModel) {
       updateCharacter(models.characterModel, deltaSec);
+      updateCombat(deltaSec);
     }
     if (models.monsterModel) {
       updateEnemy(models.monsterModel, deltaSec);

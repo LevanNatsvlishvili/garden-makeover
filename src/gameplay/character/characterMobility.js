@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { camera } from '../renderer';
+import { camera } from '../../utils/renderer';
 import { config } from '@/config/config';
 import { isCellOccupied } from '@/utils/placementTool';
 
