@@ -129,9 +129,11 @@ export function buildGameUI() {
   app.ticker.add(() => {
     moneyText.text = `💰  ${state.money}`;
 
-    const placed = state.isWellPlaced && state.isPlantPlaced;
-    finishDayBtn.visible = placed;
-    harvestBtn.visible = placed;
+    const arePlacementsMade = state.isWellPlaced && state.isPlantPlaced;
+    const isDay = state.isDay;
+    finishDayBtn.visible = arePlacementsMade && isDay;
+    harvestBtn.visible = arePlacementsMade && isDay;
+    shopBtn.visible = isDay;
 
     harvestBtn.update();
     finishDayBtn.update();
