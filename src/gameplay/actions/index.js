@@ -1,10 +1,10 @@
 import gui from '@/utils/gui';
 import { assetConfig } from '@/config/assetConfig';
 import state from '@/store/state';
-import { actionTomato } from '../spawn/assets/tomato';
-import { actionCucumber } from '../spawn/assets/cucumber';
-import { actionVine } from '../spawn/assets/vine';
-import { placeWell } from '../spawn/assets/well';
+import { actionTomato } from '../spawn/assets/spawnTomato';
+import { actionCucumber } from '../spawn/assets/spawnCucumber';
+import { actionVine } from '../spawn/assets/spawnVine';
+import { placeWell } from '../spawn/assets/spawnWell';
 import { registerButton } from '../buttonManager';
 import { turnDay } from './turnDay';
 

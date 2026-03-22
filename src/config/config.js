@@ -30,6 +30,20 @@ export const config = {
     attackCooldown: 1.5,
     health: 5,
     startingPosition: { x: 1, y: 0.1, z: 0 },
+    spawnPoints: [
+      {
+        x: 4,
+        z: 4,
+      },
+      {
+        x: 4,
+        z: 0.30000000000000004,
+      },
+      {
+        x: 4.3,
+        z: -4.1000000000000005,
+      },
+    ],
   },
 
   renderer: {
