@@ -9,6 +9,7 @@ import { updateCombat } from './gameplay/character/characterCombat';
 import { updateEnemy } from './gameplay/enemyAI/enemyAI';
 import { config } from './config/config';
 import './styles/style.css';
+import state from './store/state';
 
 async function init() {
   scene.add(camera);
@@ -40,8 +41,8 @@ async function init() {
       updateCharacter(models.characterModel, deltaSec);
       updateCombat(deltaSec);
     }
-    if (models.monsterModel) {
-      updateEnemy(models.monsterModel, deltaSec);
+    if (state.monsters.length > 0) {
+      updateEnemy(state.monsters[0], deltaSec);
     }
 
     controls.update();

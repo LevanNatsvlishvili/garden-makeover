@@ -11,6 +11,7 @@ import character from './models/other/character';
 import tree from './models/other/tree';
 import house from './models/structures/house';
 import monster from './models/other/enemy';
+import state from '@/store/state';
 
 const loadStarterModels = async () => {
   models.houseModel = await house(housePoint);
@@ -26,6 +27,7 @@ const loadStarterModels = async () => {
 
   scene.add(models.characterModel);
   scene.add(models.monsterModel);
+  state.monsters.push(models.monsterModel);
 };
 
 export async function setupScene() {

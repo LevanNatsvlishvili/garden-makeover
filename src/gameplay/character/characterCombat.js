@@ -16,13 +16,12 @@ window.addEventListener('keyup', (e) => {
   if (e.code === 'Space') spaceDown = false;
 });
 
-// Called every frame from the tick loop
 export function updateCombat(delta) {
   if (cooldownTimer > 0) cooldownTimer -= delta;
   if (!spaceDown || cooldownTimer > 0) return;
 
   const player = models.characterModel;
-  const enemy = models.monsterModel;
+  const enemy = state.monsters[0];
   if (!player || !enemy) return;
 
   // Check distance to enemy (ignore Y)
