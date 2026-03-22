@@ -1,6 +1,6 @@
 import { Application } from 'pixi.js';
 
-export const UI_HEIGHT = 72;
+export const UI_HEIGHT = 62;
 export const POPUP_HEIGHT = 120;
 export const POPUP_GAP = 10;
 

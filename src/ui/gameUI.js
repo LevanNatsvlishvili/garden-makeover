@@ -1,6 +1,6 @@
 import { Container, Graphics, Text } from 'pixi.js';
 import { app, UI_HEIGHT, resizeCanvas } from './pixiApp';
-import { UIButton } from './components/button';
+import { UIButton, BTN_HEIGHTS } from './components/button';
 import { buildPopup } from './components/popup';
 import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
@@ -81,7 +81,7 @@ export function buildGameUI() {
     const h = app.screen.height;
     const w = app.screen.width;
     const bw = w / 2 - paddingX * 2;
-    const btnY = (UI_HEIGHT - 46) / 2;
+    const btnY = (UI_HEIGHT - BTN_HEIGHTS.md) / 2;
 
     barGroup.y = h - UI_HEIGHT;
     drawBarBg(w);

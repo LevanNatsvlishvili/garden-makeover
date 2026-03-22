@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { screenSizes } from './windowResizer';
 import { config } from '../config/config';
-import gui from '@/utils/gui';
+// import gui from '@/utils/gui';
 
 export const scene = new THREE.Scene();
 

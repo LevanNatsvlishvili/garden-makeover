@@ -1,6 +1,6 @@
 import { Container, Graphics, Text } from 'pixi.js';
 
-const BTN_HEIGHT = 46;
+export const BTN_HEIGHTS = { md: 46, lg: 62 };
 const BTN_RADIUS = 8;
 
 const COLORS = {
@@ -16,17 +16,25 @@ const COLORS = {
 };
 
 export class UIButton extends Container {
-  constructor({ label, price, emoji, income, onClick, condition, btnWidth = 130 }) {
+  constructor({ label, price, emoji, income, onClick, condition, btnWidth = 130, btnSize = 'md' }) {
     super();
 
     this._btnWidth = btnWidth;
+    this._btnHeight = BTN_HEIGHTS[btnSize] || BTN_HEIGHTS.md;
     this._enabled = true;
     this._hovered = false;
     this._onClick = onClick;
     this._condition = condition;
 
+    const h = this._btnHeight;
+    const isLg = btnSize === 'lg';
+
     this._bg = new Graphics();
     this.addChild(this._bg);
+
+    const hasPrice = price != null;
+    this._hasIncome = income != null;
+    const hasSubtext = hasPrice || this._hasIncome;
 
     this._label = new Text({
       text: `${emoji}  ${label}`,
@@ -38,39 +46,41 @@ export class UIButton extends Container {
       },
     });
     this._label.anchor.set(0.5);
-    this._label.position.set(this._btnWidth / 2, price ? BTN_HEIGHT / 2 - 7 : BTN_HEIGHT / 2);
+
+    if (isLg && hasSubtext) {
+      this._label.position.set(this._btnWidth / 2, 14);
+    } else if (hasPrice) {
+      this._label.position.set(this._btnWidth / 2, h / 2 - 7);
+    } else {
+      this._label.position.set(this._btnWidth / 2, h / 2);
+    }
     this.addChild(this._label);
 
-    this._hasIncome = income != null;
-
-    if (price) {
+    if (hasPrice) {
       this._price = new Text({
-        text: `price: ${price}`,
+        text: `price ${price}`,
         style: {
           fill: COLORS.price,
           fontSize: 10,
           fontFamily: 'Segoe UI, Arial, sans-serif',
         },
       });
-      this._price.anchor.set(this._hasIncome ? 1 : 0.5, 0.5);
-      this._price.position.set(
-        this._hasIncome ? this._btnWidth / 2 - 4 : this._btnWidth / 2,
-        BTN_HEIGHT / 2 + 10
-      );
+      this._price.anchor.set(0.5, 0.5);
+      this._price.position.set(this._btnWidth / 2, isLg ? 30 : h / 2 + 10);
       this.addChild(this._price);
     }
 
     if (this._hasIncome) {
       this._income = new Text({
-        text: `income: ${income}`,
+        text: `income ${income}`,
         style: {
           fill: COLORS.income,
           fontSize: 10,
           fontFamily: 'Segoe UI, Arial, sans-serif',
         },
       });
-      this._income.anchor.set(0, 0.5);
-      this._income.position.set(this._btnWidth / 2 + 4, BTN_HEIGHT / 2 + 10);
+      this._income.anchor.set(0.5, 0.5);
+      this._income.position.set(this._btnWidth / 2, isLg ? 46 : h / 2 + 10);
       this.addChild(this._income);
     }
 
@@ -103,7 +113,7 @@ export class UIButton extends Container {
     const border = enabled ? COLORS.border : COLORS.borderDisabled;
 
     bg.clear();
-    bg.roundRect(0, 0, this._btnWidth, BTN_HEIGHT, BTN_RADIUS);
+    bg.roundRect(0, 0, this._btnWidth, this._btnHeight, BTN_RADIUS);
     bg.fill({ color: fill, alpha: 0.9 });
     bg.stroke({ color: border, width: 1, alpha: 0.4 });
 
@@ -113,11 +123,11 @@ export class UIButton extends Container {
     }
     if (this._price) {
       this._price.style.fill = enabled ? COLORS.price : COLORS.textDisabled;
-      this._price.x = this._hasIncome ? this._btnWidth / 2 - 4 : this._btnWidth / 2;
+      this._price.x = this._btnWidth / 2;
     }
     if (this._income) {
       this._income.style.fill = enabled ? COLORS.income : COLORS.textDisabled;
-      this._income.x = this._btnWidth / 2 + 4;
+      this._income.x = this._btnWidth / 2;
     }
 
     this.alpha = enabled ? 1 : 0.55;
