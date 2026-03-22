@@ -4,7 +4,7 @@ import { ambientLight, directionalLight } from './lights/lights';
 import { setupEnvironment } from './environment/environment';
 import models from '@/store/models';
 import spawnHouse, { housePoint } from '@/gameplay/spawn/assets/house';
-import { trees } from '@/store/tree';
+import { trees } from '@/config/tree';
 import { markOccupied } from '@/utils/placementTool';
 import { assetConfig } from '@/config/assetConfig';
 import character from './models/other/character';

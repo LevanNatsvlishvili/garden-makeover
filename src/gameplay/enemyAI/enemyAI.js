@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { config } from '@/config/config';
 import { isCellOccupied } from '@/utils/placementTool';
 import models from '@/store/models';
+import state from '@/store/state';
 
 const { speed, attackRange, attackDamage, attackCooldown, chaseRange } = config.monster;
 // Collision radius
@@ -29,10 +30,7 @@ export function updateEnemy(enemyModel, delta) {
   direction.y = 0;
   const distance = direction.length();
 
-  // IDLE — player is too far, enemy does nothing
-  // if (distance > chaseRange) return;
-
-  // ATTACK — player is within melee range, hit on cooldown
+  // attack when the player is within attack range
   if (distance <= attackRange) {
     attackTimer -= delta;
     if (attackTimer <= 0) {
@@ -67,5 +65,11 @@ export function updateEnemy(enemyModel, delta) {
 }
 
 function onAttack() {
+  if (state.characterHealth - attackDamage <= 0) {
+    console.log('Character is dead!');
+    return;
+  }
+  state.characterHealth -= attackDamage;
   console.log(`Monster attacks for ${attackDamage} damage!`);
+  console.log('Character health:', state.characterHealth);
 }

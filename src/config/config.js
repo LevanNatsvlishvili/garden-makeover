@@ -17,6 +17,10 @@ export const config = {
   character: {
     speed: 0.5,
     startingPosition: { x: -0, y: 0.1, z: -0 },
+    attackRange: 0.15,
+    attackDamage: 1,
+    attackCooldown: 0.5,
+    health: 3,
   },
 
   monster: {
@@ -24,7 +28,7 @@ export const config = {
     attackRange: 0.15,
     attackDamage: 1,
     attackCooldown: 1.5,
-    chaseRange: 3,
+    health: 5,
     startingPosition: { x: 1, y: 0.1, z: 0 },
   },
 
