@@ -4,6 +4,7 @@ import { isCellOccupied } from '@/utils/placementTool';
 import models from '@/store/models';
 import state from '@/store/state';
 import gameover from '../gameover';
+import { BAR_Y_OFFSET } from '@/scene/models/other/monster';
 
 const { speed, attackRange, attackDamage, attackCooldown } = config.monster;
 const RADIUS = config.grid.cellSize;
@@ -30,12 +31,26 @@ export function updateAllEnemies(delta) {
   }
 }
 
+function updateHealthBar(entry) {
+  const { model } = entry;
+  const { group, fgMesh, barWidth } = entry.healthBar;
+  group.position.x = model.position.x;
+  group.position.y = model.position.y + BAR_Y_OFFSET;
+  group.position.z = model.position.z;
+
+  const ratio = Math.max(0, entry.health / config.monster.health);
+  fgMesh.scale.x = ratio;
+  fgMesh.position.x = -(barWidth / 2) * (1 - ratio);
+}
+
 function updateSingleEnemy(entry, player, delta) {
   const { model } = entry;
 
   direction.subVectors(player.position, model.position);
   direction.y = 0;
   const distance = direction.length();
+
+  updateHealthBar(entry);
 
   // Attack when in range
   if (distance <= attackRange) {

@@ -58,6 +58,7 @@ export function updateCombat(delta) {
   if (target.health <= 0) {
     console.log('Monster defeated!');
     scene.remove(target.model);
+    scene.remove(target.healthBar.group);
     state.monsters.splice(state.monsters.indexOf(target), 1);
     updateAllButtons();
   }
