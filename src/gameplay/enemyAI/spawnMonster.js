@@ -10,14 +10,24 @@ function getRandomSpawnPoint() {
   return { x: point.x, y: 0.1, z: point.z };
 }
 
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function spawnMonster() {
   const position = getRandomSpawnPoint();
   const model = await models.monsterModel.default(position);
-  scene.add(model);
 
+  await delay(1000);
+
+  scene.add(model);
   state.monsters.push({
     model,
     health: config.monster.health,
     attackTimer: 0,
   });
+}
+
+export async function spawnMonsters(count) {
+  for (let i = 0; i < count; i++) {
+    await spawnMonster();
+  }
 }

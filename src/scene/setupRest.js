@@ -1,3 +1,4 @@
+import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
 import { spawnMonster } from '@/gameplay/enemyAI/spawnMonster';
 import models from '@/store/models';
 
@@ -11,5 +12,5 @@ export const setupRest = async () => {
   models.treeModel = await import('@/scene/models/other/tree');
   models.monsterModel = await import('@/scene/models/other/monster');
 
-  await spawnMonster();
+  await spawnMonsters(3);
 };
