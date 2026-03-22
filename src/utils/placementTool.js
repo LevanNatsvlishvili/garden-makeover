@@ -182,6 +182,7 @@ export function activate(ground, callback, blockSize = 1) {
   spawnCallback = callback;
   setHighlightSize(blockSize);
   showGrid(true);
+  import('@/ui/pixiApp').then((m) => m.hideUI());
 }
 
 export function deactivate() {
@@ -189,6 +190,7 @@ export function deactivate() {
   groundMesh = null;
   spawnCallback = null;
   showGrid(false);
+  import('@/ui/pixiApp').then((m) => m.showUI());
 }
 
 export function isActive() {
