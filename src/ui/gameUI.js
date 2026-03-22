@@ -197,12 +197,14 @@ export function buildGameUI() {
   onPlacementChange(
     () => {
       barGroup.visible = false;
+      joystick.visible = false;
       attackBtn.visible = false;
       popup.container.visible = false;
       uiContainer.style.pointerEvents = 'none';
     },
     () => {
       barGroup.visible = true;
+      joystick.visible = true;
       uiContainer.style.pointerEvents = 'auto';
     }
   );
