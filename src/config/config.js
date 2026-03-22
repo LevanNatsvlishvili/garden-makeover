@@ -20,7 +20,7 @@ export const config = {
     attackRange: 0.15,
     attackDamage: 1,
     attackCooldown: 0.5,
-    health: 3,
+    health: 20,
   },
 
   monster: {

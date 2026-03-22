@@ -54,9 +54,9 @@ export function buildGameUI() {
     emoji: '🌙',
     onClick: () => finishDay(),
     btnWidth,
-    condition: canFinishDay,
+    // condition: canFinishDay,
   });
-  finishDayBtn.visible = false;
+  finishDayBtn.visible = true;
   barGroup.addChild(finishDayBtn);
 
   const shopBtn = new UIButton({
@@ -131,7 +131,7 @@ export function buildGameUI() {
 
     const arePlacementsMade = state.isWellPlaced && state.isPlantPlaced;
     const isDay = state.isDay;
-    finishDayBtn.visible = arePlacementsMade && isDay;
+    // finishDayBtn.visible = arePlacementsMade && isDay;
     harvestBtn.visible = arePlacementsMade && isDay;
     shopBtn.visible = isDay;
 

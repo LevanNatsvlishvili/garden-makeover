@@ -5,39 +5,23 @@ import { torchLight } from '@/scene/models/other/character';
 import { scene } from '@/utils/renderer';
 import { deactivate } from '@/utils/placementTool';
 import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
+import { setNightTint } from '@/utils/setNightTint';
 
 const { intensity: defaultAmbient, nightIntensity: nightAmbient } = config.lights.ambient;
 const { intensity: defaultDirectional, nightIntensity: nightDirectional } =
   config.lights.directional;
 
-function setNightTint(isNight) {
-  const tint = isNight ? 0.1 : 1;
-  scene.traverse((child) => {
-    if (child.isSprite) {
-      child.material.color.setScalar(tint);
-    }
-  });
-}
-
 export function finishDay() {
   const wasDay = state.isDay;
   state.isDay = !wasDay;
 
-  // Ripens all plants when night is finished
-  const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
-  if (!wasDay) {
-    const ripenAll = () => allPlants().forEach((p) => p.ripenHarvest());
-    ripenAll();
-  }
   if (wasDay) {
-    console.log('Spawning monsters');
-    spawnMonsters(3);
+    spawnMonsters(1);
+    ambientLight.intensity = nightAmbient;
+    directionalLight.intensity = nightDirectional;
+    torchLight.intensity = 1.5;
+    setNightTint(true);
   }
-
-  ambientLight.intensity = wasDay ? nightAmbient : defaultAmbient;
-  directionalLight.intensity = wasDay ? nightDirectional : defaultDirectional;
-  torchLight.intensity = wasDay ? 1.5 : 0;
-  setNightTint(wasDay);
 
   if (!state.isDay) deactivate();
 }

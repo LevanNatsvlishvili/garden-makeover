@@ -11,6 +11,8 @@ import { config } from './config/config';
 import { initPixiUI } from './ui/pixiApp';
 import { buildGameUI } from './ui/gameUI';
 import './styles/style.css';
+import { finishNight } from './gameplay/actions/finishNight';
+import state from './store/state';
 
 async function init() {
   scene.add(camera);
@@ -35,6 +37,10 @@ async function init() {
     if (delta < frameDuration) {
       return;
     }
+
+    // if (!state.isDay) {
+    //   finishNight();
+    // }
 
     lastTime = now - (delta % frameDuration);
 
