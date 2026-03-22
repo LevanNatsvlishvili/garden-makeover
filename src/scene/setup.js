@@ -24,7 +24,6 @@ const loadStarterModels = async () => {
   });
 
   scene.add(models.characterModel);
-  await spawnMonster();
 };
 
 export async function setupScene() {

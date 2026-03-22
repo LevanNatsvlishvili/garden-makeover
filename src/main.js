@@ -9,7 +9,7 @@ import { updateCombat } from './gameplay/character/characterCombat';
 import { updateAllEnemies } from './gameplay/enemyAI/enemyAI';
 import { config } from './config/config';
 import './styles/style.css';
-import state from './store/state';
+// import state from './store/state';
 
 async function init() {
   scene.add(camera);

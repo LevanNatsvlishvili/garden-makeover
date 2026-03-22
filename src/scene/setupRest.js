@@ -1,9 +1,4 @@
-const tomatoModel = await import('@/scene/models/plants/tomato');
-const cucumberModel = await import('@/scene/models/plants/cucumber');
-const vineModel = await import('@/scene/models/plants/vine');
-const roseModel = await import('@/scene/models/decoration/rose');
-const statueModel = await import('@/scene/models/decoration/statue');
-const wellModel = await import('@/scene/models/structures/well');
+import { spawnMonster } from '@/gameplay/enemyAI/spawnMonster';
 import models from '@/store/models';
 
 export const setupRest = async () => {
@@ -14,4 +9,7 @@ export const setupRest = async () => {
   models.statueModel = await import('@/scene/models/decoration/statue');
   models.wellModel = await import('@/scene/models/structures/well');
   models.treeModel = await import('@/scene/models/other/tree');
+  models.monsterModel = await import('@/scene/models/other/monster');
+
+  await spawnMonster();
 };
