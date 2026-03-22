@@ -1,5 +1,5 @@
 import { Container, Graphics } from 'pixi.js';
-import { app, UI_HEIGHT, POPUP_HEIGHT, POPUP_GAP } from '../pixiApp';
+import { app, UI_HEIGHT, POPUP_GAP } from '../pixiApp';
 import { UIButton, BTN_HEIGHTS } from './button';
 import state from '@/store/state';
 import { assetConfig } from '@/config/assetConfig';
@@ -73,6 +73,7 @@ export function buildPopup(onClose) {
     price: assetConfig.vine.price,
     income: assetConfig.vine.harvestIncome,
     btnSize: 'lg',
+    txtSize: 'sm',
     emoji: '🍇',
     onClick: () => {
       actionVine();

@@ -40,7 +40,7 @@ export class UIButton extends Container {
       text: `${emoji}  ${label}`,
       style: {
         fill: COLORS.text,
-        fontSize: 14,
+        fontSize: isLg ? 12 : 14,
         fontFamily: 'Segoe UI, Arial, sans-serif',
         fontWeight: '600',
       },
@@ -58,7 +58,7 @@ export class UIButton extends Container {
 
     if (hasPrice) {
       this._price = new Text({
-        text: `price ${price}`,
+        text: `price: ${price}`,
         style: {
           fill: COLORS.price,
           fontSize: 10,
