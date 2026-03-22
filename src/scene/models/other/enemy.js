@@ -1,17 +1,11 @@
-import * as THREE from 'three';
 import gltfLoader from '@/utils/loader/gltfLoader';
-import { config as globalConfig } from '@/config/config';
 
-const { startingPosition } = globalConfig.monster;
-export const torchLight = new THREE.PointLight(0xffa733, 1.6, 4, 2); // color, intensity, distance, decay
-
-const monster = async () => {
-  const monsterSprite = await gltfLoader.loadAsync('./models/monster.glb');
-  const model = monsterSprite.scene;
+const monster = async (position = { x: 1, y: 0.1, z: 0 }) => {
+  const { scene: model } = await gltfLoader.loadAsync('./models/monster.glb');
 
   model.scale.set(0.05, 0.05, 0.05);
   model.rotation.y = Math.PI * -0.5;
-  model.position.set(startingPosition.x, startingPosition.y, startingPosition.z);
+  model.position.set(position.x, position.y, position.z);
   model.castShadow = true;
 
   return model;

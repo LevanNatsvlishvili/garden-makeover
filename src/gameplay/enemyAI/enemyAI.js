@@ -4,14 +4,11 @@ import { isCellOccupied } from '@/utils/placementTool';
 import models from '@/store/models';
 import state from '@/store/state';
 
-const { speed, attackRange, attackDamage, attackCooldown, chaseRange } = config.monster;
-// Collision radius
+const { speed, attackRange, attackDamage, attackCooldown } = config.monster;
 const RADIUS = config.grid.cellSize;
 
 const direction = new THREE.Vector3();
-let attackTimer = 0;
 
-// Returns true if the is blocked by block
 function isBlocked(x, z) {
   return (
     isCellOccupied(x - RADIUS, z - RADIUS) ||
@@ -21,55 +18,55 @@ function isBlocked(x, z) {
   );
 }
 
-export function updateEnemy(enemyModel, delta) {
+// Updates all alive monsters each frame
+export function updateAllEnemies(delta) {
   const player = models.characterModel;
-  if (!player || !enemyModel) return;
+  if (!player) return;
 
-  // directs the enemy towards the player
-  direction.subVectors(player.position, enemyModel.position);
+  for (const entry of state.monsters) {
+    if (entry.health <= 0) continue;
+    updateSingleEnemy(entry, player, delta);
+  }
+}
+
+function updateSingleEnemy(entry, player, delta) {
+  const { model } = entry;
+
+  direction.subVectors(player.position, model.position);
   direction.y = 0;
   const distance = direction.length();
 
-  // attack when the player is within attack range
+  // Attack when in range
   if (distance <= attackRange) {
-    attackTimer -= delta;
-    if (attackTimer <= 0) {
-      attackTimer = attackCooldown;
-      onAttack();
+    entry.attackTimer -= delta;
+    if (entry.attackTimer <= 0) {
+      entry.attackTimer = attackCooldown;
+      if (state.characterHealth > 0) {
+        state.characterHealth -= attackDamage;
+        console.log(`Monster attacks! Player HP: ${state.characterHealth}`);
+      }
     }
     return;
   }
 
-  // CHASE — move toward player with collision handling
+  // Chase the player
   direction.normalize();
   const step = speed * delta;
 
-  const nextX = enemyModel.position.x + direction.x * step;
-  const nextZ = enemyModel.position.z + direction.z * step;
+  const nextX = model.position.x + direction.x * step;
+  const nextZ = model.position.z + direction.z * step;
 
-  // Try full diagonal move first; if blocked, wall-slide along each axis independently
   if (!isBlocked(nextX, nextZ)) {
-    enemyModel.position.x = nextX;
-    enemyModel.position.z = nextZ;
+    model.position.x = nextX;
+    model.position.z = nextZ;
   } else {
-    if (!isBlocked(nextX, enemyModel.position.z)) {
-      enemyModel.position.x = nextX;
+    if (!isBlocked(nextX, model.position.z)) {
+      model.position.x = nextX;
     }
-    if (!isBlocked(enemyModel.position.x, nextZ)) {
-      enemyModel.position.z = nextZ;
+    if (!isBlocked(model.position.x, nextZ)) {
+      model.position.z = nextZ;
     }
   }
 
-  // Face the direction of movement
-  enemyModel.rotation.y = Math.atan2(direction.x, direction.z);
-}
-
-function onAttack() {
-  if (state.characterHealth - attackDamage <= 0) {
-    console.log('Character is dead!');
-    return;
-  }
-  state.characterHealth -= attackDamage;
-  console.log(`Monster attacks for ${attackDamage} damage!`);
-  console.log('Character health:', state.characterHealth);
+  model.rotation.y = Math.atan2(direction.x, direction.z);
 }

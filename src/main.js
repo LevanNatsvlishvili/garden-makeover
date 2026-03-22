@@ -6,7 +6,7 @@ import models from './store/models';
 import { actions } from './gameplay/actions';
 import { updateCharacter } from './gameplay/character/characterMobility';
 import { updateCombat } from './gameplay/character/characterCombat';
-import { updateEnemy } from './gameplay/enemyAI/enemyAI';
+import { updateAllEnemies } from './gameplay/enemyAI/enemyAI';
 import { config } from './config/config';
 import './styles/style.css';
 import state from './store/state';
@@ -41,9 +41,7 @@ async function init() {
       updateCharacter(models.characterModel, deltaSec);
       updateCombat(deltaSec);
     }
-    if (state.monsters.length > 0) {
-      updateEnemy(state.monsters[0], deltaSec);
-    }
+    updateAllEnemies(deltaSec);
 
     controls.update();
     renderer.render(scene, camera);

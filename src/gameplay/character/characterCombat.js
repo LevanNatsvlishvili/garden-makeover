@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { config } from '@/config/config';
 import models from '@/store/models';
 import state from '@/store/state';
+import { scene } from '@/utils/renderer';
 
 const { attackRange, attackDamage, attackCooldown } = config.character;
 
@@ -16,28 +17,41 @@ window.addEventListener('keyup', (e) => {
   if (e.code === 'Space') spaceDown = false;
 });
 
+// Finds the closest alive monster within attack range
+function findNearestTarget(playerPos) {
+  let nearest = null;
+  let minDist = Infinity;
+
+  for (const entry of state.monsters) {
+    if (entry.health <= 0) continue;
+    diff.subVectors(entry.model.position, playerPos);
+    diff.y = 0;
+    const dist = diff.length();
+    if (dist <= attackRange && dist < minDist) {
+      minDist = dist;
+      nearest = entry;
+    }
+  }
+  return nearest;
+}
+
 export function updateCombat(delta) {
   if (cooldownTimer > 0) cooldownTimer -= delta;
   if (!spaceDown || cooldownTimer > 0) return;
 
   const player = models.characterModel;
-  const enemy = state.monsters[0];
-  if (!player || !enemy) return;
+  if (!player) return;
 
-  // Check distance to enemy (ignore Y)
-  diff.subVectors(enemy.position, player.position);
-  diff.y = 0;
+  const target = findNearestTarget(player.position);
+  if (!target) return;
 
-  if (diff.length() > attackRange) return;
-
-  // Attack lands
   cooldownTimer = attackCooldown;
-  state.monsterHealth -= attackDamage;
-  console.log(`Player attacks for ${attackDamage}! Monster HP: ${state.monsterHealth}`);
+  target.health -= attackDamage;
+  console.log(`Player attacks for ${attackDamage}! Monster HP: ${target.health}`);
 
-  if (state.monsterHealth <= 0) {
+  if (target.health <= 0) {
     console.log('Monster defeated!');
-    enemy.visible = false;
-    state.monsters.splice(0, 1);
+    scene.remove(target.model);
+    state.monsters.splice(state.monsters.indexOf(target), 1);
   }
 }

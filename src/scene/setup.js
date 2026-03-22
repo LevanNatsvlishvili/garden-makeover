@@ -10,13 +10,11 @@ import { assetConfig } from '@/config/assetConfig';
 import character from './models/other/character';
 import tree from './models/other/tree';
 import house from './models/structures/house';
-import monster from './models/other/enemy';
-import state from '@/store/state';
+import { spawnMonster } from '@/gameplay/enemyAI/spawnMonster';
 
 const loadStarterModels = async () => {
   models.houseModel = await house(housePoint);
   models.characterModel = await character();
-  models.monsterModel = await monster();
 
   const side = Math.sqrt(assetConfig.tree.blockSize);
   const treeSprites = await Promise.all(trees.map((pos) => tree(pos)));
@@ -26,8 +24,7 @@ const loadStarterModels = async () => {
   });
 
   scene.add(models.characterModel);
-  scene.add(models.monsterModel);
-  state.monsters.push(models.monsterModel);
+  await spawnMonster();
 };
 
 export async function setupScene() {
