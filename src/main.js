@@ -8,14 +8,17 @@ import { updateCharacter } from './gameplay/character/characterMobility';
 import { updateCombat } from './gameplay/character/characterCombat';
 import { updateAllEnemies } from './gameplay/enemyAI/enemyAI';
 import { config } from './config/config';
+import { initPixiUI } from './ui/pixiApp';
+import { buildGameUI } from './ui/gameUI';
 import './styles/style.css';
-// import state from './store/state';
 
 async function init() {
   scene.add(camera);
   windowResizer(camera, renderer);
 
   await setupScene();
+  await initPixiUI();
+  buildGameUI();
 
   const frameDuration = 1000 / config.fps.limit;
   let lastTime = 0;
