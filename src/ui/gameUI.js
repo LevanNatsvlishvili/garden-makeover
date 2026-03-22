@@ -6,6 +6,7 @@ import { buildJoystick } from './components/joystick';
 import { buildAttackButton } from './components/attackButton';
 import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
+import { config } from '@/config/config';
 import { finishDay } from '@/gameplay/actions/finishDay';
 
 const paddingX = 12;
@@ -41,6 +42,67 @@ export function buildGameUI() {
   });
   moneyText.anchor.set(0, 0.5);
   topbarGroup.addChild(moneyText);
+
+  const HP_BAR_W = 80;
+  const HP_BAR_H = 10;
+  const maxHealth = config.character.health;
+
+  const hpLabel = new Text({
+    text: '❤️',
+    style: { fontSize: 14 },
+  });
+  hpLabel.anchor.set(0, 0.5);
+  topbarGroup.addChild(hpLabel);
+
+  const hpBarBg = new Graphics();
+  topbarGroup.addChild(hpBarBg);
+
+  const hpBarFill = new Graphics();
+  topbarGroup.addChild(hpBarFill);
+
+  const hpText = new Text({
+    text: `${state.characterHealth}`,
+    style: {
+      fill: 0xffffff,
+      fontSize: 11,
+      fontFamily: 'Segoe UI, Arial, sans-serif',
+      fontWeight: 'bold',
+    },
+  });
+  hpText.anchor.set(0.5, 0.5);
+  topbarGroup.addChild(hpText);
+
+  const atkText = new Text({
+    text: `⚔️ ${config.character.attackDamage}`,
+    style: {
+      fill: 0xff6b6b,
+      fontSize: 14,
+      fontFamily: 'Segoe UI, Arial, sans-serif',
+      fontWeight: 'bold',
+    },
+  });
+  atkText.anchor.set(0, 0.5);
+  topbarGroup.addChild(atkText);
+
+  function drawHpBar() {
+    const ratio = Math.max(0, state.characterHealth / maxHealth);
+
+    hpBarBg.clear();
+    hpBarBg.roundRect(0, 0, HP_BAR_W, HP_BAR_H, 3);
+    hpBarBg.fill({ color: 0x333333, alpha: 0.7 });
+    hpBarBg.stroke({ color: 0x666666, width: 1, alpha: 0.5 });
+
+    const fillColor = ratio > 0.5 ? 0x44cc44 : ratio > 0.25 ? 0xddaa00 : 0xcc3333;
+    hpBarFill.clear();
+    if (ratio > 0) {
+      hpBarFill.roundRect(0, 0, HP_BAR_W * ratio, HP_BAR_H, 3);
+      hpBarFill.fill({ color: fillColor, alpha: 0.9 });
+    }
+
+    hpText.text = `${state.characterHealth}/${maxHealth}`;
+  }
+
+  drawHpBar();
 
   const allPlants = () => [...state.tomatoes, ...state.cucumbers, ...state.vines];
 
@@ -96,7 +158,15 @@ export function buildGameUI() {
     joystick.position.set(80, h - UI_HEIGHT - 70);
     attackBtn.position.set(w - 80, h - UI_HEIGHT - 70);
 
-    moneyText.position.set(paddingX, 20);
+    const topY = 20;
+    moneyText.position.set(paddingX, topY);
+    const hpX = moneyText.x + moneyText.width + 16;
+    hpLabel.position.set(hpX, topY);
+    hpBarBg.position.set(hpX + 20, topY - HP_BAR_H / 2);
+    hpBarFill.position.set(hpX + 20, topY - HP_BAR_H / 2);
+    hpText.position.set(hpX + 20 + HP_BAR_W / 2, topY);
+    atkText.position.set(hpX + 20 + HP_BAR_W + 12, topY);
+
     harvestBtn.position.set(paddingX, btnY);
     finishDayBtn.position.set(paddingX, btnY);
     shopBtn.position.set(w - bw - paddingX, btnY);
@@ -139,6 +209,7 @@ export function buildGameUI() {
 
   app.ticker.add(() => {
     moneyText.text = `💰  ${state.money}`;
+    drawHpBar();
 
     const arePlacementsMade = state.isWellPlaced && state.isPlantPlaced;
     const isDay = state.isDay;
