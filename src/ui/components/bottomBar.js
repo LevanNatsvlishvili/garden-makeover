@@ -31,6 +31,9 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
       state.isFirstDay = false;
     },
     btnWidth,
+    // This button has 2 conditions:
+    // 1: If it's the first day, enables the button
+    // 2: If it's not the first day, enables the button if the character is upgraded
     condition: () => state.isFirstDay || (!state.isFirstDay && state.isCharacterUpgraded),
   });
   finishDayBtn.visible = true;
