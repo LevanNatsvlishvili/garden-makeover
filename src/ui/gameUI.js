@@ -9,12 +9,15 @@ import { onPlacementChange } from '@/utils/placementTool';
 import state from '@/store/state';
 import { config } from '@/config/config';
 import { finishDay } from '@/gameplay/actions/finishDay';
+import { moveTutorialIndex } from './utils/tutorialIndex';
 
 const paddingX = 12;
 
 export function buildGameUI() {
   const barGroup = new Container();
   const topbarGroup = new Container();
+
+  let tutorialIndex = null;
 
   const conditions = {
     allPlants: () => [...state.tomatoes, ...state.cucumbers, ...state.vines],
@@ -32,7 +35,10 @@ export function buildGameUI() {
       shouldTomatoTipsStart: () =>
         !state.isTutorialFinished && state.isWellPlaced && !state.isPlantPlaced,
       shouldShopTipsStart: () => !state.isTutorialFinished && !conditions.arePlacementsMade(),
-      shouldFinishDayTipsStart: () => !state.isTutorialFinished && conditions.arePlacementsMade(),
+      shouldFinishDayTipsStart: () =>
+        !state.isTutorialFinished && conditions.arePlacementsMade() && conditions.isDay(),
+      shouldNightTipsStart: () => !state.isTutorialFinished && !conditions.isDay(),
+      shouldHarvestTipsStart: () => !state.isTutorialFinished && conditions.isHarvestable(),
     },
   };
 
@@ -106,8 +112,6 @@ export function buildGameUI() {
   atkText.anchor.set(0, 0.5);
   topbarGroup.addChild(atkText);
 
-  let tutorialIndex = 0;
-
   function drawHpBar() {
     const ratio = Math.max(0, state.characterHealth / maxHealth);
 
@@ -133,7 +137,14 @@ export function buildGameUI() {
   const harvestBtn = new UIButton({
     label: 'Harvest',
     emoji: '🍅',
-    onClick: () => conditions.allPlants().forEach((p) => p.takeHarvest()),
+    onClick: () => {
+      conditions.allPlants().forEach((p) => p.takeHarvest());
+      state.isTutorialFinished = true;
+      tutorialIndex = 5;
+      setTimeout(() => {
+        tutorialIndex = null;
+      }, 5000);
+    },
     condition: () => conditions.isDay() && conditions.isHarvestable(),
     btnWidth,
   });
@@ -252,14 +263,22 @@ export function buildGameUI() {
     attackBtn.visible = !conditions.isDay();
 
     // Conditions for tutorial
-    shopBtn.setGlow(conditions.tutorial.shouldShopTipsStart());
-    finishDayBtn.setGlow(conditions.tutorial.shouldFinishDayTipsStart());
-    // harvestBtn.setGlow(conditions.glow.shouldHarvestGlow());
+    if (tutorialIndex !== null) {
+      shopBtn.setGlow(conditions.tutorial.shouldShopTipsStart());
+      finishDayBtn.setGlow(conditions.tutorial.shouldFinishDayTipsStart());
+      harvestBtn.setGlow(conditions.tutorial.shouldHarvestTipsStart() && tutorialIndex === 4);
+    }
+    console.log(tutorialIndex);
+
+    console.log(conditions.isDay());
+    console.log(conditions.tutorial.shouldNightTipsStart());
+
+    tutorialIndex = moveTutorialIndex(tutorialIndex, conditions);
 
     harvestBtn.update();
     finishDayBtn.update();
     popup.update();
-    tutorialTips.update();
+    tutorialTips.update(tutorialIndex);
     harvestBtn.tickGlow();
     finishDayBtn.tickGlow();
     shopBtn.tickGlow();
