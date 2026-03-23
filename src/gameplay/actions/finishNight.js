@@ -22,4 +22,5 @@ export function finishNight() {
   state.isDay = true;
   state.isSecondDay = true;
   state.isFirstDay = false;
+  state.characterCurrentHealth = state.characterMaxHealth;
 }
