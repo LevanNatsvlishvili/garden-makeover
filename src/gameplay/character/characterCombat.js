@@ -4,6 +4,7 @@ import models from '@/store/models';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { finishNight } from '../actions/finishNight';
+import { playOnce, play } from './characterAnimation';
 
 const { attackRange, attackCooldown } = config.character;
 
@@ -12,7 +13,11 @@ let spaceDown = false;
 const diff = new THREE.Vector3();
 
 window.addEventListener('keydown', (e) => {
-  if (e.code === 'Space') spaceDown = true;
+  if (e.code === 'Space') {
+    e.preventDefault();
+    spaceDown = true;
+    console.log('Space pressed');
+  }
 });
 window.addEventListener('keyup', (e) => {
   if (e.code === 'Space') spaceDown = false;
@@ -48,10 +53,14 @@ export function updateCombat(delta) {
   const player = models.characterModel;
   if (!player) return;
 
+  console.log('attacked');
+
+  cooldownTimer = attackCooldown;
+  playOnce('slash', () => play('idle'));
+
   const target = findNearestTarget(player.position);
   if (!target) return;
 
-  cooldownTimer = attackCooldown;
   target.health -= state.attackDamage;
   console.log(`Player attacks for ${state.attackDamage}! Monster HP: ${target.health}`);
 

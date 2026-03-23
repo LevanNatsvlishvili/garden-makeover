@@ -10,10 +10,13 @@ import { assetConfig } from '@/config/assetConfig';
 import character from './models/other/character';
 import tree from './models/other/tree';
 import house from './models/structures/house';
+import { initAnimations } from '@/gameplay/character/characterAnimation';
 
 const loadStarterModels = async () => {
   models.houseModel = await house(housePoint);
-  models.characterModel = await character();
+  const { model: charModel, mixer, clips } = await character();
+  models.characterModel = charModel;
+  initAnimations(mixer, clips);
 
   const side = Math.sqrt(assetConfig.tree.blockSize);
   const treeSprites = await Promise.all(trees.map((pos) => tree(pos)));

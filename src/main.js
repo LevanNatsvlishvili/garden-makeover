@@ -5,6 +5,7 @@ import { setupScene, setupRest } from './scene';
 import models from './store/models';
 import { updateCharacter } from './gameplay/character/characterMobility';
 import { updateCombat } from './gameplay/character/characterCombat';
+import { updateAnimations } from './gameplay/character/characterAnimation';
 import { updateAllEnemies } from './gameplay/monsterAI/monsterAI';
 import { config } from './config/config';
 import { initPixiUI } from './ui/pixiApp';
@@ -42,6 +43,7 @@ async function init() {
     if (models.characterModel) {
       updateCharacter(models.characterModel, deltaSec);
       updateCombat(deltaSec);
+      updateAnimations(deltaSec);
     }
     updateAllEnemies(deltaSec);
 

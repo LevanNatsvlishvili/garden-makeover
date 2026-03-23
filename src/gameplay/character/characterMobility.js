@@ -3,8 +3,10 @@ import { camera } from '../../utils/renderer';
 import { config } from '@/config/config';
 import { isCellOccupied } from '@/utils/placementTool';
 import { joystickInput } from '@/ui/components/joystick';
+import { play } from './characterAnimation';
 
 const keys = { up: false, down: false, left: false, right: false };
+let wasMoving = false;
 const forward = new THREE.Vector3();
 const right = new THREE.Vector3();
 const moveDir = new THREE.Vector3();
@@ -45,7 +47,14 @@ export function updateCharacter(model, delta) {
     moveDir.addScaledVector(forward, -joystickInput.y);
   }
 
-  if (moveDir.lengthSq() === 0) return;
+  const isMoving = moveDir.lengthSq() > 0;
+
+  if (isMoving !== wasMoving) {
+    play(isMoving ? 'walk' : 'idle');
+    wasMoving = isMoving;
+  }
+
+  if (!isMoving) return;
 
   moveDir.normalize();
   const step = SPEED * delta;
