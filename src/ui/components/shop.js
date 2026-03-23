@@ -130,6 +130,7 @@ export function buildShop(onClose, conditions) {
     onClick: () => {
       state.characterMaxHealth += assetConfig.maxHealthIncrease.increase;
       state.money -= assetConfig.maxHealthIncrease.price;
+      state.characterCurrentHealth = state.characterMaxHealth;
     },
     condition: () =>
       state.money >= assetConfig.maxHealthIncrease.price &&

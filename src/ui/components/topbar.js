@@ -78,7 +78,7 @@ export function buildTopbar() {
   container.addChild(potionsText);
 
   function drawHpBar() {
-    const ratio = Math.max(0, state.characterCurrentHealth / maxHealth);
+    const ratio = Math.max(0, state.characterCurrentHealth / state.characterMaxHealth);
 
     hpBarBg.clear();
     hpBarBg.roundRect(0, 0, HP_BAR_W, HP_BAR_H, 3);
@@ -92,7 +92,7 @@ export function buildTopbar() {
       hpBarFill.fill({ color: fillColor, alpha: 0.9 });
     }
 
-    hpText.text = `${state.characterCurrentHealth}/${maxHealth}`;
+    hpText.text = `${state.characterCurrentHealth}/${state.characterMaxHealth}`;
   }
 
   function layout() {
