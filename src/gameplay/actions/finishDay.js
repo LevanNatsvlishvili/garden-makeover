@@ -18,7 +18,7 @@ export async function finishDay() {
     torchLight.intensity = 1.5;
     setNightTint(true);
     state.isDay = false;
-    spawnMonsters(3);
+    spawnMonsters();
   }
 
   if (!state.isDay) deactivate();

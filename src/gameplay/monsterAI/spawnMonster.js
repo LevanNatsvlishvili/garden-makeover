@@ -27,7 +27,7 @@ export async function spawnMonster() {
     model,
     mixer,
     play,
-    health: config.monster.health,
+    health: hp,
     attackTimer: 0,
     healthBar,
     attackDamage,
