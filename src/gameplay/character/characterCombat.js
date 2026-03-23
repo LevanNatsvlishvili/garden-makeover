@@ -16,7 +16,6 @@ window.addEventListener('keydown', (e) => {
   if (e.code === 'Space') {
     e.preventDefault();
     spaceDown = true;
-    console.log('Space pressed');
   }
 });
 window.addEventListener('keyup', (e) => {
@@ -53,8 +52,6 @@ export function updateCombat(delta) {
   const player = models.characterModel;
   if (!player) return;
 
-  console.log('attacked');
-
   cooldownTimer = attackCooldown;
   playOnce('slash', () => play('idle'));
 
@@ -62,10 +59,8 @@ export function updateCombat(delta) {
   if (!target) return;
 
   target.health -= state.attackDamage;
-  console.log(`Player attacks for ${state.attackDamage}! Monster HP: ${target.health}`);
 
   if (target.health <= 0) {
-    console.log('Monster defeated!');
     scene.remove(target.model);
     scene.remove(target.healthBar.group);
     state.monsters.splice(state.monsters.indexOf(target), 1);

@@ -2,7 +2,6 @@ import * as THREE from 'three';
 import fbxLoader from '@/utils/loader/fbxLoader';
 import { config as globalConfig } from '@/config/config';
 import state from '@/store/state';
-import gui from '@/utils/gui';
 
 const { startingPosition } = globalConfig.character;
 export const torchLight = new THREE.PointLight(0xffa733, 1.6, 4, 2);

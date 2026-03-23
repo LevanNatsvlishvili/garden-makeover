@@ -30,8 +30,6 @@ async function init() {
       lastTime = now;
     }
 
-    // console.log(state.monsters);
-
     const delta = now - lastTime;
 
     if (delta < frameDuration) {

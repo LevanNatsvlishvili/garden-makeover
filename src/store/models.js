@@ -5,8 +5,6 @@ const models = {
   tomatoModel: null,
   cucumberModel: null,
   vineModel: null,
-  roseModel: null,
-  statueModel: null,
   wellModel: null,
 };
 

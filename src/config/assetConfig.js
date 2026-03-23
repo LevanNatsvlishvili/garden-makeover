@@ -14,12 +14,7 @@ export const assetConfig = {
     price: 16,
     harvestIncome: 10,
   },
-  rose: {
-    blockSize: 1,
-  },
-  statue: {
-    blockSize: 4,
-  },
+
   tree: {
     blockSize: 4,
     price: 0,

@@ -26,7 +26,6 @@ export function createClickHandler(renderer, camera, clickableObjects) {
     if (intersects.length > 0) {
       const clicked = intersects[0].object;
       const clickedFunc = targets.find((target) => clicked.name.includes(target.name));
-      console.log(clickedFunc);
     }
   };
 }

@@ -15,8 +15,6 @@ export function initAnimations(animMixer, clips) {
     actions[name] = action;
   }
 
-  console.log('Registered animation actions:', Object.keys(actions));
-
   play('idle');
 }
 
