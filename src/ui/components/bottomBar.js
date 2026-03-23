@@ -1,6 +1,7 @@
 import { Container, Graphics } from 'pixi.js';
 import { app, UI_HEIGHT } from '../pixiApp';
 import { UIButton, BTN_HEIGHTS } from './button';
+import { assetConfig } from '@/config/assetConfig';
 import state from '@/store/state';
 
 const paddingX = 12;
@@ -47,6 +48,17 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
   });
   container.addChild(shopBtn);
 
+  const potionBtn = new UIButton({
+    label: 'Potion',
+    price: assetConfig.healthPottion.price,
+    emoji: '🧪',
+    onClick: () => {},
+    condition: () => state.money >= assetConfig.healthPottion.price && !conditions.isDay(),
+    btnWidth,
+  });
+  potionBtn.visible = false;
+  container.addChild(potionBtn);
+
   function drawBg(w) {
     barBg.clear();
     barBg.rect(0, 0, w, UI_HEIGHT);
@@ -64,7 +76,7 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
     container.y = h - UI_HEIGHT;
     drawBg(w);
 
-    [harvestBtn, finishDayBtn, shopBtn].forEach((btn) => {
+    [harvestBtn, finishDayBtn, shopBtn, potionBtn].forEach((btn) => {
       btn._btnWidth = btnWidth;
       btn._draw();
     });
@@ -72,12 +84,14 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
     harvestBtn.position.set(paddingX, btnY);
     finishDayBtn.position.set(paddingX, btnY);
     shopBtn.position.set(w - btnWidth - paddingX, btnY);
+    potionBtn.position.set(paddingX, btnY);
   }
 
   function update(tutorialIndex) {
     finishDayBtn.visible = conditions.isFinishDayButtonVisible();
     harvestBtn.visible = conditions.isHarvestButtonVisible();
     shopBtn.visible = conditions.isDay();
+    potionBtn.visible = !conditions.isDay();
 
     // Tutorial index based
     // index moving happens in /utils/tutorialIndex.js
@@ -113,6 +127,7 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
 
     harvestBtn.update();
     finishDayBtn.update();
+    potionBtn.update();
     harvestBtn.tickGlow();
     finishDayBtn.tickGlow();
     shopBtn.tickGlow();

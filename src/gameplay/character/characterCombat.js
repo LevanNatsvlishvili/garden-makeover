@@ -7,8 +7,6 @@ import { finishNight } from '../actions/finishNight';
 
 const { attackRange, attackCooldown } = config.character;
 
-const attackDamage = state.attackDamage;
-
 let cooldownTimer = 0;
 let spaceDown = false;
 const diff = new THREE.Vector3();
@@ -54,8 +52,8 @@ export function updateCombat(delta) {
   if (!target) return;
 
   cooldownTimer = attackCooldown;
-  target.health -= attackDamage;
-  console.log(`Player attacks for ${attackDamage}! Monster HP: ${target.health}`);
+  target.health -= state.attackDamage;
+  console.log(`Player attacks for ${state.attackDamage}! Monster HP: ${target.health}`);
 
   if (target.health <= 0) {
     console.log('Monster defeated!');
