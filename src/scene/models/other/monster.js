@@ -40,7 +40,7 @@ const monster = async (position = { x: 1, y: 0.1, z: 0 }) => {
 
   model.scale.set(0.05, 0.05, 0.05);
   model.rotation.y = Math.PI * -0.5;
-  model.position.set(position.x, position.y, position.z);
+  model.position.set(position.x, position.y - 0.1, position.z);
   model.traverse((child) => {
     if (child.isMesh) {
       child.castShadow = true;
