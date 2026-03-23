@@ -18,13 +18,15 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export async function spawnMonster() {
   const position = getRandomSpawnPoint();
-  const model = await models.monsterModel.default(position);
+  const { model, mixer, play } = await models.monsterModel.default(position);
 
   const healthBar = createHealthBar();
   healthBar.group.position.set(position.x, position.y + BAR_Y_OFFSET, position.z);
 
   const entry = {
     model,
+    mixer,
+    play,
     health: config.monster.health,
     attackTimer: 0,
     healthBar,

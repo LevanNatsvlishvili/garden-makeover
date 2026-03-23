@@ -26,6 +26,7 @@ export function updateAllEnemies(delta) {
   if (!player) return;
 
   for (const entry of state.monsters) {
+    entry.mixer?.update(delta);
     if (entry.health <= 0) continue;
     updateSingleEnemy(entry, player, delta);
   }
@@ -54,6 +55,7 @@ function updateSingleEnemy(entry, player, delta) {
 
   // Attack when in range
   if (distance <= attackRange) {
+    entry.play?.('attack');
     entry.attackTimer -= delta;
     if (entry.attackTimer <= 0) {
       entry.attackTimer = attackCooldown;
@@ -72,6 +74,7 @@ function updateSingleEnemy(entry, player, delta) {
   }
 
   // Chase the player
+  entry.play?.('walk');
   direction.normalize();
   const step = speed * delta;
 

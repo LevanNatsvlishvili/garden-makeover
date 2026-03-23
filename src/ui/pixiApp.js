@@ -15,8 +15,8 @@ export async function initPixiUI() {
     autoDensity: true,
   });
 
-  // const container = document.getElementById('ui-container');
-  // container.appendChild(app.canvas);
+  const container = document.getElementById('ui-container');
+  container.appendChild(app.canvas);
 }
 
 export function resizeCanvas() {

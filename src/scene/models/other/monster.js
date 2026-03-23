@@ -30,13 +30,47 @@ export function createHealthBar() {
 }
 
 const monster = async (position = { x: 1, y: 0.1, z: 0 }) => {
-  const { scene: model } = await gltfLoader.loadAsync('./models/monster.glb');
+  const [walkGltf, slashGltf] = await Promise.all([
+    gltfLoader.loadAsync('./models/monster/walking.glb'),
+    gltfLoader.loadAsync('./models/monster/slash.glb'),
+  ]);
+
+  // Use walking GLB as the base model since it contains the skeleton
+  const model = walkGltf.scene;
 
   model.scale.set(0.05, 0.05, 0.05);
   model.rotation.y = Math.PI * -0.5;
   model.position.set(position.x, position.y, position.z);
-  model.castShadow = true;
+  model.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true;
+    }
+  });
 
-  return model;
+  const mixer = new THREE.AnimationMixer(model);
+  const actions = {};
+
+  for (const clip of walkGltf.animations) {
+    clip.name = 'walk';
+    actions['walk'] = mixer.clipAction(clip);
+  }
+  for (const clip of slashGltf.animations) {
+    clip.name = 'attack';
+    actions['attack'] = mixer.clipAction(clip);
+  }
+
+  let currentAction = null;
+
+  function play(name) {
+    const next = actions[name];
+    if (!next || next === currentAction) return;
+    if (currentAction) currentAction.fadeOut(0.2);
+    next.reset().fadeIn(0.2).play();
+    currentAction = next;
+  }
+
+  play('walk');
+
+  return { model, mixer, play };
 };
 export default monster;

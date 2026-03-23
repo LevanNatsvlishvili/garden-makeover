@@ -11,6 +11,7 @@ import { config } from './config/config';
 import { initPixiUI } from './ui/pixiApp';
 import { buildGameUI } from './ui/gameUI';
 import './styles/style.css';
+import state from './store/state';
 
 async function init() {
   scene.add(camera);
@@ -29,6 +30,8 @@ async function init() {
     if (!lastTime) {
       lastTime = now;
     }
+
+    // console.log(state.monsters);
 
     const delta = now - lastTime;
 
