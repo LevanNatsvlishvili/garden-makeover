@@ -10,14 +10,20 @@ import { updateAllEnemies } from './gameplay/monsterAI/monsterAI';
 import { config } from './config/config';
 import { initPixiUI } from './ui/pixiApp';
 import { buildGameUI } from './ui/gameUI';
+import { showLoadingScreen, updateLoadingProgress, hideLoadingScreen } from './ui/loadingScreen';
+import { onLoadProgress } from './utils/loader/loadingManager';
 import './styles/style.css';
 
 async function init() {
+  await initPixiUI();
+  showLoadingScreen();
+  onLoadProgress((loaded, total) => updateLoadingProgress(loaded, total));
+
   scene.add(camera);
   windowResizer(camera, renderer);
 
   await setupScene();
-  await initPixiUI();
+  hideLoadingScreen();
   buildGameUI();
 
   const frameDuration = 1000 / config.fps.limit;
