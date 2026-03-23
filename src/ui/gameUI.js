@@ -1,6 +1,6 @@
 import { app, UI_HEIGHT, resizeCanvas } from './pixiApp';
 import { buildBottomBar } from './components/bottomBar';
-import { buildPopup } from './components/popup';
+import { buildShop } from './components/shop';
 import { buildTopbar } from './components/topbar';
 import { buildTutorialTips } from './components/tutorialTips';
 import { buildJoystick } from './components/joystick';
@@ -19,18 +19,24 @@ export function buildGameUI() {
 
   const conditions = createConditions();
 
-  const popup = buildPopup(() => closeShop(), conditions);
+  const popup = buildShop(() => closeShop(), conditions);
   const tutorialTips = buildTutorialTips();
 
   const bottomBar = buildBottomBar({
     conditions,
     onShopToggle: () => toggleShop(),
-    onFinishDay: () => { closeShop(); finishDay(); },
+    onFinishDay: () => {
+      closeShop();
+      finishDay();
+    },
     onHarvest: () => {
       conditions.allPlants().forEach((p) => p.takeHarvest());
       state.isTutorialFinished = true;
+      state.isFirstHarvestTaken = true;
       tutorialIndex = 5;
-      setTimeout(() => { tutorialIndex = null; }, 5000);
+      setTimeout(() => {
+        tutorialIndex = null;
+      }, 5000);
     },
   });
 

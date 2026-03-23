@@ -5,7 +5,9 @@ import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { updateAllButtons } from '@/gameplay/buttonManager';
 
-const { attackRange, attackDamage, attackCooldown } = config.character;
+const { attackRange, attackCooldown } = config.character;
+
+const attackDamage = state.attackDamage;
 
 let cooldownTimer = 0;
 let spaceDown = false;

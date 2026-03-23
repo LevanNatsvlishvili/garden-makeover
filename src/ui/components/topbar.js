@@ -54,7 +54,7 @@ export function buildTopbar() {
   container.addChild(hpText);
 
   const atkText = new Text({
-    text: `⚔️ ${config.character.attackDamage}`,
+    text: `⚔️ ${state.attackDamage}`,
     style: {
       fill: 0xff6b6b,
       fontSize: 14,
@@ -123,6 +123,7 @@ export function buildTopbar() {
   function update() {
     moneyText.text = `💰  ${state.money}`;
     drawHpBar();
+    atkText.text = `⚔️ ${state.attackDamage}`;
   }
 
   drawHpBar();

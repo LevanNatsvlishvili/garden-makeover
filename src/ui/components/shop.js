@@ -13,11 +13,11 @@ const ROW_GAP = 8;
 const paddingX = 12;
 const paddingY = 10;
 
-export function buildPopup(onClose, conditions) {
-  const popupGroup = new Container();
+export function buildShop(onClose, conditions) {
+  const shopGroup = new Container();
 
-  const popupBg = new Graphics();
-  popupGroup.addChild(popupBg);
+  const shopBg = new Graphics();
+  shopGroup.addChild(shopBg);
 
   const allButtons = [];
 
@@ -31,7 +31,7 @@ export function buildPopup(onClose, conditions) {
     },
     condition: () => state.money >= assetConfig.well.price && !state.isWellPlaced && state.isDay,
   });
-  popupGroup.addChild(wellBtn);
+  shopGroup.addChild(wellBtn);
   allButtons.push(wellBtn);
 
   const plantButtons = [];
@@ -48,7 +48,7 @@ export function buildPopup(onClose, conditions) {
     },
     condition: () => state.money >= assetConfig.tomato.price && state.isWellPlaced && state.isDay,
   });
-  popupGroup.addChild(tomatoBtn);
+  shopGroup.addChild(tomatoBtn);
   allButtons.push(tomatoBtn);
   plantButtons.push(tomatoBtn);
 
@@ -64,7 +64,7 @@ export function buildPopup(onClose, conditions) {
     },
     condition: () => state.money >= assetConfig.cucumber.price && state.isWellPlaced && state.isDay,
   });
-  popupGroup.addChild(cucumberBtn);
+  shopGroup.addChild(cucumberBtn);
   allButtons.push(cucumberBtn);
   plantButtons.push(cucumberBtn);
 
@@ -81,35 +81,43 @@ export function buildPopup(onClose, conditions) {
     },
     condition: () => state.money >= assetConfig.vine.price && state.isWellPlaced && state.isDay,
   });
-  popupGroup.addChild(vineBtn);
+  shopGroup.addChild(vineBtn);
   allButtons.push(vineBtn);
   plantButtons.push(vineBtn);
 
   const potionButtons = [];
 
   const atkPotionBtn = new UIButton({
-    label: 'Atk Potion',
+    label: '+Atk Point',
     price: assetConfig.attackIncrease.price,
-    subText: `increase ${assetConfig.attackIncrease.increase} dmg`,
+    subText: `+${assetConfig.attackIncrease.increase} DMG`,
     emoji: '⚔️',
     btnSize: 'lg',
-    onClick: () => {},
-    condition: () => state.money >= assetConfig.attackIncrease.price && state.isDay,
+    onClick: () => {
+      state.attackDamage += assetConfig.attackIncrease.increase;
+      state.money -= assetConfig.attackIncrease.price;
+    },
+    condition: () =>
+      state.money >= assetConfig.attackIncrease.price && state.isDay && state.isFirstHarvestTaken,
   });
-  popupGroup.addChild(atkPotionBtn);
+  shopGroup.addChild(atkPotionBtn);
   allButtons.push(atkPotionBtn);
   potionButtons.push(atkPotionBtn);
 
   const hpPotionBtn = new UIButton({
     label: 'Hp Potion',
-    subText: `restores ${assetConfig.healthPottion.healthRestore} hp`,
+    subText: `restores ${assetConfig.healthPottion.healthRestore} hp upon use`,
     price: assetConfig.healthPottion.price,
     emoji: '❤️',
     btnSize: 'lg',
-    onClick: () => {},
-    condition: () => state.money >= assetConfig.healthPottion.price && state.isDay,
+    onClick: () => {
+      state.characterCurrentHealth += assetConfig.healthPottion.healthRestore;
+      state.money -= assetConfig.healthPottion.price;
+    },
+    condition: () =>
+      state.money >= assetConfig.healthPottion.price && state.isDay && state.isFirstHarvestTaken,
   });
-  popupGroup.addChild(hpPotionBtn);
+  shopGroup.addChild(hpPotionBtn);
   allButtons.push(hpPotionBtn);
   potionButtons.push(hpPotionBtn);
 
@@ -119,14 +127,20 @@ export function buildPopup(onClose, conditions) {
     subText: `increase ${assetConfig.maxHealthIncrease.increase} max hp`,
     emoji: '💖',
     btnSize: 'lg',
-    onClick: () => {},
-    condition: () => state.money >= assetConfig.maxHealthIncrease.price && state.isDay,
+    onClick: () => {
+      state.characterMaxHealth += assetConfig.maxHealthIncrease.increase;
+      state.money -= assetConfig.maxHealthIncrease.price;
+    },
+    condition: () =>
+      state.money >= assetConfig.maxHealthIncrease.price &&
+      state.isDay &&
+      state.isFirstHarvestTaken,
   });
-  popupGroup.addChild(maxHpBtn);
+  shopGroup.addChild(maxHpBtn);
   allButtons.push(maxHpBtn);
   potionButtons.push(maxHpBtn);
 
-  popupGroup.visible = false;
+  shopGroup.visible = false;
 
   function layout() {
     const h = app.screen.height;
@@ -138,10 +152,10 @@ export function buildPopup(onClose, conditions) {
     const wellH = BTN_HEIGHTS.md;
     const popupH = paddingY * 2 + plantH + ROW_GAP + potionH + (showWell ? ROW_GAP + wellH : 0);
 
-    popupBg.clear();
-    popupBg.roundRect(0, 0, w, popupH, 10);
-    popupBg.fill({ color: 0x14213d, alpha: 0.9 });
-    popupBg.stroke({ color: 0x8d99ae, width: 1, alpha: 0.25 });
+    shopBg.clear();
+    shopBg.roundRect(0, 0, w, popupH, 10);
+    shopBg.fill({ color: 0x14213d, alpha: 0.9 });
+    shopBg.stroke({ color: 0x8d99ae, width: 1, alpha: 0.25 });
 
     const potionBtnW = (innerW - BTN_GAP * (potionButtons.length - 1)) / potionButtons.length;
     const potionRowY = paddingY;
@@ -166,7 +180,7 @@ export function buildPopup(onClose, conditions) {
       wellBtn.position.set(paddingX, wellRowY);
     }
 
-    popupGroup.y = h - UI_HEIGHT - POPUP_GAP - popupH;
+    shopGroup.y = h - UI_HEIGHT - POPUP_GAP - popupH;
   }
 
   function update() {
@@ -179,5 +193,5 @@ export function buildPopup(onClose, conditions) {
     });
   }
 
-  return { container: popupGroup, layout, update };
+  return { container: shopGroup, layout, update };
 }

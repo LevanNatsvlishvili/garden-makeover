@@ -2,13 +2,14 @@ import { assetConfig } from '@/config/assetConfig';
 import { config } from '@/config/config';
 
 const state = {
-  money: assetConfig.global.startingMoney,
+  money: 20 || assetConfig.global.startingMoney,
   tomatoes: [],
   cucumbers: [],
   vines: [],
   trees: [],
   isWellPlaced: false,
   isPlantPlaced: false,
+  isFirstHarvestTaken: true,
   isTutorialFinished: false,
   isDay: true,
   characterCurrentHealth: config.character.health,
@@ -16,6 +17,7 @@ const state = {
   monsterHealth: config.monster.health,
   monsters: [],
   potions: 0,
+  attackDamage: config.character.attackDamage,
 };
 
 export default state;
