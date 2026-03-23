@@ -1,13 +1,12 @@
 import { Container, Graphics, Text } from 'pixi.js';
 import { app } from '../pixiApp';
-import state from '@/store/state';
 
 const TIPS = [
-  'Welcome, To start, You need to place the well, its essential for you and your plants to survive. Open the shop to place the well.',
-  'Great, Now place the tomato plant from shop, you need it to earn gold by harvesting it.',
+  'Welcome, To start, You need to place the "Well", its essential for you and your plants to survive. Open the shop to place the well.',
+  'Great, Now place the "Tomato" plant from shop, you need it to earn gold by harvesting it.',
   'You have made all the necessary placements. Press "Finish Day" to end the day but beware, when night comes, monsters will appear and attack you.',
   'use Arrows to move and "space" to attack monsters, if on mobile use knob and attack button to attack monsters',
-  'Congratulations, you have survived the night. Now you can harvest your plants to earn gold.',
+  'Congratulations, you have survived the night. Now you can "Harvest" your plants to earn gold.',
   "You've got all the basics, now you can start playing the game. Good luck!",
 ];
 

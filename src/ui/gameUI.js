@@ -10,6 +10,7 @@ import state from '@/store/state';
 import { config } from '@/config/config';
 import { finishDay } from '@/gameplay/actions/finishDay';
 import { moveTutorialIndex } from './utils/tutorialIndex';
+import { createConditions } from './utils/conditions';
 
 const paddingX = 12;
 
@@ -19,28 +20,7 @@ export function buildGameUI() {
 
   let tutorialIndex = null;
 
-  const conditions = {
-    allPlants: () => [...state.tomatoes, ...state.cucumbers, ...state.vines],
-    isDay: () => state.isDay,
-    isWellPlaced: () => state.isWellPlaced,
-    isPlantPlaced: () => state.isPlantPlaced,
-    isHarvestable: () => allPlants().some((p) => p.status === 'ripe'),
-    arePlacementsMade: () => state.isWellPlaced && state.isPlantPlaced,
-    isHarvestButtonVisible: () =>
-      conditions.arePlacementsMade() && conditions.isDay() && conditions.isHarvestable(),
-    isFinishDayButtonVisible: () =>
-      conditions.arePlacementsMade() && conditions.isDay() && !conditions.isHarvestable(),
-    tutorial: {
-      shouldWellTipsStart: () => !state.isTutorialFinished && !state.isWellPlaced,
-      shouldTomatoTipsStart: () =>
-        !state.isTutorialFinished && state.isWellPlaced && !state.isPlantPlaced,
-      shouldShopTipsStart: () => !state.isTutorialFinished && !conditions.arePlacementsMade(),
-      shouldFinishDayTipsStart: () =>
-        !state.isTutorialFinished && conditions.arePlacementsMade() && conditions.isDay(),
-      shouldNightTipsStart: () => !state.isTutorialFinished && !conditions.isDay(),
-      shouldHarvestTipsStart: () => !state.isTutorialFinished && conditions.isHarvestable(),
-    },
-  };
+  const conditions = createConditions();
 
   const popup = buildPopup(() => closeShop(), conditions);
   const tutorialTips = buildTutorialTips();
@@ -237,6 +217,8 @@ export function buildGameUI() {
 
   layout();
 
+  // Disables UI when placing assets and enables it when placing is finished
+  // Pixi overrides pointer events on the container, so we need to make it dissapear
   const uiContainer = document.getElementById('ui-container');
   onPlacementChange(
     () => {
@@ -257,10 +239,11 @@ export function buildGameUI() {
     moneyText.text = `💰  ${state.money}`;
     drawHpBar();
 
+    // Becomes visible when all placements, plants are harvested and is day
     finishDayBtn.visible = conditions.isFinishDayButtonVisible();
-    harvestBtn.visible = conditions.isHarvestButtonVisible();
-    shopBtn.visible = conditions.isDay();
-    attackBtn.visible = !conditions.isDay();
+    harvestBtn.visible = conditions.isHarvestButtonVisible(); // Disappears when no plants are ripe and during night
+    shopBtn.visible = conditions.isDay(); // Disappears during night
+    attackBtn.visible = !conditions.isDay(); // Becomes visible during night
 
     // Conditions for tutorial
     if (tutorialIndex !== null) {
@@ -268,11 +251,8 @@ export function buildGameUI() {
       finishDayBtn.setGlow(conditions.tutorial.shouldFinishDayTipsStart());
       harvestBtn.setGlow(conditions.tutorial.shouldHarvestTipsStart() && tutorialIndex === 4);
     }
-    console.log(tutorialIndex);
 
-    console.log(conditions.isDay());
-    console.log(conditions.tutorial.shouldNightTipsStart());
-
+    // Moves tutorial tips
     tutorialIndex = moveTutorialIndex(tutorialIndex, conditions);
 
     harvestBtn.update();
