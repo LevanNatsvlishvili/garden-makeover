@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import fbxLoader from '@/utils/loader/fbxLoader';
 import { config as globalConfig } from '@/config/config';
 import state from '@/store/state';
+import gui from '@/utils/gui';
 
 const { startingPosition } = globalConfig.character;
 export const torchLight = new THREE.PointLight(0xffa733, 1.6, 4, 2);
@@ -10,8 +11,6 @@ const BASE_PATH = './models/character_2/';
 
 const character = async () => {
   const model = await fbxLoader.loadAsync(`${BASE_PATH}char-with-slash.fbx`);
-
-  console.log(model);
 
   model.traverse((child) => {
     if (child.isMesh) {
@@ -39,9 +38,11 @@ const character = async () => {
   const slashClip = clips.find((c) => c.name === 'mixamo.com');
   if (slashClip) slashClip.name = 'slash';
 
-  const [idleFbx, walkFbx] = await Promise.all([
+  const [idleFbx, walkFbx, swordFbx, lanternFbx] = await Promise.all([
     fbxLoader.loadAsync(`${BASE_PATH}idle.fbx`),
     fbxLoader.loadAsync(`${BASE_PATH}walking.fbx`),
+    fbxLoader.loadAsync(`${BASE_PATH}sword.fbx`),
+    fbxLoader.loadAsync(`${BASE_PATH}lantern.fbx`),
   ]);
 
   for (const clip of idleFbx.animations) {
@@ -53,10 +54,44 @@ const character = async () => {
     clips.push(clip);
   }
 
-  console.log(
-    'Character animations:',
-    clips.map((c) => c.name)
-  );
+  // swordPivot origin = hilt; sword mesh is offset inside it so the blade extends away
+  const swordPivot = new THREE.Group();
+  swordFbx.rotation.x = Math.PI * -0.5;
+  swordFbx.rotation.y = Math.PI * 0.5;
+  swordFbx.position.y = 20; // shift sword so hilt end sits at pivot origin
+  swordFbx.position.z = -32; // shift sword so hilt end sits at pivot origin
+  swordFbx.position.x = 10; // shift sword so hilt end sits at pivot origin
+  swordFbx.scale.set(0.5, 0.5, 0.5);
+  swordPivot.add(swordFbx);
+
+  const rightHand = model.getObjectByName('RightHand');
+  if (rightHand) {
+    swordFbx.traverse((child) => {
+      if (child.isMesh) child.castShadow = true;
+    });
+    rightHand.add(swordPivot);
+  } else {
+    console.warn('Right hand bone not found — sword not attached');
+  }
+
+  // swordPivot origin = hilt; sword mesh is offset inside it so the blade extends away
+  const lanternPivot = new THREE.Group();
+  lanternFbx.rotation.x = Math.PI * -1;
+  lanternFbx.rotation.y = Math.PI * 0.5;
+  lanternFbx.position.y = 40; // shift sword so hilt end sits at pivot origin
+  lanternFbx.position.x = -5; // shift sword so hilt end sits at pivot origin
+  lanternFbx.scale.set(0.25, 0.25, 0.25);
+  lanternPivot.add(lanternFbx);
+
+  const lanternHand = model.getObjectByName('LeftHand');
+  if (lanternHand) {
+    lanternFbx.traverse((child) => {
+      if (child.isMesh) child.castShadow = true;
+    });
+    lanternHand.add(lanternPivot);
+  } else {
+    console.warn('Left hand bone not found — lantern not attached');
+  }
 
   return { model, mixer, clips };
 };
