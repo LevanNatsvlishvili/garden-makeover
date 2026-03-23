@@ -18,9 +18,19 @@ export function createConditions() {
         !state.isTutorialFinished && state.isWellPlaced && !state.isPlantPlaced,
       shouldShopTipsStart: () => !state.isTutorialFinished && !conditions.arePlacementsMade(),
       shouldFinishDayTipsStart: () =>
-        !state.isTutorialFinished && conditions.arePlacementsMade() && conditions.isDay(),
+        !state.isTutorialFinished &&
+        state.isFirstDay &&
+        conditions.arePlacementsMade() &&
+        conditions.isDay() &&
+        !conditions.isHarvestable(),
       shouldNightTipsStart: () => !state.isTutorialFinished && !conditions.isDay(),
       shouldHarvestTipsStart: () => !state.isTutorialFinished && conditions.isHarvestable(),
+      shouldUpgradeCharacterTipsStart: () =>
+        !state.isTutorialFinished &&
+        state.isFirstHarvestTaken &&
+        !state.isCharacterUpgraded &&
+        state.isSecondDay,
+      isCharacterUpgraded: () => !state.isTutorialFinished && state.isCharacterUpgraded,
     },
   };
   return conditions;

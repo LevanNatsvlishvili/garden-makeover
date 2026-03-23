@@ -79,10 +79,57 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
     harvestBtn.visible = conditions.isHarvestButtonVisible();
     shopBtn.visible = conditions.isDay();
 
+    // Conditions based
+    // if (tutorialIndex !== null) {
+    //   if (state.isFirstDay) {
+    //     shopBtn.setGlow(conditions.tutorial.shouldShopTipsStart());
+    //   }
+    //   if (conditions.tutorial.shouldFinishDayTipsStart()) {
+    //     console.log(conditions.tutorial.shouldFinishDayTipsStart());
+    //     finishDayBtn.setGlow(conditions.tutorial.shouldFinishDayTipsStart());
+    //   }
+    //   harvestBtn.setGlow(conditions.tutorial.shouldHarvestTipsStart() && tutorialIndex === 4);
+    //   // Upgrade character
+    //   console.log(state.isFirstDay);
+    //   if (conditions.tutorial.shouldUpgradeCharacterTipsStart()) {
+    //     shopBtn.setGlow(true);
+    //   }
+    // }
+
+    // Tutorial index based
     if (tutorialIndex !== null) {
-      shopBtn.setGlow(conditions.tutorial.shouldShopTipsStart());
-      finishDayBtn.setGlow(conditions.tutorial.shouldFinishDayTipsStart());
-      harvestBtn.setGlow(conditions.tutorial.shouldHarvestTipsStart() && tutorialIndex === 4);
+      // Welcome, activates until well and then tomato plants are placed
+      // 0: Welcome and, Well placed, 1
+      // 1: Tomato placed,
+      // 5: Upgrade character
+      if (tutorialIndex === 0 || tutorialIndex === 1) {
+        shopBtn.setGlow(tutorialIndex === 0 || tutorialIndex === 1);
+      }
+      // Finish the day, activates when the first day is finished
+      console.log(tutorialIndex);
+
+      if (tutorialIndex === 2) {
+        shopBtn.setGlow(false);
+
+        finishDayBtn.setGlow(tutorialIndex === 2);
+      }
+      // harvestBtn.setGlow(tutorialIndex === 4);
+
+      // 3: How to to navigate and attack monsters, happens during night
+      // Doesn't activate any button
+
+      if (tutorialIndex === 4) {
+        // finishDayBtn.setGlow(tutorialIndex === 3);
+        harvestBtn.setGlow(tutorialIndex === 4);
+      }
+      // // Upgrade character
+      if (tutorialIndex === 5) {
+        finishDayBtn.setGlow(false);
+        shopBtn.setGlow(true);
+      }
+      if (tutorialIndex === 6) {
+        shopBtn.setGlow(false);
+      }
     }
 
     harvestBtn.update();

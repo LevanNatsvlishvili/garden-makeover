@@ -19,7 +19,7 @@ export function buildGameUI() {
 
   const conditions = createConditions();
 
-  const popup = buildShop(() => closeShop(), conditions);
+  const shop = buildShop(() => closeShop(), conditions);
   const tutorialTips = buildTutorialTips();
 
   const bottomBar = buildBottomBar({
@@ -31,12 +31,8 @@ export function buildGameUI() {
     },
     onHarvest: () => {
       conditions.allPlants().forEach((p) => p.takeHarvest());
-      state.isTutorialFinished = true;
       state.isFirstHarvestTaken = true;
       tutorialIndex = 5;
-      setTimeout(() => {
-        tutorialIndex = null;
-      }, 5000);
     },
   });
 
@@ -46,7 +42,7 @@ export function buildGameUI() {
   app.stage.addChild(attackBtn);
   app.stage.addChild(topbar.container);
   app.stage.addChild(tutorialTips.container);
-  app.stage.addChild(popup.container);
+  app.stage.addChild(shop.container);
   app.stage.addChild(bottomBar.container);
 
   function layout() {
@@ -61,7 +57,7 @@ export function buildGameUI() {
     tutorialTips.layout(tutorialIndex);
 
     if (shopOpen) {
-      popup.layout();
+      shop.layout();
     }
   }
 
@@ -71,13 +67,13 @@ export function buildGameUI() {
 
   function openShop() {
     shopOpen = true;
-    popup.container.visible = true;
-    popup.layout();
+    shop.container.visible = true;
+    shop.layout();
   }
 
   function closeShop() {
     shopOpen = false;
-    popup.container.visible = false;
+    shop.container.visible = false;
   }
 
   layout();
@@ -90,7 +86,7 @@ export function buildGameUI() {
       bottomBar.container.visible = false;
       joystick.visible = false;
       attackBtn.visible = false;
-      popup.container.visible = false;
+      shop.container.visible = false;
       uiContainer.style.pointerEvents = 'none';
     },
     () => {
@@ -107,7 +103,7 @@ export function buildGameUI() {
     tutorialIndex = moveTutorialIndex(tutorialIndex, conditions);
 
     bottomBar.update(tutorialIndex);
-    popup.update();
+    shop.update(tutorialIndex);
     tutorialTips.update(tutorialIndex);
   });
 

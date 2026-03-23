@@ -7,7 +7,8 @@ const TIPS = [
   'You have made all the necessary placements. Press "Finish Day" to end the day but beware, when night comes, monsters will appear and attack you.',
   'use Arrows to move and "space" to attack monsters, if on mobile use knob and attack button to attack monsters',
   'Congratulations, you have survived the night. Now you can "Harvest" your plants to earn gold.',
-  "You've got all the basics, now you can start playing the game. Good luck!",
+  "By harvesting you've earned gold, upgrade you character from shop, you can either increase your attack damage or your max health.",
+  "You've grown stronger, now you've got all the basics, you can start playing the game. Good luck!",
 ];
 
 const paddingX = 16;

@@ -19,6 +19,10 @@ export const moveTutorialIndex = (index, conditions) => {
     index = 4; // Harvest the plants
     return index;
   }
+  if (conditions.tutorial.isCharacterUpgraded() && index === 5) {
+    index = 6; // Upgrade the character
+    return index;
+  }
 
   return index;
 };

@@ -20,4 +20,6 @@ export function finishNight() {
   torchLight.intensity = 0;
   setNightTint(false);
   state.isDay = true;
+  state.isSecondDay = true;
+  state.isFirstDay = false;
 }

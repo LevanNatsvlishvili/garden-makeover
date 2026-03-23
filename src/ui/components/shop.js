@@ -13,7 +13,7 @@ const ROW_GAP = 8;
 const paddingX = 12;
 const paddingY = 10;
 
-export function buildShop(onClose, conditions) {
+export function buildShop(onClose, conditions, tutorialIndex) {
   const shopGroup = new Container();
 
   const shopBg = new Graphics();
@@ -96,6 +96,7 @@ export function buildShop(onClose, conditions) {
     onClick: () => {
       state.attackDamage += assetConfig.attackIncrease.increase;
       state.money -= assetConfig.attackIncrease.price;
+      // tutorialIndex += 1;
       if (!state.isCharacterUpgraded) {
         state.isCharacterUpgraded = true;
       }
@@ -190,7 +191,7 @@ export function buildShop(onClose, conditions) {
     shopGroup.y = h - UI_HEIGHT - POPUP_GAP - popupH;
   }
 
-  function update() {
+  function update(tutorialIndex) {
     wellBtn.visible = !state.isWellPlaced;
     wellBtn.setGlow(conditions.tutorial.shouldWellTipsStart());
     tomatoBtn.setGlow(conditions.tutorial.shouldTomatoTipsStart());
@@ -198,6 +199,11 @@ export function buildShop(onClose, conditions) {
       btn.update();
       btn.tickGlow();
     });
+
+    if (tutorialIndex !== null) {
+      atkPotionBtn.setGlow(tutorialIndex === 5);
+      maxHpBtn.setGlow(tutorialIndex === 5);
+    }
   }
 
   return { container: shopGroup, layout, update };
