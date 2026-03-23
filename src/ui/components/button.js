@@ -12,7 +12,7 @@ const COLORS = {
   text: 0xedf2f4,
   textDisabled: 0x666688,
   price: 0xa8dadc,
-  income: 0x7ddf64,
+  subText: 0x7ddf64,
   glow: 0xffd166,
 };
 
@@ -23,7 +23,16 @@ const GLOW_RINGS = [
 ];
 
 export class UIButton extends Container {
-  constructor({ label, price, emoji, income, onClick, condition, btnWidth = 130, btnSize = 'md' }) {
+  constructor({
+    label,
+    price,
+    emoji,
+    subText,
+    onClick,
+    condition,
+    btnWidth = 130,
+    btnSize = 'md',
+  }) {
     super();
 
     this._btnWidth = btnWidth;
@@ -44,8 +53,8 @@ export class UIButton extends Container {
     this.addChild(this._bg);
 
     const hasPrice = price != null;
-    this._hasIncome = income != null;
-    const hasSubtext = hasPrice || this._hasIncome;
+    this._hasSubText = subText != null;
+    const hasSubText = hasPrice || this._hasSubText;
 
     this._label = new Text({
       text: `${emoji}  ${label}`,
@@ -58,7 +67,7 @@ export class UIButton extends Container {
     });
     this._label.anchor.set(0.5);
 
-    if (isLg && hasSubtext) {
+    if (isLg && hasSubText) {
       this._label.position.set(this._btnWidth / 2, 14);
     } else if (hasPrice) {
       this._label.position.set(this._btnWidth / 2, h / 2 - 7);
@@ -81,18 +90,18 @@ export class UIButton extends Container {
       this.addChild(this._price);
     }
 
-    if (this._hasIncome) {
-      this._income = new Text({
-        text: `income ${income}`,
+    if (this._hasSubText) {
+      this._subText = new Text({
+        text: subText,
         style: {
-          fill: COLORS.income,
+          fill: COLORS.subText,
           fontSize: 10,
           fontFamily: 'Segoe UI, Arial, sans-serif',
         },
       });
-      this._income.anchor.set(0.5, 0.5);
-      this._income.position.set(this._btnWidth / 2, isLg ? 46 : h / 2 + 10);
-      this.addChild(this._income);
+      this._subText.anchor.set(0.5, 0.5);
+      this._subText.position.set(this._btnWidth / 2, isLg ? 46 : h / 2 + 10);
+      this.addChild(this._subText);
     }
 
     this._draw();
@@ -165,9 +174,9 @@ export class UIButton extends Container {
       this._price.style.fill = enabled ? COLORS.price : COLORS.textDisabled;
       this._price.x = this._btnWidth / 2;
     }
-    if (this._income) {
-      this._income.style.fill = enabled ? COLORS.income : COLORS.textDisabled;
-      this._income.x = this._btnWidth / 2;
+    if (this._subText) {
+      this._subText.style.fill = enabled ? COLORS.subText : COLORS.textDisabled;
+      this._subText.x = this._btnWidth / 2;
     }
 
     this.alpha = enabled ? 1 : 0.55;

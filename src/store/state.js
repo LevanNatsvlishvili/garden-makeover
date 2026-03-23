@@ -11,9 +11,11 @@ const state = {
   isPlantPlaced: false,
   isTutorialFinished: false,
   isDay: true,
-  characterHealth: config.character.health,
+  characterCurrentHealth: config.character.health,
+  characterMaxHealth: config.character.health,
   monsterHealth: config.monster.health,
   monsters: [],
+  potions: 0,
 };
 
 export default state;

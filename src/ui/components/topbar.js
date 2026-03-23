@@ -6,9 +6,15 @@ import { config } from '@/config/config';
 const HP_BAR_W = 80;
 const HP_BAR_H = 10;
 
+const BG_PADDING_X = 14;
+const BG_HEIGHT = 40;
+
 export function buildTopbar() {
   const container = new Container();
-  const maxHealth = config.character.health;
+  const maxHealth = state.characterMaxHealth;
+
+  const bg = new Graphics();
+  container.addChild(bg);
 
   const moneyText = new Text({
     text: `💰  ${state.money}`,
@@ -36,7 +42,7 @@ export function buildTopbar() {
   container.addChild(hpBarFill);
 
   const hpText = new Text({
-    text: `${state.characterHealth}`,
+    text: `${state.characterCurrentHealth}`,
     style: {
       fill: 0xffffff,
       fontSize: 11,
@@ -59,8 +65,20 @@ export function buildTopbar() {
   atkText.anchor.set(0, 0.5);
   container.addChild(atkText);
 
+  const potionsText = new Text({
+    text: `🧪 ${state.potions}`,
+    style: {
+      fill: 0xff6b6b,
+      fontSize: 12,
+      fontFamily: 'Segoe UI, Arial, sans-serif',
+      fontWeight: 'bold',
+    },
+  });
+  potionsText.anchor.set(-1.5, 0.5);
+  container.addChild(potionsText);
+
   function drawHpBar() {
-    const ratio = Math.max(0, state.characterHealth / maxHealth);
+    const ratio = Math.max(0, state.characterCurrentHealth / maxHealth);
 
     hpBarBg.clear();
     hpBarBg.roundRect(0, 0, HP_BAR_W, HP_BAR_H, 3);
@@ -74,12 +92,14 @@ export function buildTopbar() {
       hpBarFill.fill({ color: fillColor, alpha: 0.9 });
     }
 
-    hpText.text = `${state.characterHealth}/${maxHealth}`;
+    hpText.text = `${state.characterCurrentHealth}/${maxHealth}`;
   }
 
   function layout() {
     const w = app.screen.width;
-    const topY = 20;
+    const topY = BG_HEIGHT / 2;
+
+    bg.clear();
 
     moneyText.position.set(0, topY);
     const hpX = moneyText.width + 16;
@@ -88,8 +108,15 @@ export function buildTopbar() {
     hpBarFill.position.set(hpX + 20, topY - HP_BAR_H / 2);
     hpText.position.set(hpX + 20 + HP_BAR_W / 2, topY);
     atkText.position.set(hpX + 20 + HP_BAR_W + 12, topY);
+    potionsText.position.set(hpX + 20 + HP_BAR_W + 12, topY);
 
-    container.x = (w - container.width) / 2;
+    const contentW = container.width;
+
+    bg.roundRect(-BG_PADDING_X, 0, contentW + BG_PADDING_X * 2, BG_HEIGHT, 8);
+    bg.fill({ color: 0x14213d, alpha: 0.85 });
+    bg.stroke({ color: 0x8d99ae, width: 1, alpha: 0.3 });
+
+    container.x = (w - contentW) / 2;
     container.y = 0;
   }
 
