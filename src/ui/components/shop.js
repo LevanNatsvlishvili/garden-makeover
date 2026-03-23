@@ -7,6 +7,7 @@ import { placeWell } from '@/gameplay/spawn/assets/spawnWell';
 import { actionTomato } from '@/gameplay/spawn/assets/spawnTomato';
 import { actionCucumber } from '@/gameplay/spawn/assets/spawnCucumber';
 import { actionVine } from '@/gameplay/spawn/assets/spawnVine';
+import { config } from '@/config/config';
 
 const BTN_GAP = 8;
 const ROW_GAP = 8;
@@ -89,20 +90,20 @@ export function buildShop(onClose, conditions, tutorialIndex) {
 
   const atkPotionBtn = new UIButton({
     label: '+Atk Point',
-    price: assetConfig.attackIncrease.price,
-    subText: `+${assetConfig.attackIncrease.increase} DMG`,
+    price: config.items.attackIncrease.price,
+    subText: `+${config.items.attackIncrease.increase} DMG`,
     emoji: '⚔️',
     btnSize: 'lg',
     onClick: () => {
-      state.attackDamage += assetConfig.attackIncrease.increase;
-      state.money -= assetConfig.attackIncrease.price;
+      state.attackDamage += config.items.attackIncrease.increase;
+      state.money -= config.items.attackIncrease.price;
       // tutorialIndex += 1;
       if (!state.isCharacterUpgraded) {
         state.isCharacterUpgraded = true;
       }
     },
     condition: () =>
-      state.money >= assetConfig.attackIncrease.price && state.isDay && state.isFirstHarvestTaken,
+      state.money >= config.items.attackIncrease.price && state.isDay && state.isFirstHarvestTaken,
   });
   shopGroup.addChild(atkPotionBtn);
   allButtons.push(atkPotionBtn);
@@ -110,16 +111,16 @@ export function buildShop(onClose, conditions, tutorialIndex) {
 
   const hpPotionBtn = new UIButton({
     label: 'Hp Potion',
-    subText: `restores ${assetConfig.healthPottion.healthRestore} hp upon use`,
-    price: assetConfig.healthPottion.price,
+    subText: `restores ${config.items.healthPottion.healthRestore} hp upon use`,
+    price: config.items.healthPottion.price,
     emoji: '❤️',
     btnSize: 'lg',
     onClick: () => {
       state.potions += 1;
-      state.money -= assetConfig.healthPottion.price;
+      state.money -= config.items.items.healthPottion.price;
     },
     condition: () =>
-      state.money >= assetConfig.healthPottion.price && state.isDay && state.isFirstHarvestTaken,
+      state.money >= config.items.healthPottion.price && state.isDay && state.isFirstHarvestTaken,
   });
   shopGroup.addChild(hpPotionBtn);
   allButtons.push(hpPotionBtn);
@@ -127,20 +128,20 @@ export function buildShop(onClose, conditions, tutorialIndex) {
 
   const maxHpBtn = new UIButton({
     label: '+Max Hp',
-    price: assetConfig.maxHealthIncrease.price,
-    subText: `increase ${assetConfig.maxHealthIncrease.increase} max hp`,
+    price: config.items.maxHealthIncrease.price,
+    subText: `increase ${config.items.maxHealthIncrease.increase} max hp`,
     emoji: '💖',
     btnSize: 'lg',
     onClick: () => {
-      state.characterMaxHealth += assetConfig.maxHealthIncrease.increase;
+      state.characterMaxHealth += config.items.maxHealthIncrease.increase;
       state.characterCurrentHealth = state.characterMaxHealth;
-      state.money -= assetConfig.maxHealthIncrease.price;
+      state.money -= config.items.maxHealthIncrease.price;
       if (!state.isCharacterUpgraded) {
         state.isCharacterUpgraded = true;
       }
     },
     condition: () =>
-      state.money >= assetConfig.maxHealthIncrease.price &&
+      state.money >= config.items.maxHealthIncrease.price &&
       state.isDay &&
       state.isFirstHarvestTaken,
   });

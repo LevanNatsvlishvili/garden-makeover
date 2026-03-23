@@ -46,6 +46,21 @@ export const config = {
     ],
   },
 
+  items: {
+    attackIncrease: {
+      price: 2,
+      increase: 1,
+    },
+    healthPottion: {
+      price: 4,
+      healthRestore: 10,
+    },
+    maxHealthIncrease: {
+      price: 2,
+      increase: 1,
+    },
+  },
+
   renderer: {
     pixelRatio: Math.min(window.devicePixelRatio, 2),
     shadowMap: true,

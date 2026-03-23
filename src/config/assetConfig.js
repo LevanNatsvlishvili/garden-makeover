@@ -34,18 +34,6 @@ export const assetConfig = {
     yBlocks: 6,
     startingPosition: { x: -0.75, y: 0, z: 0 },
   },
-  attackIncrease: {
-    price: 2,
-    increase: 1,
-  },
-  healthPottion: {
-    price: 4,
-    healthRestore: 5,
-  },
-  maxHealthIncrease: {
-    price: 2,
-    increase: 1,
-  },
 
   global: {
     placementMinus: 0.05,

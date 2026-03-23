@@ -1,8 +1,8 @@
 import { Container, Graphics } from 'pixi.js';
 import { app, UI_HEIGHT } from '../pixiApp';
 import { UIButton, BTN_HEIGHTS } from './button';
-import { assetConfig } from '@/config/assetConfig';
 import state from '@/store/state';
+import { config } from '@/config/config';
 
 const paddingX = 12;
 
@@ -50,10 +50,18 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
 
   const potionBtn = new UIButton({
     label: 'Potion',
-    price: assetConfig.healthPottion.price,
     emoji: '🧪',
-    onClick: () => {},
-    condition: () => state.money >= assetConfig.healthPottion.price && !conditions.isDay(),
+    onClick: () => {
+      if (
+        state.characterCurrentHealth + config.items.healthPottion.healthRestore >
+        state.characterMaxHealth
+      ) {
+        state.characterCurrentHealth = state.characterMaxHealth;
+      } else {
+        state.characterCurrentHealth += config.items.healthPottion.healthRestore;
+      }
+    },
+    // condition: () => state.potions > 0 && !conditions.isDay(),
     btnWidth,
   });
   potionBtn.visible = false;
