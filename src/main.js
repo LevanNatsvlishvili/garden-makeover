@@ -5,13 +5,11 @@ import { setupScene, setupRest } from './scene';
 import models from './store/models';
 import { updateCharacter } from './gameplay/character/characterMobility';
 import { updateCombat } from './gameplay/character/characterCombat';
-import { updateAllEnemies } from './gameplay/enemyAI/enemyAI';
+import { updateAllEnemies } from './gameplay/monsterAI/monsterAI';
 import { config } from './config/config';
 import { initPixiUI } from './ui/pixiApp';
 import { buildGameUI } from './ui/gameUI';
 import './styles/style.css';
-import { finishNight } from './gameplay/actions/finishNight';
-import state from './store/state';
 
 async function init() {
   scene.add(camera);

@@ -5,6 +5,9 @@ import models from '@/store/models';
 import { createHealthBar, BAR_Y_OFFSET } from '@/scene/models/other/monster';
 
 const { spawnPoints } = config.monster;
+let spawnCount = 1;
+let attackDamage = config.monster.attackDamage;
+let hp = config.monster.health;
 
 function getRandomSpawnPoint() {
   const point = spawnPoints[Math.floor(Math.random() * spawnPoints.length)];
@@ -25,6 +28,7 @@ export async function spawnMonster() {
     health: config.monster.health,
     attackTimer: 0,
     healthBar,
+    attackDamage,
   };
   state.monsters.push(entry);
 
@@ -33,8 +37,15 @@ export async function spawnMonster() {
   scene.add(healthBar.group);
 }
 
-export async function spawnMonsters(count) {
-  for (let i = 0; i < count; i++) {
+export async function spawnMonsters() {
+  for (let i = 0; i < spawnCount; i++) {
     await spawnMonster();
+  }
+  if (spawnCount === 5) {
+    spawnCount = 1;
+    attackDamage = config.monster.attackDamage + 1;
+    hp = config.monster.health + 2;
+  } else {
+    spawnCount++;
   }
 }

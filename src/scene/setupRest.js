@@ -1,5 +1,5 @@
-import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
-import { spawnMonster } from '@/gameplay/enemyAI/spawnMonster';
+import { spawnMonsters } from '@/gameplay/monsterAI/spawnMonster';
+import { spawnMonster } from '@/gameplay/monsterAI/spawnMonster';
 import models from '@/store/models';
 
 export const setupRest = async () => {

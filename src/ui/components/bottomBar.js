@@ -61,7 +61,7 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
         state.characterCurrentHealth += config.items.healthPottion.healthRestore;
       }
     },
-    // condition: () => state.potions > 0 && !conditions.isDay(),
+    condition: () => state.potions > 0 && !conditions.isDay(),
     btnWidth,
   });
   potionBtn.visible = false;

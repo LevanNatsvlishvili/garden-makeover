@@ -12,7 +12,7 @@ const state = {
   characterMaxHealth: config.character.health,
   monsterHealth: config.monster.health,
   monsters: [],
-  potions: 1,
+  potions: 0,
   attackDamage: config.character.attackDamage,
   wellModel: null,
   // Tutorial

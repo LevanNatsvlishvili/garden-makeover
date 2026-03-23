@@ -3,7 +3,7 @@ import { ambientLight, directionalLight } from '@/scene/lights/lights';
 import { config } from '@/config/config';
 import { torchLight } from '@/scene/models/other/character';
 import { deactivate } from '@/utils/placementTool';
-import { spawnMonsters } from '@/gameplay/enemyAI/spawnMonster';
+import { spawnMonsters } from '@/gameplay/monsterAI/spawnMonster';
 import { setNightTint } from '@/utils/setNightTint';
 
 const { nightIntensity: nightAmbient } = config.lights.ambient;

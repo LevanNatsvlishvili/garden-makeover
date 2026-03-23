@@ -58,13 +58,13 @@ function updateSingleEnemy(entry, player, delta) {
     if (entry.attackTimer <= 0) {
       entry.attackTimer = attackCooldown;
       if (state.characterCurrentHealth > 0) {
-        if (state.characterCurrentHealth - attackDamage <= 0) {
+        if (state.characterCurrentHealth - entry.attackDamage <= 0) {
           console.log('You died !');
-          state.characterCurrentHealth -= attackDamage;
+          state.characterCurrentHealth -= entry.attackDamage;
           gameover();
           return;
         }
-        state.characterCurrentHealth -= attackDamage;
+        state.characterCurrentHealth -= entry.attackDamage;
         console.log(`Monster attacks! Player HP: ${state.characterCurrentHealth}`);
       }
     }
