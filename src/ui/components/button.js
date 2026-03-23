@@ -13,7 +13,14 @@ const COLORS = {
   textDisabled: 0x666688,
   price: 0xa8dadc,
   income: 0x7ddf64,
+  glow: 0xffd166,
 };
+
+const GLOW_RINGS = [
+  { expand: 3, alpha: 0.45 },
+  { expand: 7, alpha: 0.2 },
+  { expand: 12, alpha: 0.08 },
+];
 
 export class UIButton extends Container {
   constructor({ label, price, emoji, income, onClick, condition, btnWidth = 130, btnSize = 'md' }) {
@@ -23,11 +30,15 @@ export class UIButton extends Container {
     this._btnHeight = BTN_HEIGHTS[btnSize] || BTN_HEIGHTS.md;
     this._enabled = true;
     this._hovered = false;
+    this._glowOn = false;
     this._onClick = onClick;
     this._condition = condition;
 
     const h = this._btnHeight;
     const isLg = btnSize === 'lg';
+
+    this._glow = new Graphics();
+    this.addChild(this._glow);
 
     this._bg = new Graphics();
     this.addChild(this._bg);
@@ -104,18 +115,47 @@ export class UIButton extends Container {
     });
   }
 
+  setGlow(on) {
+    this._glowOn = on;
+    this._draw();
+  }
+
+  tickGlow() {
+    if (!this._glowOn) return;
+    this._drawGlow();
+  }
+
+  _drawGlow() {
+    this._glow.clear();
+    if (!this._glowOn) return;
+    const pulse = 0.5 + 0.5 * Math.sin(performance.now() / 120);
+    for (const { expand, alpha } of GLOW_RINGS) {
+      this._glow.roundRect(
+        -expand,
+        -expand,
+        this._btnWidth + expand * 2,
+        this._btnHeight + expand * 2,
+        BTN_RADIUS + expand
+      );
+      this._glow.fill({ color: COLORS.glow, alpha: alpha * (0.55 + 0.45 * pulse) });
+    }
+  }
+
   _draw() {
     const bg = this._bg;
     const enabled = this._enabled;
     const hovered = this._hovered && enabled;
 
     const fill = !enabled ? COLORS.disabled : hovered ? COLORS.hover : COLORS.normal;
-    const border = enabled ? COLORS.border : COLORS.borderDisabled;
+    const border = this._glowOn ? COLORS.glow : enabled ? COLORS.border : COLORS.borderDisabled;
+    const borderAlpha = this._glowOn ? 0.9 : 0.4;
+
+    this._drawGlow();
 
     bg.clear();
     bg.roundRect(0, 0, this._btnWidth, this._btnHeight, BTN_RADIUS);
     bg.fill({ color: fill, alpha: 0.9 });
-    bg.stroke({ color: border, width: 1, alpha: 0.4 });
+    bg.stroke({ color: border, width: this._glowOn ? 1.5 : 1, alpha: borderAlpha });
 
     if (this._label) {
       this._label.style.fill = enabled ? COLORS.text : COLORS.textDisabled;

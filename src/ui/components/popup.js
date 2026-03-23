@@ -13,7 +13,7 @@ const ROW_GAP = 8;
 const paddingX = 12;
 const paddingY = 10;
 
-export function buildPopup(onClose) {
+export function buildPopup(onClose, conditions) {
   const popupGroup = new Container();
 
   const popupBg = new Graphics();
@@ -121,7 +121,12 @@ export function buildPopup(onClose) {
 
   function update() {
     wellBtn.visible = !state.isWellPlaced;
-    allButtons.forEach((btn) => btn.update());
+    wellBtn.setGlow(conditions.tutorial.shouldWellTipsStart());
+    tomatoBtn.setGlow(conditions.tutorial.shouldTomatoTipsStart());
+    allButtons.forEach((btn) => {
+      btn.update();
+      btn.tickGlow();
+    });
   }
 
   return { container: popupGroup, layout, update };

@@ -16,7 +16,27 @@ export function buildGameUI() {
   const barGroup = new Container();
   const topbarGroup = new Container();
 
-  const popup = buildPopup(() => closeShop());
+  const conditions = {
+    allPlants: () => [...state.tomatoes, ...state.cucumbers, ...state.vines],
+    isDay: () => state.isDay,
+    isWellPlaced: () => state.isWellPlaced,
+    isPlantPlaced: () => state.isPlantPlaced,
+    isHarvestable: () => allPlants().some((p) => p.status === 'ripe'),
+    arePlacementsMade: () => state.isWellPlaced && state.isPlantPlaced,
+    isHarvestButtonVisible: () =>
+      conditions.arePlacementsMade() && conditions.isDay() && conditions.isHarvestable(),
+    isFinishDayButtonVisible: () =>
+      conditions.arePlacementsMade() && conditions.isDay() && !conditions.isHarvestable(),
+    tutorial: {
+      shouldWellTipsStart: () => !state.isTutorialFinished && !state.isWellPlaced,
+      shouldTomatoTipsStart: () =>
+        !state.isTutorialFinished && state.isWellPlaced && !state.isPlantPlaced,
+      shouldShopTipsStart: () => !state.isTutorialFinished && !conditions.arePlacementsMade(),
+      shouldFinishDayTipsStart: () => !state.isTutorialFinished && conditions.arePlacementsMade(),
+    },
+  };
+
+  const popup = buildPopup(() => closeShop(), conditions);
   const tutorialTips = buildTutorialTips();
 
   const joystick = buildJoystick();
@@ -85,6 +105,8 @@ export function buildGameUI() {
   });
   atkText.anchor.set(0, 0.5);
   topbarGroup.addChild(atkText);
+
+  let tutorialIndex = 0;
 
   function drawHpBar() {
     const ratio = Math.max(0, state.characterHealth / maxHealth);
@@ -180,7 +202,7 @@ export function buildGameUI() {
     finishDayBtn.position.set(paddingX, btnY);
     shopBtn.position.set(w - btnWidth - paddingX, btnY);
 
-    tutorialTips.layout();
+    tutorialTips.layout(tutorialIndex);
 
     if (shopOpen) {
       popup.layout();
@@ -220,17 +242,6 @@ export function buildGameUI() {
     }
   );
 
-  const conditions = {
-    allPlants: () => [...state.tomatoes, ...state.cucumbers, ...state.vines],
-    isDay: () => state.isDay,
-    isHarvestable: () => allPlants().some((p) => p.status === 'ripe'),
-    arePlacementsMade: () => state.isWellPlaced && state.isPlantPlaced,
-    isHarvestButtonVisible: () =>
-      conditions.arePlacementsMade() && conditions.isDay() && conditions.isHarvestable(),
-    isFinishDayButtonVisible: () =>
-      conditions.arePlacementsMade() && conditions.isDay() && !conditions.isHarvestable(),
-  };
-
   app.ticker.add(() => {
     moneyText.text = `💰  ${state.money}`;
     drawHpBar();
@@ -240,10 +251,18 @@ export function buildGameUI() {
     shopBtn.visible = conditions.isDay();
     attackBtn.visible = !conditions.isDay();
 
+    // Conditions for tutorial
+    shopBtn.setGlow(conditions.tutorial.shouldShopTipsStart());
+    finishDayBtn.setGlow(conditions.tutorial.shouldFinishDayTipsStart());
+    // harvestBtn.setGlow(conditions.glow.shouldHarvestGlow());
+
     harvestBtn.update();
     finishDayBtn.update();
     popup.update();
     tutorialTips.update();
+    harvestBtn.tickGlow();
+    finishDayBtn.tickGlow();
+    shopBtn.tickGlow();
   });
 
   window.addEventListener('resize', () => {
