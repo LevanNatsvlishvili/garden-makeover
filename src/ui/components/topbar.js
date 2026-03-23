@@ -124,6 +124,7 @@ export function buildTopbar() {
     moneyText.text = `💰  ${state.money}`;
     drawHpBar();
     atkText.text = `⚔️ ${state.attackDamage}`;
+    potionsText.text = `🧪 ${state.potions}`;
   }
 
   drawHpBar();

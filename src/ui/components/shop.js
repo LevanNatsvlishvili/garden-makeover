@@ -111,7 +111,7 @@ export function buildShop(onClose, conditions) {
     emoji: '❤️',
     btnSize: 'lg',
     onClick: () => {
-      state.characterCurrentHealth += assetConfig.healthPottion.healthRestore;
+      state.potions += 1;
       state.money -= assetConfig.healthPottion.price;
     },
     condition: () =>
@@ -129,8 +129,8 @@ export function buildShop(onClose, conditions) {
     btnSize: 'lg',
     onClick: () => {
       state.characterMaxHealth += assetConfig.maxHealthIncrease.increase;
-      state.money -= assetConfig.maxHealthIncrease.price;
       state.characterCurrentHealth = state.characterMaxHealth;
+      state.money -= assetConfig.maxHealthIncrease.price;
     },
     condition: () =>
       state.money >= assetConfig.maxHealthIncrease.price &&
