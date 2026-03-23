@@ -4,6 +4,7 @@ import models from '@/store/models';
 import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { updateAllButtons } from '@/gameplay/buttonManager';
+import { finishNight } from '../actions/finishNight';
 
 const { attackRange, attackCooldown } = config.character;
 
@@ -63,5 +64,8 @@ export function updateCombat(delta) {
     scene.remove(target.healthBar.group);
     state.monsters.splice(state.monsters.indexOf(target), 1);
     updateAllButtons();
+    if (state.monsters.length === 0) {
+      finishNight();
+    }
   }
 }

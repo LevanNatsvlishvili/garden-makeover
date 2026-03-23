@@ -37,10 +37,6 @@ async function init() {
       return;
     }
 
-    if (!state.isDay) {
-      finishNight();
-    }
-
     lastTime = now - (delta % frameDuration);
 
     const deltaSec = delta / 1000;
