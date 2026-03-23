@@ -1,6 +1,7 @@
 import { Container, Graphics } from 'pixi.js';
 import { app, UI_HEIGHT } from '../pixiApp';
 import { UIButton, BTN_HEIGHTS } from './button';
+import state from '@/store/state';
 
 const paddingX = 12;
 
@@ -25,8 +26,12 @@ export function buildBottomBar({ conditions, onShopToggle, onFinishDay, onHarves
   const finishDayBtn = new UIButton({
     label: 'Finish Day',
     emoji: '🌙',
-    onClick: () => onFinishDay(),
+    onClick: () => {
+      onFinishDay();
+      state.isFirstDay = false;
+    },
     btnWidth,
+    condition: () => state.isFirstDay || (!state.isFirstDay && state.isCharacterUpgraded),
   });
   finishDayBtn.visible = true;
   container.addChild(finishDayBtn);

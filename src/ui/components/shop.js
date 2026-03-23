@@ -96,6 +96,9 @@ export function buildShop(onClose, conditions) {
     onClick: () => {
       state.attackDamage += assetConfig.attackIncrease.increase;
       state.money -= assetConfig.attackIncrease.price;
+      if (!state.isCharacterUpgraded) {
+        state.isCharacterUpgraded = true;
+      }
     },
     condition: () =>
       state.money >= assetConfig.attackIncrease.price && state.isDay && state.isFirstHarvestTaken,
@@ -131,6 +134,9 @@ export function buildShop(onClose, conditions) {
       state.characterMaxHealth += assetConfig.maxHealthIncrease.increase;
       state.characterCurrentHealth = state.characterMaxHealth;
       state.money -= assetConfig.maxHealthIncrease.price;
+      if (!state.isCharacterUpgraded) {
+        state.isCharacterUpgraded = true;
+      }
     },
     condition: () =>
       state.money >= assetConfig.maxHealthIncrease.price &&
