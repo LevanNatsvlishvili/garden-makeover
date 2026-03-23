@@ -4,7 +4,6 @@ import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
 import { deactivate } from '../../../utils/placementTool';
-import { updateAllButtons } from '../../buttonManager';
 import models from '@/store/models';
 
 async function spawnCucumber(point) {
@@ -21,14 +20,12 @@ async function spawnCucumber(point) {
       const [ripeSprite, growingSprite] = model.children;
       ripeSprite.visible = newStatus === 'ripe';
       growingSprite.visible = newStatus === 'growing';
-      updateAllButtons();
     },
     ripenHarvest() {
       this.status = 'ripe';
       const [ripeSprite, growingSprite] = model.children;
       ripeSprite.visible = true;
       growingSprite.visible = false;
-      updateAllButtons();
     },
     takeHarvest() {
       if (this.status !== 'ripe') return;
@@ -37,12 +34,10 @@ async function spawnCucumber(point) {
       ripeSprite.visible = false;
       growingSprite.visible = true;
       state.money += assetConfig.cucumber.harvestIncome;
-      updateAllButtons();
     },
   };
   state.cucumbers.push(entry);
 
-  updateAllButtons();
   if (state.money < assetConfig.cucumber.price) {
     deactivate();
   }

@@ -4,7 +4,6 @@ import state from '@/store/state';
 import { scene } from '@/utils/renderer';
 import { spawnActivator } from '../spawnTool';
 import { deactivate } from '@/utils/placementTool';
-import { updateAllButtons } from '@/gameplay/buttonManager';
 import models from '@/store/models';
 
 async function spawnTree(point) {
@@ -13,7 +12,6 @@ async function spawnTree(point) {
   scene.add(model);
   state.money -= assetConfig.tree.price;
   state.trees.push({ x: point.x, z: point.z });
-  updateAllButtons();
   if (state.money < assetConfig.tree.price) {
     deactivate();
   }
