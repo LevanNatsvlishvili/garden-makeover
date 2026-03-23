@@ -25,12 +25,9 @@ const character = async () => {
 
   torchLight.shadow.mapSize.set(512, 512);
   torchLight.shadow.radius = 2;
-  torchLight.position.y = 1.1;
-  torchLight.position.x = 0.51;
   torchLight.intensity = state.isDay ? 0 : 1.5;
   torchLight.distance = 8;
   torchLight.decay = 1;
-  model.add(torchLight);
 
   const mixer = new THREE.AnimationMixer(model);
   const clips = [...model.animations];
@@ -88,6 +85,8 @@ const character = async () => {
     lanternFbx.traverse((child) => {
       if (child.isMesh) child.castShadow = true;
     });
+    torchLight.position.set(0, 30, 0);
+    lanternPivot.add(torchLight);
     lanternHand.add(lanternPivot);
   } else {
     console.warn('Left hand bone not found — lantern not attached');
