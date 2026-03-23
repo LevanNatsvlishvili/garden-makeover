@@ -24,7 +24,7 @@ export const config = {
   },
 
   monster: {
-    speed: 0.25,
+    speed: 0.75,
     attackRange: 0.15,
     attackDamage: 1,
     attackCooldown: 1.5,

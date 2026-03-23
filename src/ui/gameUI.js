@@ -2,6 +2,7 @@ import { Container, Graphics, Text } from 'pixi.js';
 import { app, UI_HEIGHT, resizeCanvas } from './pixiApp';
 import { UIButton, BTN_HEIGHTS } from './components/button';
 import { buildPopup } from './components/popup';
+import { buildTutorialTips } from './components/tutorialTips';
 import { buildJoystick } from './components/joystick';
 import { buildAttackButton } from './components/attackButton';
 import { onPlacementChange } from '@/utils/placementTool';
@@ -16,12 +17,14 @@ export function buildGameUI() {
   const topbarGroup = new Container();
 
   const popup = buildPopup(() => closeShop());
+  const tutorialTips = buildTutorialTips();
 
   const joystick = buildJoystick();
   const attackBtn = buildAttackButton();
   app.stage.addChild(joystick);
   app.stage.addChild(attackBtn);
   app.stage.addChild(topbarGroup);
+  app.stage.addChild(tutorialTips.container);
   app.stage.addChild(popup.container);
   app.stage.addChild(barGroup);
 
@@ -108,8 +111,8 @@ export function buildGameUI() {
   const harvestBtn = new UIButton({
     label: 'Harvest',
     emoji: '🍅',
-    onClick: () => allPlants().forEach((p) => p.takeHarvest()),
-    condition: () => state.isDay && allPlants().some((p) => p.status === 'ripe'),
+    onClick: () => conditions.allPlants().forEach((p) => p.takeHarvest()),
+    condition: () => conditions.isDay() && conditions.isHarvestable(),
     btnWidth,
   });
   harvestBtn.visible = false;
@@ -177,6 +180,8 @@ export function buildGameUI() {
     finishDayBtn.position.set(paddingX, btnY);
     shopBtn.position.set(w - btnWidth - paddingX, btnY);
 
+    tutorialTips.layout();
+
     if (shopOpen) {
       popup.layout();
     }
@@ -215,21 +220,30 @@ export function buildGameUI() {
     }
   );
 
+  const conditions = {
+    allPlants: () => [...state.tomatoes, ...state.cucumbers, ...state.vines],
+    isDay: () => state.isDay,
+    isHarvestable: () => allPlants().some((p) => p.status === 'ripe'),
+    arePlacementsMade: () => state.isWellPlaced && state.isPlantPlaced,
+    isHarvestButtonVisible: () =>
+      conditions.arePlacementsMade() && conditions.isDay() && conditions.isHarvestable(),
+    isFinishDayButtonVisible: () =>
+      conditions.arePlacementsMade() && conditions.isDay() && !conditions.isHarvestable(),
+  };
+
   app.ticker.add(() => {
     moneyText.text = `💰  ${state.money}`;
     drawHpBar();
 
-    const arePlacementsMade = state.isWellPlaced && state.isPlantPlaced;
-    const isDay = state.isDay;
-    const isHarvestable = allPlants().some((p) => p.status === 'ripe');
-    finishDayBtn.visible = arePlacementsMade && isDay && !isHarvestable;
-    harvestBtn.visible = arePlacementsMade && isDay && isHarvestable;
-    shopBtn.visible = isDay;
-    attackBtn.visible = !isDay;
+    finishDayBtn.visible = conditions.isFinishDayButtonVisible();
+    harvestBtn.visible = conditions.isHarvestButtonVisible();
+    shopBtn.visible = conditions.isDay();
+    attackBtn.visible = !conditions.isDay();
 
     harvestBtn.update();
     finishDayBtn.update();
     popup.update();
+    tutorialTips.update();
   });
 
   window.addEventListener('resize', () => {
