@@ -1,5 +1,5 @@
 function gameover() {
-  alert('You died !');
+  window.dispatchEvent(new Event('gameover'));
 }
 
 export default gameover;

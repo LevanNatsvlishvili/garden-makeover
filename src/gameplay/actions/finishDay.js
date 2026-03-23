@@ -17,7 +17,7 @@ export async function finishDay() {
     directionalLight.intensity = nightDirectional;
     torchLight.intensity = 1.5;
     setNightTint(true);
-    await spawnMonsters(0);
+    await spawnMonsters(3);
     state.isDay = false;
   }
 

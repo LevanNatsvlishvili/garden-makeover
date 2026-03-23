@@ -3,6 +3,7 @@ import { buildBottomBar } from './components/bottomBar';
 import { buildShop } from './components/shop';
 import { buildTopbar } from './components/topbar';
 import { buildTutorialTips } from './components/tutorialTips';
+import { buildGameOverScreen } from './components/gameOverScreen';
 import { buildJoystick } from './components/joystick';
 import { buildAttackButton } from './components/attackButton';
 import { onPlacementChange } from '@/utils/placementTool';
@@ -36,6 +37,8 @@ export function buildGameUI() {
     },
   });
 
+  const gameOverScreen = buildGameOverScreen();
+
   const joystick = buildJoystick();
   const attackBtn = buildAttackButton();
   app.stage.addChild(joystick);
@@ -44,6 +47,9 @@ export function buildGameUI() {
   app.stage.addChild(tutorialTips.container);
   app.stage.addChild(shop.container);
   app.stage.addChild(bottomBar.container);
+  app.stage.addChild(gameOverScreen.container);
+
+  window.addEventListener('gameover', () => gameOverScreen.show());
 
   function layout() {
     const h = app.screen.height;

@@ -7,13 +7,14 @@ const state = {
   vines: [],
   trees: [],
   // Global
-  money: 10 || assetConfig.global.startingMoney,
+  money: assetConfig.global.startingMoney,
   characterCurrentHealth: config.character.health,
   characterMaxHealth: config.character.health,
   monsterHealth: config.monster.health,
   monsters: [],
   potions: 0,
   attackDamage: config.character.attackDamage,
+  wellModel: null,
   // Tutorial
   isWellPlaced: false,
   isPlantPlaced: false,

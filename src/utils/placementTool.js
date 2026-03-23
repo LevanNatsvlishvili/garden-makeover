@@ -209,6 +209,11 @@ export function getActiveCallback() {
   return spawnCallback;
 }
 
+export function clearOccupied() {
+  occupiedCells.clear();
+  occupiedGroup.clear();
+}
+
 export function isCellOccupied(x, z) {
   const cx = Math.floor(x / cellSize) * cellSize + cellSize * 0.5;
   const cz = Math.floor(z / cellSize) * cellSize + cellSize * 0.5;

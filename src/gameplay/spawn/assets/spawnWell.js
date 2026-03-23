@@ -12,6 +12,7 @@ async function spawnWell(point) {
   scene.add(model);
   state.money -= assetConfig.well.price;
   state.isWellPlaced = true;
+  state.wellModel = model;
   deactivate();
 }
 
