@@ -6,7 +6,7 @@ import { config as globalConfig } from '@/config/config';
 const blockSide = assetConfig.cucumber.blockSize * globalConfig.grid.cellSize;
 const { placementMinus } = assetConfig.global;
 
-const ripeTexture = textureLoader.load('./sprite/cucumber/ripe.web');
+const ripeTexture = textureLoader.load('./sprite/cucumber/ripe.webp');
 ripeTexture.colorSpace = THREE.SRGBColorSpace;
 const ripeMat = new THREE.SpriteMaterial({ map: ripeTexture, depthWrite: false });
 
