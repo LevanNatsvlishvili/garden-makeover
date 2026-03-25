@@ -5,7 +5,7 @@ import { config as globalConfig } from '@/config/config';
 
 const blockSide = assetConfig.tree.blockSize * globalConfig.grid.cellSize;
 
-const treeTexture = textureLoader.load('./sprite/tree.png');
+const treeTexture = textureLoader.load('./sprite/tree.webp');
 treeTexture.colorSpace = THREE.SRGBColorSpace;
 const treeMat = new THREE.SpriteMaterial({ map: treeTexture, depthWrite: false });
 

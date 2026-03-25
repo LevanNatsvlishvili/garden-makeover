@@ -4,7 +4,7 @@ import { config } from '@/config/config';
 
 const { size, color } = config.ground;
 
-const groundTexture = textureLoader.load('./textures/grass.png');
+const groundTexture = textureLoader.load('./textures/grass.webp');
 
 const rotation = Math.PI * 0.75;
 
