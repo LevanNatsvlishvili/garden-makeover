@@ -6,11 +6,11 @@ import { config as globalConfig } from '@/config/config';
 const blockSide = assetConfig.tomato.blockSize * globalConfig.grid.cellSize;
 const { placementMinus } = assetConfig.global;
 
-const ripeTexture = textureLoader.load('./sprite/tomato/ripe.png');
+const ripeTexture = textureLoader.load('./sprite/tomato/ripe.webp');
 ripeTexture.colorSpace = THREE.SRGBColorSpace;
 const ripeMat = new THREE.SpriteMaterial({ map: ripeTexture, depthWrite: false });
 
-const growingTexture = textureLoader.load('./sprite/tomato/growing.png');
+const growingTexture = textureLoader.load('./sprite/tomato/growing.webp');
 growingTexture.colorSpace = THREE.SRGBColorSpace;
 const growingMat = new THREE.SpriteMaterial({ map: growingTexture, depthWrite: false });
 

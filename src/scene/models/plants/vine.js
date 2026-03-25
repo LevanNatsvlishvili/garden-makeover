@@ -6,11 +6,11 @@ import { config as globalConfig } from '@/config/config';
 const blockSide = assetConfig.vine.blockSize * globalConfig.grid.cellSize;
 const { placementMinus } = assetConfig.global;
 
-const ripeTexture = textureLoader.load('./sprite/vine/ripe.png');
+const ripeTexture = textureLoader.load('./sprite/vine/ripe.webp');
 ripeTexture.colorSpace = THREE.SRGBColorSpace;
 const ripeMat = new THREE.SpriteMaterial({ map: ripeTexture, depthWrite: false });
 
-const growingTexture = textureLoader.load('./sprite/vine/growing.png');
+const growingTexture = textureLoader.load('./sprite/vine/growing.webp');
 growingTexture.colorSpace = THREE.SRGBColorSpace;
 const growingMat = new THREE.SpriteMaterial({ map: growingTexture, depthWrite: false });
 

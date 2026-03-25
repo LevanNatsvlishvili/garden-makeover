@@ -4,9 +4,8 @@ import { assetConfig } from '@/config/assetConfig';
 import { config as globalConfig } from '@/config/config';
 
 const blockSide = Math.sqrt(assetConfig.well.blockSize) * globalConfig.grid.cellSize;
-const { placementMinus } = assetConfig.global;
 
-const wellTexture = textureLoader.load('./sprite/well.png');
+const wellTexture = textureLoader.load('./sprite/well.webp');
 wellTexture.colorSpace = THREE.SRGBColorSpace;
 const wellMat = new THREE.SpriteMaterial({ map: wellTexture, depthWrite: false });
 

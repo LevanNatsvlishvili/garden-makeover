@@ -6,10 +6,10 @@ import state from '@/store/state';
 const { startingPosition } = globalConfig.character;
 export const torchLight = new THREE.PointLight(0xffa733, 1.6, 4, 2);
 
-const BASE_PATH = './models/character/';
+const BASE_PATH = './models/character';
 
 const character = async () => {
-  const gltf = await gltfLoader.loadAsync(`${BASE_PATH}char-with-slash.glb`);
+  const gltf = await gltfLoader.loadAsync(`${BASE_PATH}/char-with-slash.glb`);
   const model = gltf.scene;
 
   model.scale.set(0.1, 0.1, 0.1);
@@ -26,10 +26,10 @@ const character = async () => {
   const clips = [];
 
   const [idleGltf, walkGltf, swordGlb, lanternGlb] = await Promise.all([
-    gltfLoader.loadAsync(`${BASE_PATH}idle.glb`),
-    gltfLoader.loadAsync(`${BASE_PATH}walking.glb`),
-    gltfLoader.loadAsync(`${BASE_PATH}sword.glb`),
-    gltfLoader.loadAsync(`${BASE_PATH}lantern.glb`),
+    gltfLoader.loadAsync(`${BASE_PATH}/idle.glb`),
+    gltfLoader.loadAsync(`${BASE_PATH}/walking.glb`),
+    gltfLoader.loadAsync(`${BASE_PATH}/sword.glb`),
+    gltfLoader.loadAsync(`${BASE_PATH}/lantern.glb`),
   ]);
 
   const idleClip = idleGltf.animations.find((c) => c.name === 'Armature|Armature|Idle_3|baselayer');

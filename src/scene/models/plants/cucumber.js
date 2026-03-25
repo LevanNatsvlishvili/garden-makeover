@@ -6,11 +6,11 @@ import { config as globalConfig } from '@/config/config';
 const blockSide = assetConfig.cucumber.blockSize * globalConfig.grid.cellSize;
 const { placementMinus } = assetConfig.global;
 
-const ripeTexture = textureLoader.load('./sprite/cucumber/ripe.png');
+const ripeTexture = textureLoader.load('./sprite/cucumber/ripe.web');
 ripeTexture.colorSpace = THREE.SRGBColorSpace;
 const ripeMat = new THREE.SpriteMaterial({ map: ripeTexture, depthWrite: false });
 
-const growingTexture = textureLoader.load('./sprite/cucumber/growing.png');
+const growingTexture = textureLoader.load('./sprite/cucumber/growing.webp');
 growingTexture.colorSpace = THREE.SRGBColorSpace;
 const growingMat = new THREE.SpriteMaterial({ map: growingTexture, depthWrite: false });
 
